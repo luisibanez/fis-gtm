@@ -1,0 +1,2 @@
+mupip_crypt.o mupip_crypt.d : \
+mupip_crypt.c mdef.h mdefsa.h mdefsp.h gtm_sizeof.h gtm_threadgbl.h gtm_threadgbl_deftypes.h gtm_limits.h cli.h cliif.h gtm_stdio.h util.h cmidef.h cmidefsp.h gtm_unistd.h gtm_utf8.h gtm_icu_api.h iosp.h gtm_ctype.h mupip_exit.h mupip_crypt.h mu_decrypt.h gtmcrypt.h rtnhdr.h stack_frame.h hashtab_mname.h hashtab.h gtmxc_types.h gtmcrypt_interface.h gtmimagename.h gtmimagetable.h gtm_string.h gtm_stdlib.h have_crit.h deferred_signal_handler.h gtmmsg.h gtmci.h wbox_test_init.h
