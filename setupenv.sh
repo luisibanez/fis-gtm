@@ -15,7 +15,8 @@
 
 
 # Path (only directory) to the gtm executables
-setenv gtm_curpro /usr/lib/fis-gtm/V5.4-002B_x86
+# setenv gtm_curpro /usr/lib/fis-gtm/V5.4-002B_x86
+setenv gtm_curpro $PWD/fake-binary-surrogates
 setenv gtm_exe $gtm_curpro
 setenv HOSTOS `uname -s`
 
