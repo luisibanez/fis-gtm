@@ -1,2 +1,0 @@
-op_indtext.o op_indtext.d : \
-op_indtext.c mdef.h mdefsa.h mdefsp.h gtm_sizeof.h gtm_threadgbl.h gtm_threadgbl_deftypes.h gtm_string.h advancewindow.h cache.h hashtab_objcode.h hashtab.h compiler.h copy.h indir_enum.h indir.h mvalconv.h op.h rtnhdr.h opcode.h opcode_def.h stringpool.h toktyp.h mv_stent.h error_trap.h io.h gt_timer.h stack_frame.h hashtab_mname.h lv_val.h lv_tree.h error.h errorsp.h gtm_stdio.h

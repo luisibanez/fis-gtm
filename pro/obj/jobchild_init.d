@@ -1,2 +1,0 @@
-jobchild_init.o jobchild_init.d : \
-jobchild_init.c mdef.h mdefsa.h mdefsp.h gtm_sizeof.h gtm_threadgbl.h gtm_threadgbl_deftypes.h gtm_string.h gtm_stdlib.h gtm_unistd.h gtm_utf8.h gtm_icu_api.h rtnhdr.h startup.h gtm_startup.h stack_frame.h hashtab_mname.h hashtab.h job_addr.h compiler.h copy.h indir_enum.h indir.h error.h errorsp.h gtm_stdio.h util.h cmidef.h cmidefsp.h iosp.h gtm_ctype.h cli.h cliif.h job.h jobsp.h jobparams.h gcall.h jobchild_init.h lv_val.h lv_tree.h callg.h fgncalsp.h invocation_mode.h gtmci.h send_msg.h

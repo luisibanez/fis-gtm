@@ -1,2 +1,0 @@
-op_setzbrk.o op_setzbrk.d : \
-op_setzbrk.c mdef.h mdefsa.h mdefsp.h gtm_sizeof.h gtm_threadgbl.h gtm_threadgbl_deftypes.h gtm_string.h gtm_stdio.h cache.h rtnhdr.h zbreak.h zbreaksp.h stack_frame.h hashtab_mname.h hashtab.h xfer_enum.h xfer.h indir_enum.h indir.h cachectl.h op.h fix_pages.h io.h gt_timer.h mv_stent.h error_trap.h lv_val.h lv_tree.h error.h errorsp.h inst_flush.h private_code_copy.h iosp.h gtm_ctype.h gtm_text_alloc.h srcline.h trigger_source_read_andor_verify.h gtm_trigger_trc.h

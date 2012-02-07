@@ -1,2 +1,0 @@
-tcp_open.o tcp_open.d : \
-tcp_open.c mdef.h mdefsa.h mdefsp.h gtm_sizeof.h gtm_threadgbl.h gtm_threadgbl_deftypes.h gtm_time.h gtm_socket.h gtm_inet.h gtm_string.h gtm_ctype.h gtm_stdio.h gtm_netdb.h copy.h gt_timer.h io.h rtnhdr.h stack_frame.h hashtab_mname.h hashtab.h mv_stent.h error_trap.h lv_val.h lv_tree.h error.h errorsp.h iotimer.h iotcp_select.h iotcpdef.h iotcproutine.h io_params.h iop.h util.h cmidef.h cmidefsp.h gtm_unistd.h gtm_utf8.h gtm_icu_api.h iosp.h gtmmsg.h

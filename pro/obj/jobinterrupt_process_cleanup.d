@@ -1,2 +1,0 @@
-jobinterrupt_process_cleanup.o jobinterrupt_process_cleanup.d : \
-jobinterrupt_process_cleanup.c mdef.h mdefsa.h mdefsp.h gtm_sizeof.h gtm_threadgbl.h gtm_threadgbl_deftypes.h gtm_stdio.h rtnhdr.h stack_frame.h hashtab_mname.h hashtab.h stringpool.h objlabel.h cache.h dm_setup.h error.h errorsp.h error_trap.h util.h cmidef.h cmidefsp.h gtm_unistd.h gtm_utf8.h gtm_icu_api.h iosp.h gtm_ctype.h gtm_string.h gtmmsg.h jobinterrupt_process_cleanup.h

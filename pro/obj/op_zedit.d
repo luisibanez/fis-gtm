@@ -1,2 +1,0 @@
-op_zedit.o op_zedit.d : \
-op_zedit.c mdef.h mdefsa.h mdefsp.h gtm_sizeof.h gtm_threadgbl.h gtm_threadgbl_deftypes.h gtm_string.h gtm_stdlib.h gtm_unistd.h gtm_utf8.h gtm_icu_api.h io.h gt_timer.h rtnhdr.h stack_frame.h hashtab_mname.h hashtab.h mv_stent.h error_trap.h lv_val.h lv_tree.h error.h errorsp.h gtm_stdio.h parse_file.h zroutines.h zroutinessp.h eintr_wrappers.h stringpool.h setterm.h op.h

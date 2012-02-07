@@ -1,2 +1,0 @@
-dm_read.o dm_read.d : \
-dm_read.c mdef.h mdefsa.h mdefsp.h gtm_sizeof.h gtm_threadgbl.h gtm_threadgbl_deftypes.h gtm_string.h gtm_unistd.h gtm_utf8.h gtm_icu_api.h gtm_stdlib.h iotcp_select.h io.h gt_timer.h rtnhdr.h stack_frame.h hashtab_mname.h hashtab.h mv_stent.h error_trap.h lv_val.h lv_tree.h error.h errorsp.h gtm_stdio.h trmdef.h iottdef.h gtm_termios.h iottdefsp.h iott_edit.h stringpool.h comline.h gtmio.h gtm_stat.h gtm_fcntl.h eintr_wrappers.h min_max.h cli.h cliif.h outofband.h dm_read.h gtm_tputs.h

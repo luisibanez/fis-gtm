@@ -1,2 +1,0 @@
-gtm_malloc_dbg.o gtm_malloc_dbg.d : \
-gtm_malloc_dbg.c caller_id.h gtm_malloc_src.h mdef.h mdefsa.h mdefsp.h gtm_sizeof.h gtm_threadgbl.h gtm_threadgbl_deftypes.h gtm_stdio.h gtm_string.h gtm_stdlib.h eintr_wrappers.h gtmdbglvl.h io.h gt_timer.h rtnhdr.h stack_frame.h hashtab_mname.h hashtab.h mv_stent.h error_trap.h lv_val.h lv_tree.h error.h errorsp.h iosp.h gtm_ctype.h min_max.h mdq.h trans_log_name.h gtmmsg.h print_exit_stats.h mmemory.h gtm_malloc.h gtm_logicals.h cache.h have_crit.h deferred_signal_handler.h

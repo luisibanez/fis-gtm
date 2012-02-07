@@ -1,2 +1,0 @@
-util_output.o util_output.d : \
-util_output.c mdef.h mdefsa.h mdefsp.h gtm_sizeof.h gtm_threadgbl.h gtm_threadgbl_deftypes.h gtm_string.h gtm_stdio.h gtm_syslog.h io.h gt_timer.h rtnhdr.h stack_frame.h hashtab_mname.h hashtab.h mv_stent.h error_trap.h lv_val.h lv_tree.h error.h errorsp.h fao_parm.h min_max.h util.h cmidef.h cmidefsp.h gtm_unistd.h gtm_utf8.h gtm_icu_api.h iosp.h gtm_ctype.h util_format.h util_out_print_vaparm.h gtmimagename.h gtmimagetable.h
