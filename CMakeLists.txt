@@ -1,0 +1,12 @@
+project(fis-gtm)
+
+add_subdirectory(sr_i386)
+add_subdirectory(sr_linux)
+add_subdirectory(sr_port)
+add_subdirectory(sr_port_cm)
+add_subdirectory(sr_unix)
+add_subdirectory(sr_unix_cm)
+add_subdirectory(sr_unix_gnp)
+add_subdirectory(sr_unix_nsb)
+add_subdirectory(sr_x86_64)
+add_subdirectory(sr_x86_regs)
