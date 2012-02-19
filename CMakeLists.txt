@@ -17,6 +17,9 @@ include_directories(
   )
 
 
+include(CTest)
+
+
 #
 #  Look at the type of architecture.
 #
