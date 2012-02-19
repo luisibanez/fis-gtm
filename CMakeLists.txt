@@ -16,8 +16,24 @@ include_directories(
   ${fis-gtm_BINARY_DIR}
   )
 
+
+#
+#  Look at the type of architecture.
+#
+
+if(CMAKE_C_SIZEOF_DATA_PTR EQUAL 8)
+  message("This is a 64 bits architecture")
+endif()
+
+if(CMAKE_C_SIZEOF_DATA_PTR EQUAL 4)
+  message("This is a 32 bits architecture")
+endif()
+
+
+#
+# Visit subdirectories
+#
 add_subdirectory(sr_linux)
-add_subdirectory(sr_i386)
 add_subdirectory(sr_unix_nsb)
 add_subdirectory(sr_unix_cm)
 add_subdirectory(sr_unix_gnp)
@@ -25,6 +41,15 @@ add_subdirectory(sr_unix)
 add_subdirectory(sr_port_cm)
 add_subdirectory(sr_port)
 
-# add_subdirectory(sr_x86_64)
 
-# sr_linux sr_i386 sr_x86_regs sr_unix_gnp sr_unix_cm sr_unix_nsb sr_unix sr_port_cm sr_port
+#
+# Select architecture dependent directories
+#
+if(CMAKE_C_SIZEOF_DATA_PTR EQUAL 4)
+  add_subdirectory(sr_i386)
+endif()
+
+if(CMAKE_C_SIZEOF_DATA_PTR EQUAL 8)
+  add_subdirectory(sr_x86_64)
+endif()
+
