@@ -18,6 +18,7 @@ endif()
 
 
 include_directories(
+  ${fis-gtm_SOURCE_DIR}/sr_unix_nsb
   ${fis-gtm_SOURCE_DIR}/sr_unix
   ${fis-gtm_SOURCE_DIR}/sr_linux
   ${fis-gtm_SOURCE_DIR}/pro
