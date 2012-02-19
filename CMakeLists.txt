@@ -22,10 +22,9 @@ add_subdirectory(sr_unix_nsb)
 add_subdirectory(sr_unix_cm)
 add_subdirectory(sr_unix_gnp)
 add_subdirectory(sr_unix)
+add_subdirectory(sr_port_cm)
+add_subdirectory(sr_port)
 
-# add_subdirectory(sr_port)
-# add_subdirectory(sr_port_cm)
-# add_subdirectory(sr_unix_gnp)
 # add_subdirectory(sr_x86_64)
 
 # sr_linux sr_i386 sr_x86_regs sr_unix_gnp sr_unix_cm sr_unix_nsb sr_unix sr_port_cm sr_port
