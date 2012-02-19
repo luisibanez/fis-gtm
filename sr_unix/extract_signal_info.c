@@ -31,6 +31,7 @@
 
 #include <signal.h>
 
+#include "gtmconfig.h"
 #include "gtmsiginfo.h"
 
 /* OS/390 (R7) does not define SI_USER but for code expansions purposes, define the value it uses

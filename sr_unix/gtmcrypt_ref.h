@@ -11,6 +11,8 @@
 #ifndef GTMCRYPT_REF_H
 #define GTMCRYPT_REF_H
 
+# include <gtmconfig.h>
+
 #ifdef USE_OPENSSL
 # include <openssl/blowfish.h>
 # include <openssl/sha.h>
