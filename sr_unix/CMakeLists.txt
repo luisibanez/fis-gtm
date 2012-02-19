@@ -189,7 +189,6 @@ set(GTM_UNIX_SRC
   gtm_tputs.c
   gtm_trigger.c
   gtm_unique_file_util.c
-  gtm_unlink_all.c
   gtm_utf8.c
   gtm_utf8_stx.c
   gtm_wake.c
@@ -267,7 +266,6 @@ set(GTM_UNIX_SRC
   is_raw_dev.c
   jnlext_write.c
   jnl_file_extend.c
-  jnl_file_open.c
   jnl_fsync.c
   jnl_output_sp.c
   jnlpool_init.c
@@ -342,7 +340,6 @@ set(GTM_UNIX_SRC
   mutex_wake_proc.c
   mu_trig_trgfile.c
   m_ztrigger.c
-  obj_code.c
   ojchildioclean.c
   ojchildioset.c
   ojchildparms.c
@@ -482,6 +479,9 @@ if(NEED_TO_ADD_SOURCES)
     make_cimode.c
     make_dmode.c
     obj_file.c
+    obj_code.c
+    gtm_unlink_all.c
+    jnl_file_open.c
     )
 endif(NEED_TO_ADD_SOURCES)
 
