@@ -18,6 +18,8 @@ include_directories(
 
 add_subdirectory(sr_linux)
 add_subdirectory(sr_i386)
+add_subdirectory(sr_unix_nsb)
+add_subdirectory(sr_unix_cm)
 add_subdirectory(sr_unix)
 
 # add_subdirectory(sr_port)
