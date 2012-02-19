@@ -1028,7 +1028,6 @@ set(GTM_PORT_SRC_C
   sgnl_gvundef.c
   shmpool.c
   show_source_line.c
-  shrink_trips.c
   shuffq.c
   skan_offset.c
   skan_rnum.c
@@ -1186,6 +1185,7 @@ if(CMAKE_C_SIZEOF_DATA_PTR EQUAL 8)
     ${GTM_PORT_SRC_C}
     emit_code.c
     code_gen.c
+    shrink_trips.c
     )
 endif()
 
