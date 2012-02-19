@@ -1,16 +1,34 @@
+#
+#  Select headers for 32 bits
+#
+if(CMAKE_C_SIZEOF_DATA_PTR EQUAL 4)
+  include_directories(
+    ${fis-gtm_SOURCE_DIR}/sr_i386
+    )
+endif()
+
+#
+#  Select headers for 64 bits
+#
+if(CMAKE_C_SIZEOF_DATA_PTR EQUAL 8)
+  include_directories(
+    ${fis-gtm_SOURCE_DIR}/sr_x86_64
+    )
+endif()
+
+
 include_directories(
-  ${fis-gtm_SOURCE_DIR}/sr_i386
   ${fis-gtm_SOURCE_DIR}/sr_unix
   ${fis-gtm_SOURCE_DIR}/sr_linux
   ${fis-gtm_SOURCE_DIR}/pro
   ${fis-gtm_SOURCE_DIR}/pro/obj
   ${fis-gtm_SOURCE_DIR}/sr_port_cm
   ${fis-gtm_SOURCE_DIR}/sr_port
-  ${fis-gtm_SOURCE_DIR}/sr_x86_64
   ${fis-gtm_SOURCE_DIR}/sr_x86_regs
   )
 
-add_library(gtm_port
+
+set(GTM_PORT_SRC_C
   act_in_gvt.c
   actuallist.c
   add_atom.c
@@ -67,7 +85,6 @@ add_library(gtm_port
   cli_get_str_ele.c
   cli_port.c
   cmd.c
-  code_gen.c
   coerce.c
   collseq.c
   comp_fini.c
@@ -161,7 +178,6 @@ add_library(gtm_port
   ecode_get.c
   ecode_init.c
   ecode_set.c
-  emit_code.c
   entryref.c
   err_check.c
   eval_expr.c
@@ -1148,3 +1164,33 @@ add_library(gtm_port
   zwr2format.c
   zyerror_init.c
   )
+
+
+#
+#  Select sources specific for 32 bits
+#
+if(CMAKE_C_SIZEOF_DATA_PTR EQUAL 4)
+  set(GTM_PORT_SRC_C
+    ${GTM_PORT_SRC_C}
+    )
+endif()
+
+
+
+#
+#  Select sources specific for 64 bits
+#
+if(CMAKE_C_SIZEOF_DATA_PTR EQUAL 8)
+  set(GTM_PORT_SRC_C
+    ${GTM_PORT_SRC_C}
+    emit_code.c
+    code_gen.c
+    )
+endif()
+
+
+
+add_library(gtm_port
+  ${GTM_PORT_SRC_C}
+  )
+
