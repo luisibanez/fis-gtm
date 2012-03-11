@@ -37,12 +37,13 @@ endif()
 # Visit subdirectories
 #
 add_subdirectory(sr_linux)
-add_subdirectory(sr_unix_nsb)
+# add_subdirectory(sr_unix_nsb)   # no needed when USHBIN is ON
 add_subdirectory(sr_unix_cm)
 add_subdirectory(sr_unix_gnp)
 add_subdirectory(sr_unix)
 add_subdirectory(sr_port_cm)
 add_subdirectory(sr_port)
+add_subdirectory(pro)
 
 
 #
@@ -53,6 +54,7 @@ if(CMAKE_C_SIZEOF_DATA_PTR EQUAL 4)
 endif()
 
 if(CMAKE_C_SIZEOF_DATA_PTR EQUAL 8)
+  set(LINUX_64)
   add_subdirectory(sr_x86_64)
 endif()
 

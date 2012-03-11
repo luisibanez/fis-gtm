@@ -3,7 +3,7 @@ include_directories(
   ${fis-gtm_SOURCE_DIR}/sr_port_cm
   ${fis-gtm_SOURCE_DIR}/sr_port
   ${fis-gtm_SOURCE_DIR}/pro/obj
-  ${fis-gtm_SOURCE_DIR}/sr_unix_nsb
+# ${fis-gtm_SOURCE_DIR}/sr_unix_nsb   # no needed when USHBIN is ON
   ${fis-gtm_SOURCE_DIR}/sr_unix
   ${fis-gtm_SOURCE_DIR}/sr_linux
   ${fis-gtm_SOURCE_DIR}/sr_x86_64
@@ -21,11 +21,11 @@ set(GTM_UNIX_SRC
   ccp_sendmsg.c
   ccp_userwait.c
   ce_init.c
-  cenable.c
   ce_substitute.c
-  change_fhead_timer.c
+  cenable.c
   ch_cond_core.c
   ch_overrun.c
+  change_fhead_timer.c
   ci_ret_code.c
   cli.c
   cli_disallow.c
@@ -42,8 +42,7 @@ set(GTM_UNIX_SRC
   ctrly_set.c
   cvtprot.c
   cvttime.c
-  daemon_ch.c
-  daemon_crit.c
+  db_ipcs_reset.c
   dbcertify_cmd.c
   dbcertify_dbfilop.c
   dbcertify_deferred_signal_handler.c
@@ -51,18 +50,17 @@ set(GTM_UNIX_SRC
   dbcertify_signal_handler.c
   dbfilop.c
   dbinit_ch.c
-  db_ipcs_reset.c
   dbopen_ch.c
   dec_err.c
   deferred_signal_handler.c
   disk_block_available.c
   dm_read.c
-  dollarh.c
   do_semop.c
   do_shmat.c
   do_verify.c
   do_write.c
   do_xform.c
+  dollarh.c
   dpgbldir_sysops.c
   dse.c
   dse_cmd.c
@@ -73,60 +71,47 @@ set(GTM_UNIX_SRC
   dse_puttime.c
   dse_remove.c
   dsk_read.c
-  dskspace_msg_timer.c
   dsk_write.c
   dsk_write_nocache.c
-  dtgbldir.c
+  dskspace_msg_timer.c
   err_init.c
   error_return.c
-  extract_signal_info.c
   exttab_parse.c
   exttime.c
   f_char.c
+  f_piece.c
   fgn_getinfo.c
   file_head_read.c
   file_head_write.c
   file_input.c
-  fix_pages.c
-  f_piece.c
   ftok.c
   ftok_sems.c
-  gdsfilext.c
   gds_rundown.c
+  gdsfilext.c
   generic_signal_handler.c
   genpat.c
-  getcaps.c
   get_command_line.c
-  geteditor.c
-  geteuid.c
   get_full_path.c
-  getjobnum.c
-  getmaxfds.c
   get_page_size.c
   get_src_line.c
+  geteditor.c
+  getjobnum.c
   getstorage.c
   getzmode.c
   getzprocess.c
-  golevel.c
   go_load.c
+  golevel.c
   goq_load.c
   grab_crit.c
   grab_lock.c
+  gt_timers.c
   gtcmstub.c
   gtcmtrstub.c
-  gtm_bintim.c
   gtm.c
-  gtmci.c
-  gtmci_ch.c
-  gtmci_isv.c
-  gtmci_signals.c
+  gtm_bintim.c
+  gtm_c_stack_trace_semop.c
   gtm_compile.c
   gtm_conv.c
-  gtmcrypt_dbk_ref.c
-  gtmcrypt_entry.c
-  gtmcrypt_pk_ref.c
-  gtmcrypt_ref.c
-  gtm_c_stack_trace_semop.c
   gtm_dbjnl_dupfd_check.c
   gtm_dump.c
   gtm_dump_core.c
@@ -142,19 +127,34 @@ set(GTM_UNIX_SRC
   gtm_getpwuid.c
   gtm_icu.c
   gtm_init_env.c
-  gtm_isanlp.c
   gtm_main.c
   gtm_permissions.c
   gtm_pipe.c
   gtm_putmsg.c
   gtm_putmsg_list.c
+  gtm_rename.c
+  gtm_startup.c
+  gtm_startup_chk.c
+  gtm_stdio.c
+  gtm_text_alloc.c
+  gtm_trigger.c
+  gtm_unique_file_util.c
+  gtm_unlink_all.c
+  gtm_utf8.c
+  gtm_utf8_stx.c
+  gtm_wake.c
+  gtm_zlib.c
+  gtmci.c
+  gtmci_ch.c
+  gtmci_isv.c
+  gtmci_signals.c
+  gtmcrypt_entry.c
   gtmrecv.c
   gtmrecv_end.c
   gtmrecv_fetchresync.c
   gtmrecv_poll_actions.c
   gtmrecv_process.c
   gtmrecv_shutdown.c
-  gtm_rename.c
   gtmsecshr.c
   gtmsecshr_sock_cleanup.c
   gtmsecshr_sock_init.c
@@ -166,8 +166,8 @@ set(GTM_UNIX_SRC
   gtmsource_flush_fh.c
   gtmsource_get_opt.c
   gtmsource_heartbeat.c
-  gtmsource_jnlpool.c
   gtmsource_jnl_release_timer.c
+  gtmsource_jnlpool.c
   gtmsource_losttncomplete.c
   gtmsource_mode_change.c
   gtmsource_needrestart.c
@@ -181,19 +181,7 @@ set(GTM_UNIX_SRC
   gtmsource_shutdown.c
   gtmsource_statslog.c
   gtmsource_stopfilter.c
-  gtm_startup.c
-  gtm_startup_chk.c
-  gtm_stdio.c
-  gtm_text_alloc.c
-  gtm_tparm.c
-  gtm_tputs.c
-  gtm_trigger.c
-  gtm_unique_file_util.c
-  gtm_utf8.c
-  gtm_utf8_stx.c
-  gtm_wake.c
-  gtm_zlib.c
-  gt_timers.c
+  gv_trigger.c
   gvcmx_canremlk_stub.c
   gvcmx_reqremlk_stub.c
   gvcmx_resremlk_stub.c
@@ -203,10 +191,17 @@ set(GTM_UNIX_SRC
   gvcmz_neterr_stub.c
   gvcmz_zflush_stub.c
   gvcst_init_sysops.c
-  gv_trigger.c
   gvusr.c
   heartbeat_timer.c
+  incr_link.c
   init_gtm.c
+  io_get_fgn_driver.c
+  io_init_name.c
+  io_is_rm.c
+  io_is_sn.c
+  io_is_tt.c
+  io_open_try.c
+  io_type.c
   iob_close.c
   iob_flush.c
   iob_open_rd.c
@@ -214,11 +209,6 @@ set(GTM_UNIX_SRC
   iob_read.c
   iob_write.c
   ioff_open.c
-  io_get_fgn_driver.c
-  io_init_name.c
-  io_is_rm.c
-  io_is_sn.c
-  io_is_tt.c
   iomt_ch.c
   iomt_closesp.c
   iomt_info.c
@@ -230,7 +220,6 @@ set(GTM_UNIX_SRC
   iomt_sense.c
   iomt_tm.c
   iomt_wtlblk.c
-  io_open_try.c
   iopi_iocontrol.c
   iopi_open.c
   iorm_close.c
@@ -252,7 +241,6 @@ set(GTM_UNIX_SRC
   iott_readfl.c
   iott_use.c
   iott_write.c
-  io_type.c
   ious_iocontrol.c
   ious_open.c
   ious_rdone.c
@@ -264,12 +252,12 @@ set(GTM_UNIX_SRC
   is_file_identical.c
   is_proc_alive.c
   is_raw_dev.c
-  jnlext_write.c
   jnl_file_extend.c
   jnl_fsync.c
   jnl_output_sp.c
-  jnlpool_init.c
   jnl_prc_vector.c
+  jnlext_write.c
+  jnlpool_init.c
   jobchild_init.c
   jobexam_signal_handler.c
   list_file.c
@@ -282,16 +270,12 @@ set(GTM_UNIX_SRC
   lke_help.c
   lke_setgdr.c
   lref_parse.c
-  make_mode.c
+  m_ztrigger.c
+  make_cimode.c
+  make_dmode.c
   map_sym.c
-  maskpass.c
   mem_access.c
   mu_all_version_standalone.c
-  mubexpfilnam.c
-  mubfilcpy.c
-  mubgetfil.c
-  mubinccpy.c
-  mucblkini.c
   mu_cre_file.c
   mu_cre_structs.c
   mu_decrypt.c
@@ -300,9 +284,23 @@ set(GTM_UNIX_SRC
   mu_getlst.c
   mu_gvis.c
   mu_int_ch.c
-  mumps_clitab.c
   mu_op_open.c
   mu_outofband_setup.c
+  mu_replpool_grab_sem.c
+  mu_replpool_remove_sem.c
+  mu_rndwn_all.c
+  mu_rndwn_file.c
+  mu_rndwn_repl_instance.c
+  mu_rndwn_replpool.c
+  mu_signal_process.c
+  mu_term_setup.c
+  mu_trig_trgfile.c
+  mubexpfilnam.c
+  mubfilcpy.c
+  mubgetfil.c
+  mubinccpy.c
+  mucblkini.c
+  mumps_clitab.c
   mup_bak_sys.c
   mupip.c
   mupip_cmd.c
@@ -324,22 +322,14 @@ set(GTM_UNIX_SRC
   mupip_trigger.c
   mupip_upgrade_standalone.c
   mur_cre_file_extfmt.c
-  mu_replpool_grab_sem.c
-  mu_replpool_remove_sem.c
-  murgetlst.c
-  mu_rndwn_all.c
-  mu_rndwn_file.c
-  mu_rndwn_repl_instance.c
-  mu_rndwn_replpool.c
   mur_read_file_sp.c
-  mu_signal_process.c
-  mu_term_setup.c
+  murgetlst.c
   mutex.c
   mutex_sock_cleanup.c
   mutex_sock_init.c
   mutex_wake_proc.c
-  mu_trig_trgfile.c
-  m_ztrigger.c
+  obj_code.c
+  obj_file.c
   ojchildioclean.c
   ojchildioset.c
   ojchildparms.c
@@ -389,12 +379,11 @@ set(GTM_UNIX_SRC
   reg_cmcheck.c
   rel_crit.c
   rel_lock.c
-  rel_quant.c
   remove_rms.c
-  repl_instance.c
   repl_inst_create.c
   repl_inst_dump.c
   repl_inst_edit.c
+  repl_instance.c
   repl_ipc_cleanup.c
   repl_log.c
   repl_log_init.c
@@ -407,8 +396,8 @@ set(GTM_UNIX_SRC
   send_msg.c
   set_jnl_file_close.c
   set_num_additional_processors.c
-  setterm.c
   set_zstatus.c
+  setterm.c
   sgtm_putmsg.c
   sig_init.c
   sleep.c
@@ -471,17 +460,19 @@ set(GTM_UNIX_SRC
   zshow_zcalls.c
   )
 
-if(NEED_TO_ADD_SOURCES)
+if(LINUX_64)
   set(GTM_UNIX_SRC
     ${GTM_UNIX_SRC}
     auto_zlink.c
-    incr_link.c
-    make_cimode.c
-    make_dmode.c
-    obj_file.c
-    obj_code.c
-    gtm_unlink_all.c
+    )
+endif(LINUX_64)
+
+
+if(NEED_TO_ADD_SOURCES)
+  set(GTM_UNIX_SRC
+    ${GTM_UNIX_SRC}
     jnl_file_open.c
+    make_mode.c
     )
 endif(NEED_TO_ADD_SOURCES)
 

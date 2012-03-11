@@ -18,7 +18,7 @@ endif()
 
 
 include_directories(
-  ${fis-gtm_SOURCE_DIR}/sr_unix_nsb
+# ${fis-gtm_SOURCE_DIR}/sr_unix_nsb   # no needed when USHBIN is ON as it is the case on Linux.
   ${fis-gtm_SOURCE_DIR}/sr_unix
   ${fis-gtm_SOURCE_DIR}/sr_linux
   ${fis-gtm_SOURCE_DIR}/pro
@@ -47,6 +47,7 @@ set(GTM_PORT_SRC_C
   bit_set.c
   bm_find_blk.c
   bm_getfree.c
+  bm_setmap.c
   bml_busy.c
   bml_find_busy.c
   bml_find_free.c
@@ -57,7 +58,6 @@ set(GTM_PORT_SRC_C
   bml_status_check.c
   bmm_find_free.c
   bmm_init.c
-  bm_setmap.c
   bool_expr.c
   bt_get.c
   bt_init.c
@@ -69,13 +69,12 @@ set(GTM_PORT_SRC_C
   bx_relop.c
   bx_tail.c
   cache_cleanup.c
-  cacheflush.c
   cache_get.c
   cache_init.c
   cache_put.c
   cache_stats.c
   cache_table_rebuild.c
-  caller_id.c
+  cacheflush.c
   callg_signal.c
   cdbg_dump.c
   ceprep_file.c
@@ -89,45 +88,44 @@ set(GTM_PORT_SRC_C
   coerce.c
   collseq.c
   comp_fini.c
+  comp_indr.c
+  comp_init.c
   compile_pattern.c
   compiler_ch.c
   compiler_startup.c
-  comp_indr.c
-  comp_init.c
   copy_stack_frame.c
-  create_dummy_gbldir.c
-  create_fatal_error_zshow_dmp.c
   cre_jnl_file.c
   cre_jnl_file_intrpt_rename.c
   cre_private_code_copy.c
+  create_dummy_gbldir.c
+  create_fatal_error_zshow_dmp.c
   crit_wake_alarm.c
-  ctrlc_handler_dummy.c
   cvtparm.c
   db_auto_upgrade.c
-  dbcertify_base_ch.c
-  dbcertify.c
-  dbcertify_certify_phase.c
-  dbcertify_funcs.c
-  dbcertify_scan_phase.c
   db_common_init.c
   db_csh_get.c
   db_csh_getn.c
   db_csh_ini.c
   db_csh_ref.c
+  dbcertify.c
+  dbcertify_base_ch.c
+  dbcertify_certify_phase.c
+  dbcertify_funcs.c
+  dbcertify_scan_phase.c
   deferred_events.c
   desired_db_format_set.c
   deviceparameters.c
   dfa_calc.c
   dm_setup.c
   do_indir_do.c
-  dollar_quit.c
-  dollar_system_init.c
-  dollarx.c
-  dollar_zlevel.c
   do_patalt.c
   do_patfixed.c
   do_patsplit.c
   do_pattern.c
+  dollar_quit.c
+  dollar_system_init.c
+  dollar_zlevel.c
+  dollarx.c
   dpgbldir.c
   dse_adrec.c
   dse_adstar.c
@@ -145,25 +143,25 @@ set(GTM_PORT_SRC_C
   dse_exhaus.c
   dse_exit.c
   dse_f_blk.c
-  dse_fdmp.c
   dse_f_free.c
-  dse_find_roots.c
   dse_f_key.c
-  dse_flush.c
   dse_f_reg.c
+  dse_fdmp.c
+  dse_find_roots.c
+  dse_flush.c
   dse_getki.c
   dse_integ.c
   dse_is_blk_free.c
   dse_is_blk_in.c
   dse_ksrch.c
   dse_lm_blk_free.c
-  dse_maps.c
   dse_m_rest.c
+  dse_maps.c
   dse_order.c
   dse_over.c
   dse_page.c
-  dse_range.c
   dse_r_dmp.c
+  dse_range.c
   dse_rest.c
   dse_rmrec.c
   dse_rmsb.c
@@ -173,8 +171,8 @@ set(GTM_PORT_SRC_C
   dump_lockhist.c
   dump_record.c
   dumptable.c
-  ebc_xlat.c
   eb_muldiv.c
+  ebc_xlat.c
   ecode_add.c
   ecode_get.c
   ecode_init.c
@@ -182,13 +180,13 @@ set(GTM_PORT_SRC_C
   entryref.c
   err_check.c
   eval_expr.c
-  exfunc.c
+  ex_tail.c
   exfun_frame.c
-  expratom.c
+  exfunc.c
   expr.c
+  expratom.c
   expritem.c
   ext2jnl.c
-  ex_tail.c
   extern_func.c
   f_ascii.c
   f_data.c
@@ -200,35 +198,17 @@ set(GTM_PORT_SRC_C
   f_fnzbitset.c
   f_fnzbitstr.c
   f_get.c
-  fgncal_lookup.c
-  fgncal_unwind.c
-  fgn_glopref.c
   f_incr.c
-  find_line_addr.c
-  find_line_start.c
-  find_rtn_hdr.c
-  five_2_ascii.c
-  five_bit.c
   f_justify.c
   f_length.c
-  flt_mod.c
-  flush_jmp.c
-  flush_pio.c
   f_mint.c
   f_mint_mstr.c
   f_mstr.c
   f_name.c
   f_next.c
-  fnpc_stats.c
-  fntext_ch.c
   f_one_mval.c
-  f_order1.c
   f_order.c
-  format2zwr.c
-  format_key_lv_val.c
-  format_key_mvals.c
-  format_lvname.c
-  format_targ_key.c
+  f_order1.c
   f_qlength.c
   f_qsubscript.c
   f_query.c
@@ -255,6 +235,24 @@ set(GTM_PORT_SRC_C
   f_ztrigger.c
   f_ztrnlnm.c
   f_zwidth.c
+  fgn_glopref.c
+  fgncal_lookup.c
+  fgncal_unwind.c
+  find_line_addr.c
+  find_line_start.c
+  find_rtn_hdr.c
+  five_2_ascii.c
+  five_bit.c
+  flt_mod.c
+  flush_jmp.c
+  flush_pio.c
+  fnpc_stats.c
+  fntext_ch.c
+  format2zwr.c
+  format_key_lv_val.c
+  format_key_mvals.c
+  format_lvname.c
+  format_targ_key.c
   gbldefs.c
   gbldefs_usr_share.c
   gds_blk_downgrade.c
@@ -268,18 +266,18 @@ set(GTM_PORT_SRC_C
   get_frame_creation_info.c
   get_frame_place_mcode.c
   get_fs_block_size.c
-  getjobname.c
   get_lmap.c
   get_log_name.c
   get_mladdr.c
   get_mmseg.c
   get_mvaddr.c
-  getprime.c
   get_reference.c
   get_ret_targ.c
   get_root.c
   get_spec.c
   get_symb_line.c
+  getjobname.c
+  getprime.c
   getzdir.c
   getzposition.c
   global_map.c
@@ -298,8 +296,12 @@ set(GTM_PORT_SRC_C
   gtm_maxstr.c
   gtm_memcmp.c
   gtm_newintrinsic.c
-  gtmrecv_changelog.c
+  gtm_relqueopi.c
+  gtm_savetraps.c
+  gtm_tempnam.c
+  gtm_threadgbl_init.c
   gtmrecv_ch.c
+  gtmrecv_changelog.c
   gtmrecv_checkhealth.c
   gtmrecv_comm_init.c
   gtmrecv_end_helpers.c
@@ -312,18 +314,18 @@ set(GTM_PORT_SRC_C
   gtmrecv_start_helpers.c
   gtmrecv_statslog.c
   gtmrecv_upd_proc_init.c
-  gtm_relqueopi.c
-  gtm_savetraps.c
   gtmsource_ch.c
   gtmsource_comm_init.c
   gtmsource_ctl_init.c
   gtmsource_exit.c
   gtmsource_poll_actions.c
   gtmsource_reinit_logseqno.c
-  gtm_tempnam.c
-  gtm_threadgbl_deftypes.c
-  gtm_threadgbl_init.c
   gv_bind_name.c
+  gv_init_reg.c
+  gv_match.c
+  gv_rundown.c
+  gv_select.c
+  gv_xform_key.c
   gvcst_blk_build.c
   gvcst_blk_search.c
   gvcst_bmp_mark_free.c
@@ -337,8 +339,8 @@ set(GTM_PORT_SRC_C
   gvcst_get.c
   gvcst_incr.c
   gvcst_init.c
-  gvcst_kill_blk.c
   gvcst_kill.c
+  gvcst_kill_blk.c
   gvcst_kill_sort.c
   gvcst_lbm_check.c
   gvcst_lftsib.c
@@ -355,24 +357,19 @@ set(GTM_PORT_SRC_C
   gvincr_compute_post_incr.c
   gvincr_recompute_upd_array.c
   gvinit.c
-  gv_init_reg.c
-  gv_match.c
+  gvn.c
   gvname_env_restore.c
   gvname_env_save.c
-  gvn.c
-  gv_rundown.c
-  gv_select.c
   gvstats_rec.c
   gvstrsub.c
   gvsub2str.c
-  gv_xform_key.c
   gvzwr_arg.c
   gvzwr_fini.c
   gvzwr_init.c
-  gvzwrite_ch.c
-  gvzwrite_clnup.c
   gvzwr_out.c
   gvzwr_var.c
+  gvzwrite_ch.c
+  gvzwrite_clnup.c
   hashtab_addr.c
   hashtab_int4.c
   hashtab_int8.c
@@ -382,22 +379,23 @@ set(GTM_PORT_SRC_C
   hashtab_str.c
   have_crit.c
   i2asc.c
-  i2hex_blkfill.c
   i2hex.c
+  i2hex_blkfill.c
   i2hex_nofill.c
   ind_cg_var.c
   ind_code.c
-  indirection.c
   indir_lits.c
+  indirection.c
   init_secshr_addrs.c
   ins_errtriple.c
-  insert_region.c
   ins_triple.c
-  intexpr.c
+  insert_region.c
   int_label.c
+  intexpr.c
   io_find_mvstent.c
   io_init.c
   io_init_ch.c
+  io_rundown.c
   iomt_ansilab_manager.c
   iomt_close.c
   iomt_dummy.c
@@ -408,8 +406,8 @@ set(GTM_PORT_SRC_C
   iomt_rddoslab.c
   iomt_rdone.c
   iomt_rdstream.c
-  iomt_readblk.c
   iomt_read.c
+  iomt_readblk.c
   iomt_readfl.c
   iomt_rewind.c
   iomt_skipfile.c
@@ -438,7 +436,6 @@ set(GTM_PORT_SRC_C
   iop_parms_size.c
   iorm_wtff.c
   iorm_wtone.c
-  io_rundown.c
   iosocket_bind.c
   iosocket_close.c
   iosocket_connect.c
@@ -504,15 +501,14 @@ set(GTM_PORT_SRC_C
   jnl_format.c
   jnl_get_checksum.c
   jnl_get_checksum_entire.c
-  jnlpool_hasnt_overflowed.c
   jnl_put_jrt_pfin.c
   jnl_put_jrt_pini.c
   jnl_send_oper.c
   jnl_setver.c
   jnl_wait.c
+  jnl_write.c
   jnl_write_aimg_rec.c
   jnl_write_attempt.c
-  jnl_write.c
   jnl_write_eof_rec.c
   jnl_write_epoch_rec.c
   jnl_write_inctn_rec.c
@@ -520,6 +516,7 @@ set(GTM_PORT_SRC_C
   jnl_write_pblk.c
   jnl_write_poolonly.c
   jnl_write_ztp_logical.c
+  jnlpool_hasnt_overflowed.c
   job_addr.c
   jobexam_process.c
   jobinterrupt_event.c
@@ -553,32 +550,23 @@ set(GTM_PORT_SRC_C
   lower_to_upper.c
   lref.c
   lv_getslot.c
-  lv_killarray.c
   lv_kill.c
-  lvn.c
+  lv_killarray.c
   lv_newblock.c
   lv_newname.c
   lv_tree.c
   lv_var_clone.c
+  lvn.c
   lvzwr_arg.c
   lvzwr_fini.c
   lvzwr_init.c
   lvzwr_key.c
   lvzwr_out.c
   lvzwr_var.c
-  make_commarg.c
-  make_gvsubsc.c
-  maketriple.c
-  matchc.c
   m_break.c
-  mcalloc.c
-  mcfree.c
   m_close.c
-  mdb_condition_handler.c
   m_do.c
   m_else.c
-  memvcmp.c
-  merge_desc_check.c
   m_for.c
   m_goto.c
   m_halt.c
@@ -587,6 +575,51 @@ set(GTM_PORT_SRC_C
   m_if.c
   m_job.c
   m_kill.c
+  m_lock.c
+  m_merge.c
+  m_new.c
+  m_open.c
+  m_quit.c
+  m_read.c
+  m_set.c
+  m_tcommit.c
+  m_trestart.c
+  m_trollback.c
+  m_tstart.c
+  m_use.c
+  m_view.c
+  m_write.c
+  m_xecute.c
+  m_zallocate.c
+  m_zattach.c
+  m_zbreak.c
+  m_zcompile.c
+  m_zcontinue.c
+  m_zdeallocate.c
+  m_zedit.c
+  m_zgoto.c
+  m_zhalt.c
+  m_zhelp.c
+  m_zlink.c
+  m_zmessage.c
+  m_zprint.c
+  m_zshow.c
+  m_zstep.c
+  m_zsystem.c
+  m_ztcommit.c
+  m_ztstart.c
+  m_zwatch.c
+  m_zwithdraw.c
+  m_zwrite.c
+  make_commarg.c
+  make_gvsubsc.c
+  maketriple.c
+  matchc.c
+  mcalloc.c
+  mcfree.c
+  mdb_condition_handler.c
+  memvcmp.c
+  merge_desc_check.c
   mlabel2xtern.c
   mlk_bckout.c
   mlk_garbage_collect.c
@@ -598,37 +631,22 @@ set(GTM_PORT_SRC_C
   mlk_pvtblk_equ.c
   mlk_pvtblk_insert.c
   mlk_region_lookup.c
+  mlk_shr_init.c
   mlk_shrblk_create.c
   mlk_shrblk_delete_if_empty.c
   mlk_shrblk_find.c
   mlk_shrclean.c
-  mlk_shr_init.c
   mlk_shrsub_garbage_collect.c
   mlk_tree_wake_children.c
   mlk_unlock.c
   mlk_unpend.c
   mlk_wake_pending.c
-  m_lock.c
-  m_merge.c
   mm_read.c
-  m_new.c
-  m_open.c
-  movtc.c
   mprof_funcs.c
   mprof_stack.c
   mprof_tree.c
-  m_quit.c
-  m_read.c
-  m_set.c
   mtables.c
-  m_tcommit.c
-  m_trestart.c
-  m_trollback.c
-  m_tstart.c
-  mubclnup.c
-  mubfndreg.c
   mu_clsce.c
-  mucregini.c
   mu_dwngrd_header.c
   mu_extr_gblout.c
   mu_extr_getblk.c
@@ -647,6 +665,17 @@ set(GTM_PORT_SRC_C
   mu_int_reg_ch.c
   mu_int_wait_rdonly.c
   mu_int_write.c
+  mu_put_gvdata.c
+  mu_reduce_level.c
+  mu_reorg.c
+  mu_reorg_upgrd_dwngrd.c
+  mu_split.c
+  mu_swap_blk.c
+  mu_upgrd_dngrd_confirmed.c
+  mu_upgrd_header.c
+  mubclnup.c
+  mubfndreg.c
+  mucregini.c
   mupfndfil.c
   mupip_backup.c
   mupip_create.c
@@ -668,7 +697,6 @@ set(GTM_PORT_SRC_C
   mupip_set_journal_parse.c
   mupip_stop.c
   mupip_upgrade.c
-  mu_put_gvdata.c
   mur_apply_pblk.c
   mur_back_process.c
   mur_block_count_correct.c
@@ -677,9 +705,6 @@ set(GTM_PORT_SRC_C
   mur_close_files.c
   mur_db_files_from_jnllist.c
   mur_do_wildcard.c
-  mu_reduce_level.c
-  mu_reorg.c
-  mu_reorg_upgrd_dwngrd.c
   mur_forward.c
   mur_forward_play_cur_jrec.c
   mur_forward_play_multireg_tp.c
@@ -711,42 +736,13 @@ set(GTM_PORT_SRC_C
   mur_tp_resolve_time.c
   mur_validate_checksum.c
   mur_ztp_lookback.c
-  m_use.c
-  mu_split.c
-  mu_swap_blk.c
   mutex_deadlock_check.c
-  mu_upgrd_dngrd_confirmed.c
-  mu_upgrd_header.c
   mval2fao.c
   mval2subsc.c
-  mvalconv.c
   mval_lex.c
   mval_nongraphic.c
   mval_write.c
-  m_view.c
-  m_write.c
-  m_xecute.c
-  m_zallocate.c
-  m_zattach.c
-  m_zbreak.c
-  m_zcompile.c
-  m_zcontinue.c
-  m_zdeallocate.c
-  m_zedit.c
-  m_zgoto.c
-  m_zhalt.c
-  m_zhelp.c
-  m_zlink.c
-  m_zmessage.c
-  m_zprint.c
-  m_zshow.c
-  m_zstep.c
-  m_zsystem.c
-  m_ztcommit.c
-  m_ztstart.c
-  m_zwatch.c
-  m_zwithdraw.c
-  m_zwrite.c
+  mvalconv.c
   n2s.c
   name_glvn.c
   namelook.c
@@ -774,8 +770,8 @@ set(GTM_PORT_SRC_C
   op_dt_get.c
   op_dt_store.c
   op_dt_true.c
-  op_exfunretals.c
   op_exfunret.c
+  op_exfunretals.c
   op_exp.c
   op_fnascii.c
   op_fnchar.c
@@ -783,9 +779,9 @@ set(GTM_PORT_SRC_C
   op_fnfind.c
   op_fnfnumber.c
   op_fnget2.c
+  op_fngvget.c
   op_fngvget1.c
   op_fngvget2.c
-  op_fngvget.c
   op_fnincr.c
   op_fnj2.c
   op_fnj3.c
@@ -832,8 +828,8 @@ set(GTM_PORT_SRC_C
   op_fnzwidth.c
   op_forfreeindx.c
   op_fornestlvl.c
-  op_getindx.c
   op_get_msf.c
+  op_getindx.c
   op_gvdata.c
   op_gvextnam.c
   op_gvget.c
@@ -875,21 +871,21 @@ set(GTM_PORT_SRC_C
   op_indtext.c
   op_iocontrol.c
   op_iretmval.c
-  op_killaliasall.c
-  op_killalias.c
-  op_killall.c
   op_kill.c
+  op_killalias.c
+  op_killaliasall.c
+  op_killall.c
   op_labaddr.c
   op_lkinit.c
   op_lkname.c
-  op_lock2.c
   op_lock.c
+  op_lock2.c
   op_lvpatwrite.c
   op_lvzwithdraw.c
   op_lvzwrite.c
-  op_merge_arg.c
-  op_merge.c
   op_m_srchindx.c
+  op_merge.c
+  op_merge_arg.c
   op_mul.c
   op_newintrinsic.c
   op_newvar.c
@@ -945,9 +941,9 @@ set(GTM_PORT_SRC_C
   op_zprint.c
   op_zshow.c
   op_zst_break.c
+  op_zst_over.c
   op_zstep.c
   op_zstepret.c
-  op_zst_over.c
   op_zsystem.c
   op_ztcommit.c
   op_ztstart.c
@@ -956,10 +952,10 @@ set(GTM_PORT_SRC_C
   outofband_clear.c
   parse_until_rparen_or_space.c
   pat_compress.c
+  pat_unwind.c
   patmaskseq.c
   patstr.c
   pattab.c
-  pat_unwind.c
   performcaslatchcheck.c
   preemptive_ch.c
   prepare_unique_name.c
@@ -994,33 +990,33 @@ set(GTM_PORT_SRC_C
   region_init.c
   region_init_ch.c
   reinit_externs.c
-  release_private_code_copy.c
   rel_mmseg.c
+  release_private_code_copy.c
   relqueop.c
   relqueopi.c
   rename_file_if_exists.c
   repl_comm.c
   repl_errno.c
   repl_filter.c
-  replication_ch.c
-  replic_gbldefs.c
   repl_sort_tr_buff.c
   repl_tr_good.c
+  replic_gbldefs.c
+  replication_ch.c
   resolve_blocks.c
   resolve_lab.c
   resolve_ref.c
   rtnlaboff2entryref.c
   rwformat.c
   s2n.c
-  s2pool_align.c
   s2pool.c
+  s2pool_align.c
   sec_shr_blk_build.c
-  secshr_db_clnup.c
   sec_shr_map_build.c
+  secshr_db_clnup.c
   semwt2long_handler.c
-  setcurtchain.c
   set_jnl_info.c
   set_testpoint.c
+  setcurtchain.c
   setzdir.c
   seven_2_ascii.c
   sgnl_gvnulsubsc.c
@@ -1039,9 +1035,9 @@ set(GTM_PORT_SRC_C
   stp_expand_array.c
   stp_gcol.c
   stp_gcol_ch.c
-  stpg_sort.c
   stp_init.c
   stp_move.c
+  stpg_sort.c
   str2gvargs.c
   str2gvkey_gvfunc.c
   str2gvkey_nogvfunc.c
@@ -1049,19 +1045,24 @@ set(GTM_PORT_SRC_C
   strpiecediff.c
   stx_error.c
   sub2stbl.c
-  symbinit.c
   symb_line.c
+  symbinit.c
   t_abort.c
-  targ_alloc.c
   t_begin.c
   t_begin_crit.c
   t_busy2free.c
   t_ch.c
   t_commit_cleanup.c
-  tcp_open.c
   t_create.c
   t_end.c
   t_end_sysops.c
+  t_qread.c
+  t_retry.c
+  t_write.c
+  t_write_map.c
+  t_write_root.c
+  targ_alloc.c
+  tcp_open.c
   terminate_ch.c
   time_calc.c
   timeout2msec.c
@@ -1069,7 +1070,6 @@ set(GTM_PORT_SRC_C
   tp_change_reg.c
   tp_clean_up.c
   tp_cw_list.c
-  tpdefs.c
   tp_get_cw.c
   tp_hist.c
   tp_incr_clean_up.c
@@ -1080,22 +1080,17 @@ set(GTM_PORT_SRC_C
   tp_timeout.c
   tp_timeout_dummy.c
   tp_unwind.c
-  t_qread.c
+  tpdefs.c
   trans_code.c
   trans_code_cleanup.c
   trans_numeric.c
-  t_retry.c
   tripinit.c
   tt_write_error_set.c
-  t_write.c
-  t_write_map.c
-  t_write_root.c
   underr.c
   undx.c
-  unwind_nocounts.c
   unw_mv_ent.c
-  unw_prof_frame_dummy.c
   unw_retarg.c
+  unwind_nocounts.c
   updhelper_end.c
   updhelper_init.c
   updhelper_reader.c
@@ -1117,17 +1112,17 @@ set(GTM_PORT_SRC_C
   urx_resolve.c
   util_base_ch.c
   util_ch.c
+  val_iscan.c
   valid_labname.c
   valid_mname.c
-  val_iscan.c
   verify_queue.c
   view_arg_convert.c
   view_jnlfile.c
-  viewkeys.c
   view_routines.c
+  viewkeys.c
   wait_for_block_flush.c
-  wake_alarm.c
   wake.c
+  wake_alarm.c
   walktree.c
   wbox_test_init.c
   wcs_backoff.c
@@ -1146,9 +1141,9 @@ set(GTM_PORT_SRC_C
   zr_find.c
   zr_get_free.c
   zr_init.c
-  zro_init.c
   zr_put_free.c
   zr_remove.c
+  zro_init.c
   zshow_ch.c
   zshow_format_lock.c
   zshow_gvstats.c
@@ -1165,6 +1160,12 @@ set(GTM_PORT_SRC_C
   zyerror_init.c
   )
 
+set(GTM_PORT_SRC_C_EXTRAS
+  movtc.c                     # Not found in manual build log
+  caller_id.c                 # There is another caller_id.c in sr_linux
+  unw_prof_frame_dummy.c      # Not found in manual build log
+  gtm_threadgbl_deftypes.c    # Not found in manual build log
+  )
 
 #
 #  Select sources specific for 32 bits

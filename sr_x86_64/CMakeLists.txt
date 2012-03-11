@@ -2,7 +2,7 @@ include_directories(
   ${fis-gtm_SOURCE_DIR}/sr_x86_64
   ${fis-gtm_SOURCE_DIR}/sr_x86_regs
   ${fis-gtm_SOURCE_DIR}/sr_port
-  ${fis-gtm_SOURCE_DIR}/sr_unix_nsb
+# ${fis-gtm_SOURCE_DIR}/sr_unix_nsb  # no needed when USHBIN is ON as it is the case on Linux
   ${fis-gtm_SOURCE_DIR}/sr_unix
   ${fis-gtm_SOURCE_DIR}/sr_linux
   )
@@ -13,7 +13,6 @@ set(SRC_C
   find_line_call.c
   obj_filesp.c
   )
-
 
 set(SRC_S
   aswp.s

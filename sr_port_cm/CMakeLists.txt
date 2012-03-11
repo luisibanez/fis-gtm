@@ -11,8 +11,6 @@ add_library(gtm_port_cm
   gtcm_action_pending.c
   gtcm_add_region.c
   gtcm_bind_name.c
-  gtcmd_cst_init.c
-  gtcmd_rundown.c
   gtcm_err_compat.c
   gtcm_exi_handler.c
   gtcm_find_proc.c
@@ -22,6 +20,16 @@ add_library(gtm_port_cm
   gtcm_int_unpack.c
   gtcm_is_query_queryget.c
   gtcm_jnl_switched.c
+  gtcm_link_accept.c
+  gtcm_neterr.c
+  gtcm_protocol.c
+  gtcm_read_ast.c
+  gtcm_release_name.c
+  gtcm_remove_from_action_queue.c
+  gtcm_shutdown_ast.c
+  gtcm_write_ast.c
+  gtcmd_cst_init.c
+  gtcmd_rundown.c
   gtcml_blklck.c
   gtcml_chklck.c
   gtcml_chkprc.c
@@ -29,7 +37,6 @@ add_library(gtm_port_cm
   gtcml_decrlock.c
   gtcml_dolock.c
   gtcml_incrlock.c
-  gtcm_link_accept.c
   gtcml_lckclr.c
   gtcml_lcktime.c
   gtcml_lkbckout.c
@@ -43,12 +50,6 @@ add_library(gtm_port_cm
   gtcml_unlock.c
   gtcml_zallocate.c
   gtcml_zdeallocate.c
-  gtcm_neterr.c
-  gtcm_protocol.c
-  gtcm_read_ast.c
-  gtcm_release_name.c
-  gtcm_remove_from_action_queue.c
-  gtcm_shutdown_ast.c
   gtcmtr_bufflush.c
   gtcmtr_data.c
   gtcmtr_get.c
@@ -76,7 +77,6 @@ add_library(gtm_port_cm
   gtcmtr_terminate_free.c
   gtcmtr_zprevious.c
   gtcmtr_zwithdraw.c
-  gtcm_write_ast.c
   gvcmx_canremlk.c
   gvcmx_data.c
   gvcmx_get.c

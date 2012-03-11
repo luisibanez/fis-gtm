@@ -3,7 +3,7 @@ include_directories(
   ${fis-gtm_SOURCE_DIR}/sr_port_cm
   ${fis-gtm_SOURCE_DIR}/sr_port
   ${fis-gtm_SOURCE_DIR}/pro/obj
-  ${fis-gtm_SOURCE_DIR}/sr_unix_nsb
+# ${fis-gtm_SOURCE_DIR}/sr_unix_nsb   # no needed when USHBIN is ON
   ${fis-gtm_SOURCE_DIR}/sr_unix
   ${fis-gtm_SOURCE_DIR}/sr_linux
   ${fis-gtm_SOURCE_DIR}/sr_x86_64
