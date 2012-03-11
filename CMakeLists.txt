@@ -103,7 +103,6 @@ include_directories(
 # Visit subdirectories
 #
 add_subdirectory(sr_linux)
-# add_subdirectory(sr_unix_nsb)   # no needed when USHBIN is ON
 add_subdirectory(sr_unix_cm)
 add_subdirectory(sr_unix_gnp)
 add_subdirectory(sr_unix)
@@ -115,12 +114,11 @@ add_subdirectory(pro)
 #
 # Select architecture dependent directories
 #
-if(CMAKE_C_SIZEOF_DATA_PTR EQUAL 4)
+if(ARCHITECTURE_IS_32_BITS)
   add_subdirectory(sr_i386)
 endif()
 
-if(CMAKE_C_SIZEOF_DATA_PTR EQUAL 8)
-  set(LINUX_64)
+if(ARCHITECTURE_IS_64_BITS)
   add_subdirectory(sr_x86_64)
 endif()
 

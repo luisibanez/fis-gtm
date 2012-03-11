@@ -472,12 +472,12 @@ set(GTM_UNIX_SRC
   zshow_zcalls.c
   )
 
-if(LINUX_64)
+if(ARCHITECTURE_IS_64_BITS)
   set(GTM_UNIX_SRC
     ${GTM_UNIX_SRC}
     auto_zlink.c
     )
-endif(LINUX_64)
+endif()
 
 
 if(NEED_TO_ADD_SOURCES)
