@@ -25,11 +25,11 @@ include(CTest)
 #
 
 if(CMAKE_C_SIZEOF_DATA_PTR EQUAL 8)
-  message("This is a 64 bits architecture")
+  set(ARCHITECTURE_IS_64_BITS ON)
 endif()
 
 if(CMAKE_C_SIZEOF_DATA_PTR EQUAL 4)
-  message("This is a 32 bits architecture")
+  set(ARCHITECTURE_IS_32_BITS ON)
 endif()
 
 

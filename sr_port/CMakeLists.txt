@@ -1,16 +1,12 @@
-#
-#  Select headers for 32 bits
-#
-if(CMAKE_C_SIZEOF_DATA_PTR EQUAL 4)
+if(ARCHITECTURE_IS_32_BITS)
   include_directories(
     ${fis-gtm_SOURCE_DIR}/sr_i386
+    ${fis-gtm_SOURCE_DIR}/sr_unix_nsb
     )
 endif()
 
-#
-#  Select headers for 64 bits
-#
-if(CMAKE_C_SIZEOF_DATA_PTR EQUAL 8)
+
+if(ARCHITECTURE_IS_64_BITS)
   include_directories(
     ${fis-gtm_SOURCE_DIR}/sr_x86_64
     )
@@ -18,7 +14,6 @@ endif()
 
 
 include_directories(
-# ${fis-gtm_SOURCE_DIR}/sr_unix_nsb   # no needed when USHBIN is ON as it is the case on Linux.
   ${fis-gtm_SOURCE_DIR}/sr_unix
   ${fis-gtm_SOURCE_DIR}/sr_linux
   ${fis-gtm_SOURCE_DIR}/pro
