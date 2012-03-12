@@ -24,19 +24,24 @@ include_directories(
   )
 
 
-set(GTM_PORT_SRC_C
+set(GTM_MUMPS_SRC_C
   act_in_gvt.c
   actuallist.c
   add_atom.c
+# add_inter.c
   adjust_frames.c
   advancewindow.c
   alias_funcs.c
   alloc_reg.c
+# append_time_stamp.c
   asc2i.c
   asc_hex2i.c
+# auto_zlink.c
+# auto_zlink_sp.c
   azl_geturxlab.c
   azl_geturxrtn.c
   backup_block.c
+# backup_buffer_flush.c
   base_frame.c
   bit_clear.c
   bit_set.c
@@ -70,101 +75,99 @@ set(GTM_PORT_SRC_C
   cache_stats.c
   cache_table_rebuild.c
   cacheflush.c
-  callg_signal.c
+# caller_id.o
+# callg.o
+# callintogtmxfer.o
+# ccp_cluster_lock_wake.o
+# ccp_fid_msg.o
+# ccp_sendmsg.o
+# ccp_userwait.o
   cdbg_dump.c
+# ce_init.o
+# ce_substitute.o
+# cenable.o
   ceprep_file.c
   cert_blk.c
   cg_var.c
+# ch_cond_core.o
+# ch_overrun.o
+# change_fhead_timer.o
   change_reg.c
   chktchain.c
+# ci_ret_code.o
+# cli.o
+# cli_disallow.o
   cli_get_str_ele.c
+# cli_lex.o
+# cli_parse.o
   cli_port.c
   cmd.c
+# code_gen.o
   coerce.c
   collseq.c
   comp_fini.c
   comp_indr.c
   comp_init.c
+# comp_lits.o
   compile_pattern.c
   compiler_ch.c
   compiler_startup.c
+# continue_handler.o
+# continue_proc.o
   copy_stack_frame.c
   cre_jnl_file.c
   cre_jnl_file_intrpt_rename.c
   cre_private_code_copy.c
   create_dummy_gbldir.c
   create_fatal_error_zshow_dmp.c
+# crit_wake.o
   crit_wake_alarm.c
+# ctrap_set.o
+# ctrlc_handler.o
+# ctrlc_set.o
+# ctrly_set.o
   cvtparm.c
+# cvtprot.o
+# cvttime.o
   db_auto_upgrade.c
   db_common_init.c
   db_csh_get.c
   db_csh_getn.c
   db_csh_ini.c
   db_csh_ref.c
-  dbcertify.c
-  dbcertify_base_ch.c
-  dbcertify_certify_phase.c
-  dbcertify_funcs.c
-  dbcertify_scan_phase.c
+# dbfilop.o
+# dbinit_ch.o
+# dbopen_ch.o
+# dec_err.o
   deferred_events.c
-  desired_db_format_set.c
+# deferred_signal_handler.o
   deviceparameters.c
   dfa_calc.c
+# disk_block_available.o
+# dm_read.o
   dm_setup.c
   do_indir_do.c
   do_patalt.c
   do_patfixed.c
   do_patsplit.c
   do_pattern.c
+# do_semop.o
+# do_shmat.o
+# do_verify.o
+# do_write.o
+# do_xform.o
   dollar_quit.c
   dollar_system_init.c
   dollar_zlevel.c
+# dollarh.c
   dollarx.c
   dpgbldir.c
-  dse_adrec.c
-  dse_adstar.c
-  dse_all.c
-  dse_b_dmp.c
-  dse_cache.c
-  dse_chng_bhead.c
-  dse_chng_fhead.c
-  dse_chng_rhead.c
-  dse_crit.c
-  dse_data.c
-  dse_dmp.c
-  dse_dmp_fhead.c
-  dse_eval.c
-  dse_exhaus.c
-  dse_exit.c
-  dse_f_blk.c
-  dse_f_free.c
-  dse_f_key.c
-  dse_f_reg.c
-  dse_fdmp.c
-  dse_find_roots.c
-  dse_flush.c
-  dse_getki.c
-  dse_integ.c
-  dse_is_blk_free.c
-  dse_is_blk_in.c
-  dse_ksrch.c
-  dse_lm_blk_free.c
-  dse_m_rest.c
-  dse_maps.c
-  dse_order.c
-  dse_over.c
-  dse_page.c
-  dse_r_dmp.c
-  dse_range.c
-  dse_rest.c
-  dse_rmrec.c
-  dse_rmsb.c
-  dse_save.c
-  dse_shift.c
-  dse_wcreinit.c
+# dpgbldir_sysops.o
+# dsk_read.o
+# dsk_write.o
+# dsk_write_nocache.o
+# dskspace_msg_timer.o
   dump_lockhist.c
-  dump_record.c
   dumptable.c
   eb_muldiv.c
   ebc_xlat.c
@@ -172,8 +175,12 @@ set(GTM_PORT_SRC_C
   ecode_get.c
   ecode_init.c
   ecode_set.c
+# emit_code.o
+# emit_code_sp.o
   entryref.c
   err_check.c
+# err_init.o
+# error_return.o
   eval_expr.c
   ex_tail.c
   exfun_frame.c
@@ -181,8 +188,9 @@ set(GTM_PORT_SRC_C
   expr.c
   expratom.c
   expritem.c
-  ext2jnl.c
   extern_func.c
+# exttab_parse.o
+# exttime.o
   f_ascii.c
   f_data.c
   f_extract.c
@@ -204,6 +212,7 @@ set(GTM_PORT_SRC_C
   f_one_mval.c
   f_order.c
   f_order1.c
+# f_piece.o
   f_qlength.c
   f_qsubscript.c
   f_query.c
@@ -230,10 +239,15 @@ set(GTM_PORT_SRC_C
   f_ztrigger.c
   f_ztrnlnm.c
   f_zwidth.c
+# fgn_getinfo.o
   fgn_glopref.c
   fgncal_lookup.c
   fgncal_unwind.c
+# file_head_read.o
+# file_head_write.o
+# file_input.o
   find_line_addr.c
+# find_line_call.o
   find_line_start.c
   find_rtn_hdr.c
   five_2_ascii.c
@@ -248,12 +262,18 @@ set(GTM_PORT_SRC_C
   format_key_mvals.c
   format_lvname.c
   format_targ_key.c
+# ftok_sems.o
   gbldefs.c
   gbldefs_usr_share.c
   gds_blk_downgrade.c
   gds_blk_upgrade.c
   gds_map_moved.c
+# gds_rundown.o
+# gdsfilext.o
+# generic_signal_handler.o
+# genpat.o
   get_cmd_qlf.c
+# get_command_line.o
   get_dir_root.c
   get_dlr_device.c
   get_dlr_key.c
@@ -261,58 +281,98 @@ set(GTM_PORT_SRC_C
   get_frame_creation_info.c
   get_frame_place_mcode.c
   get_fs_block_size.c
+# get_full_path.o
   get_lmap.c
   get_log_name.c
   get_mladdr.c
   get_mmseg.c
   get_mvaddr.c
+# get_page_size.o
   get_reference.c
   get_ret_targ.c
   get_root.c
   get_spec.c
+# get_src_line.o
   get_symb_line.c
+# geteditor.o
   getjobname.c
+# getjobnum.o
   getprime.c
+# getstorage.o
   getzdir.c
+# getzmode.o
   getzposition.c
+# getzprocess.o
   global_map.c
   glvn.c
   goerrorframe.c
   goframes.c
+# golevel.o
+# goq_load.o
+# grab_crit.o
+# grab_lock.o
+# gt_timers.o
+# gtcm_find_reghead.o
+# gtcm_jnl_switched.o
   gtm_assert.c
+# gtm_bintim.o
   gtm_byteswap_64.c
+# gtm_c_stack_trace_semop.o
+# gtm_compile.o
+# gtm_conv.o
+# gtm_dbjnl_dupfd_check.o
+# gtm_dump.o
+# gtm_dump_core.o
   gtm_env_init.c
+# gtm_env_init_sp.o
+# gtm_env_translate.o
   gtm_env_xlate_init.c
+# gtm_event_log.o
+# gtm_exit_handler.o
+# gtm_fd_trace.o
   gtm_fetch.c
   gtm_ffs.c
+# gtm_file_remove.o
+# gtm_file_stat.o
+# gtm_fork_n_core.o
+# gtm_getmsg.o
+# gtm_getpwuid.o
+# gtm_icu.o
   gtm_imagetype_init.c
+# gtm_init_env.o
   gtm_malloc.c
   gtm_malloc_dbg.c
   gtm_maxstr.c
   gtm_memcmp.c
   gtm_newintrinsic.c
+# gtm_permissions.o
+# gtm_pipe.o
+# gtm_putmsg.o
+# gtm_putmsg_list.o
   gtm_relqueopi.c
+# gtm_rename.o
   gtm_savetraps.c
-  gtm_tempnam.c
+# gtm_startup.o
+# gtm_startup_chk.o
+# gtm_stdio.o
+# gtm_text_alloc.o
   gtm_threadgbl_init.c
-  gtmrecv_ch.c
-  gtmrecv_changelog.c
-  gtmrecv_checkhealth.c
-  gtmrecv_comm_init.c
-  gtmrecv_end_helpers.c
-  gtmrecv_exit.c
-  gtmrecv_get_opt.c
-  gtmrecv_helpers_init.c
-  gtmrecv_reap_helpers.c
-  gtmrecv_reinit_logseqno.c
-  gtmrecv_showbacklog.c
-  gtmrecv_start_helpers.c
-  gtmrecv_statslog.c
-  gtmrecv_upd_proc_init.c
-  gtmsource_ch.c
-  gtmsource_comm_init.c
-  gtmsource_ctl_init.c
-  gtmsource_exit.c
+# gtm_trigger.o
+# gtm_unique_file_util.o
+# gtm_unlink_all.o
+# gtm_utf8.o
+# gtm_utf8_stx.o
+# gtm_wake.o
+# gtmci.o
+# gtmci_ch.o
+# gtmci_isv.o
+# gtmci_signals.o
+# gtmcrypt_entry.o
+# gtmsecshr_sock_cleanup.o
+# gtmsecshr_sock_init.o
+# gtmsource_jnl_release_timer.o
+# gtmsource_losttncomplete.o
+# gtmsource_needrestart.o
   gtmsource_poll_actions.c
   gtmsource_reinit_logseqno.c
   gv_bind_name.c
@@ -672,26 +732,6 @@ set(GTM_PORT_SRC_C
   mubfndreg.c
   mucregini.c
   mupfndfil.c
-  mupip_backup.c
-  mupip_create.c
-  mupip_downgrade.c
-  mupip_extend.c
-  mupip_freeze.c
-  mupip_integ.c
-  mupip_intrpt.c
-  mupip_load_ch.c
-  mupip_recover.c
-  mupip_reorg.c
-  mupip_set.c
-  mupip_set_jnl_ch.c
-  mupip_set_jnl_cleanup.c
-  mupip_set_jnlfile_aux.c
-  mupip_set_journal.c
-  mupip_set_journal_fname.c
-  mupip_set_journal_newstate.c
-  mupip_set_journal_parse.c
-  mupip_stop.c
-  mupip_upgrade.c
   mur_apply_pblk.c
   mur_back_process.c
   mur_block_count_correct.c
@@ -1020,8 +1060,6 @@ set(GTM_PORT_SRC_C
   shmpool.c
   show_source_line.c
   shuffq.c
-  skan_offset.c
-  skan_rnum.c
   skpc.c
   sockint_stats.c
   sorts_after.c
@@ -1155,6 +1193,112 @@ set(GTM_PORT_SRC_C
   zyerror_init.c
   )
 
+#
+#  Prepare sources for library libmupip
+#
+set(GTM_MUPIP_SRC_C
+  desired_db_format_set.c
+  ext2jnl.c
+  gtm_tempnam.c
+  gtmrecv_ch.c
+  gtmrecv_changelog.c
+  gtmrecv_checkhealth.c
+  gtmrecv_comm_init.c
+  gtmrecv_end_helpers.c
+  gtmrecv_exit.c
+  gtmrecv_get_opt.c
+  gtmrecv_helpers_init.c
+  gtmrecv_reap_helpers.c
+  gtmrecv_reinit_logseqno.c
+  gtmrecv_showbacklog.c
+  gtmrecv_start_helpers.c
+  gtmrecv_statslog.c
+  gtmrecv_upd_proc_init.c
+  gtmsource_ch.c
+  gtmsource_comm_init.c
+  gtmsource_ctl_init.c
+  gtmsource_exit.c
+  gtmsource_poll_actions.c
+  gtmsource_reinit_logseqno.c
+  mupip_backup.c
+  mupip_create.c
+  mupip_downgrade.c
+  mupip_extend.c
+  mupip_freeze.c
+  mupip_integ.c
+  mupip_intrpt.c
+  mupip_load_ch.c
+  mupip_recover.c
+  mupip_reorg.c
+  mupip_set.c
+  mupip_set_jnl_ch.c
+  mupip_set_jnl_cleanup.c
+  mupip_set_jnlfile_aux.c
+  mupip_set_journal.c
+  mupip_set_journal_fname.c
+  mupip_set_journal_newstate.c
+  mupip_set_journal_parse.c
+  mupip_stop.c
+  mupip_upgrade.c
+  )
+
+set(GTM_DSE_SRC_C
+  dse_adrec.c
+  dse_adstar.c
+  dse_all.c
+  dse_b_dmp.c
+  dse_cache.c
+  dse_chng_bhead.c
+  dse_chng_fhead.c
+  dse_chng_rhead.c
+# dse_cmd_disallow.o
+  dse_crit.c
+# dse_ctrlc_handler.o
+  dse_data.c
+  dse_dmp.c
+  dse_dmp_fhead.c
+  dse_eval.c
+  dse_exhaus.c
+  dse_exit.c
+  dse_f_blk.c
+  dse_f_free.c
+  dse_f_key.c
+  dse_f_reg.c
+  dse_fdmp.c
+  dse_find_roots.c
+  dse_flush.c
+  dse_getki.c
+# dse_help.o
+  dse_integ.c
+  dse_is_blk_free.c
+  dse_is_blk_in.c
+  dse_ksrch.c
+  dse_lm_blk_free.c
+  dse_m_rest.c
+  dse_maps.c
+# dse_open.o
+  dse_order.c
+  dse_over.c
+  dse_page.c
+# dse_puttime.o
+  dse_r_dmp.c
+  dse_range.c
+# dse_remove.o
+  dse_rest.c
+  dse_rmrec.c
+  dse_rmsb.c
+  dse_save.c
+  dse_shift.c
+  dse_wcreinit.c
+  dump_record.c
+  skan_offset.c
+  skan_rnum.c
+  )
+
+set(GTM_GNPCLIENT_SRC_C
+  callg_signal.c
+  )
+
 set(GTM_PORT_SRC_C_EXTRAS
   movtc.c                     # Not found in manual build log
   caller_id.c                 # There is another caller_id.c in sr_linux
@@ -1165,9 +1309,9 @@ set(GTM_PORT_SRC_C_EXTRAS
 #
 #  Select sources specific for 32 bits
 #
-if(CMAKE_C_SIZEOF_DATA_PTR EQUAL 4)
-  set(GTM_PORT_SRC_C
-    ${GTM_PORT_SRC_C}
+if(ARCHITECTURE_IS_32_BITS)
+  set(GTM_MUMPS_SRC_C
+    ${GTM_MUMPS_SRC_C}
     )
 endif()
 
@@ -1176,9 +1320,9 @@ endif()
 #
 #  Select sources specific for 64 bits
 #
-if(CMAKE_C_SIZEOF_DATA_PTR EQUAL 8)
-  set(GTM_PORT_SRC_C
-    ${GTM_PORT_SRC_C}
+if(ARCHITECTURE_IS_64_BITS)
+  set(GTM_MUMPS_SRC_C
+    ${GTM_MUMPS_SRC_C}
     emit_code.c
     code_gen.c
     shrink_trips.c
@@ -1186,8 +1330,27 @@ if(CMAKE_C_SIZEOF_DATA_PTR EQUAL 8)
 endif()
 
 
-
-add_library(gtm_port
-  ${GTM_PORT_SRC_C}
+add_library(gnpclient
+  ${GTM_GNPCLIENT_SRC_C}
   )
 
+
+add_library(dse
+  ${GTM_DSE_SRC_C}
+  )
+
+
+add_library(mumps
+  ${GTM_MUMPS_SRC_C}
+  )
+
+#
+#  Complimentary pieces are in sr_unix
+#
+add_library(dbcertifyport
+  dbcertify.c
+  dbcertify_base_ch.c
+  dbcertify_certify_phase.c
+  dbcertify_funcs.c
+  dbcertify_scan_phase.c
+  )

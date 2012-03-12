@@ -82,11 +82,6 @@ if(ARCHITECTURE_IS_64_BITS)
     cmistub.c
     comp_lits.c
     db_ipcs_reset.c
-    dbcertify_cmd.c
-    dbcertify_dbfilop.c
-    dbcertify_deferred_signal_handler.c
-    dbcertify_parse_and_dispatch.c
-    dbcertify_signal_handler.c
     dse.c
     dse_cmd.c
     dse_cmd_disallow.c
@@ -502,5 +497,16 @@ endif(NEED_TO_ADD_SOURCES)
 
 add_library(gtm_unix
   ${GTM_UNIX_SRC}
+  )
+
+#
+#  Complimentary pieces are in sr_port
+#
+add_library(dbcertifyunix
+  dbcertify_cmd.c
+  dbcertify_dbfilop.c
+  dbcertify_deferred_signal_handler.c
+  dbcertify_parse_and_dispatch.c
+  dbcertify_signal_handler.c
   )
 
