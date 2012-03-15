@@ -11,6 +11,16 @@
 
 /* For the various Unix/Posix flavors, extract and fill in the appropriate information */
 
+/*
+See issue :
+
+See also :
+  http://stackoverflow.com/questions/5679267/how-to-resolve-reg-eip-undeclared-first-use-in-this-function-error-on-linux-3
+*/
+#define  _GNU_SOURCE
+
+
+
 #include "mdef.h"
 
 #include "gtm_string.h"
@@ -118,6 +128,9 @@ void extract_signal_info(int sig, siginfo_t *info, gtm_sigcontext_t *context, gt
 					gtmsi->int_iadr = (caddr_t)context->uc_mcontext.sc_ip;
 #    elif defined(__i386)
 #      ifndef REG_EIP
+#      ifndef EIP
+#      error "EIP not defined"
+#      endif
 #        define REG_EIP EIP
 #      endif
 					gtmsi->int_iadr = (caddr_t)context->uc_mcontext.gregs[REG_EIP];
