@@ -76,9 +76,7 @@ add_library(gtm_port_cm
   gtcmtr_lkcancel.c
   gtcmtr_lkdelete.c
   gtcmtr_lke_clearrep.c
-  gtcmtr_lke_clearreq.c
   gtcmtr_lke_showrep.c
-  gtcmtr_lke_showreq.c
   gtcmtr_lkreqimmed.c
   gtcmtr_lkreqnode.c
   gtcmtr_lkrequest.c
@@ -91,6 +89,11 @@ add_library(gtm_port_cm
   gtcmtr_terminate_free.c
   gtcmtr_zprevious.c
   gtcmtr_zwithdraw.c
+  )
+
+set(GTM_GNPCLIENT_PORT_CM_SRC_C
+  gtcmtr_lke_clearreq.c
+  gtcmtr_lke_showreq.c
   gvcmx_canremlk.c
   gvcmx_data.c
   gvcmx_get.c
@@ -127,3 +130,8 @@ add_library(gtm_port_cm
   gvcmz_zflush.c
   lock_cmtimeout.c
   )
+
+add_library(gnpclientportcm
+  ${GTM_GNPCLIENT_PORT_CM_SRC_C}
+  )
+

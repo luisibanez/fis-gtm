@@ -1576,6 +1576,7 @@ set(GTM_DSE_SRC_C
   )
 
 set(GTM_GNPCLIENT_SRC_C
+  # The rest of the sources are in sr_port_cm
   callg_signal.c
   )
 
@@ -1625,7 +1626,7 @@ set(GTM_LKE_PORT_SRC_C
   lke_showtree.c
   )
 
-add_library(gnpclient
+add_library(gnpclientport
   ${GTM_GNPCLIENT_SRC_C}
   )
 
