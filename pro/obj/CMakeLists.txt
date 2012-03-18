@@ -21,6 +21,14 @@ include_directories(
   ${fis-gtm_SOURCE_DIR}/sr_linux
   )
 
+set(GTM_MUMPS_PRO_SRC_C
+  ttt.c
+  )
+
+add_library(mumpspro
+  ${GTM_MUMPS_PRO_SRC_C}
+  )
+
 set(SRC_C
   cmerrors_ctl.c
   cmierrors_ctl.c

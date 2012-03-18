@@ -102,7 +102,7 @@ set(GTM_MUMPS_PORT_SRC_C
 # cli_parse.o    in sr_unix
   cli_port.c
   cmd.c
-# code_gen.o  in ??
+# code_gen.o  in  64 bits section below
   coerce.c
   collseq.c
   comp_fini.c
@@ -175,7 +175,7 @@ set(GTM_MUMPS_PORT_SRC_C
   ecode_get.c
   ecode_init.c
   ecode_set.c
-# emit_code.o           in ???
+# emit_code.o           in  64bits section below
 # emit_code_sp.o           in ???
   entryref.c
   err_check.c
@@ -1103,26 +1103,46 @@ set(GTM_MUMPS_PORT_SRC_C
   s2n.c
   s2pool.c
   s2pool_align.c
+# same_device_check.o      in  sr_unix
   sec_shr_blk_build.c
   sec_shr_map_build.c
+# secshr_client.o      in  sr_unix
   secshr_db_clnup.c
   semwt2long_handler.c
+# send_msg.o            in sr_unix
+# set_jnl_file_close.o            in sr_unix
   set_jnl_info.c
+# set_num_additional_processors.o      in  sr_unix
   set_testpoint.c
+# set_zstatus.o      in  sr_unix
   setcurtchain.c
+# setterm.o      in  sr_unix
   setzdir.c
   seven_2_ascii.c
   sgnl_gvnulsubsc.c
   sgnl_gvreplerr.c
   sgnl_gvundef.c
+# sgtm_putmsg.o      in  sr_unix
   shmpool.c
   show_source_line.c
+# shrink_trips.o      in  64 bits section
   shuffq.c
+# sig_init.o      in  sr_unix
   skpc.c
+# sleep.o      in  sr_unix
   sockint_stats.c
   sorts_after.c
+# source_file.o              in sr_unix
+# ss_context_mgr.o              in sr_unix
+# ss_lock_facility.o              in sr_unix
+# ss_release.o              in sr_unix
+# ss_shdw_mgr.o              in sr_unix
+# ss_write_block.o              in sr_unix
   start_fetches.c
   start_for_fetches.c
+# std_dev_outbndset.o          in  src_unix
+# stop_image.o          in  src_unix
+# stop_image_ch.o          in  src_unix
   stp_expand_array.c
   stp_gcol.c
   stp_gcol_ch.c
@@ -1132,10 +1152,13 @@ set(GTM_MUMPS_PORT_SRC_C
   str2gvargs.c
   str2gvkey_gvfunc.c
   str2gvkey_nogvfunc.c
+# str_match.o      in  sr_unix
   strexpr.c
   strpiecediff.c
   stx_error.c
   sub2stbl.c
+# suspend.o      in  sr_unix
+# suspsigs_handler.o      in  sr_unix
   symb_line.c
   symbinit.c
   t_abort.c
@@ -1154,6 +1177,7 @@ set(GTM_MUMPS_PORT_SRC_C
   t_write_root.c
   targ_alloc.c
   tcp_open.c
+# term_setup.o      in  sr_unix
   terminate_ch.c
   time_calc.c
   timeout2msec.c
@@ -1162,6 +1186,7 @@ set(GTM_MUMPS_PORT_SRC_C
   tp_clean_up.c
   tp_cw_list.c
   tp_get_cw.c
+# tp_grab_crit.o      in  sr_unix
   tp_hist.c
   tp_incr_clean_up.c
   tp_incr_commit.c
@@ -1174,23 +1199,31 @@ set(GTM_MUMPS_PORT_SRC_C
   tpdefs.c
   trans_code.c
   trans_code_cleanup.c
+# trans_log_name.o      in  sr_unix
   trans_numeric.c
+# trigger_cmd.o          in sr_unix
+# trigger_compare.o          in sr_unix
+# trigger_delete.o          in sr_unix
+# trigger_fill_xecute_buffer.o          in sr_unix
+# trigger_gbl_fill_xecute_buffer.o          in sr_unix
+# trigger_incr_cycle.o          in sr_unix
+# trigger_parse.o          in sr_unix
+# trigger_read_name_entry.o          in sr_unix
+# trigger_scan_string.o          in sr_unix
+# trigger_select.o          in sr_unix
+# trigger_source_read_andor_verify.o          in sr_unix
+# trigger_tpwrap_ch.o          in sr_unix
+# trigger_trgfile.o          in sr_unix
+# trigger_update.o          in sr_unix
+# trigger_user_name.o          in sr_unix
   tripinit.c
   tt_write_error_set.c
+# ttt.o      generated in pro/obj
   underr.c
   undx.c
   unw_mv_ent.c
   unw_retarg.c
   unwind_nocounts.c
-  updhelper_end.c
-  updhelper_init.c
-  updhelper_reader.c
-  updhelper_writer.c
-  updproc.c
-  updproc_end.c
-  updproc_get_gblname.c
-  updproc_init.c
-  updproc_open_files.c
   upper_to_lower.c
   urx_add.c
   urx_addlab.c
@@ -1200,9 +1233,16 @@ set(GTM_MUMPS_PORT_SRC_C
   urx_getrtn.c
   urx_putlab.c
   urx_putrtn.c
+# urx_remove.o      in  sr_unix
   urx_resolve.c
   util_base_ch.c
   util_ch.c
+# util_exit_handler.o   in  sr_unix
+# util_in_open.o   in  sr_unix
+# util_input.o   in  sr_unix
+# util_output.o   in  sr_unix
+# util_output_cm.o   in  sr_unix
+# util_spawn.o   in  sr_unix
   val_iscan.c
   valid_labname.c
   valid_mname.c
@@ -1217,25 +1257,39 @@ set(GTM_MUMPS_PORT_SRC_C
   walktree.c
   wbox_test_init.c
   wcs_backoff.c
+# wcs_clean_dbsync.o      in  sr_unix
+# wcs_clean_dbsync_timer.o      in  sr_unix
+# wcs_flu.o      in  sr_unix
+# wcs_get_space.o      in  sr_unix
   wcs_phase2_commit_wait.c
   wcs_read_in_progress_wait.c
   wcs_recover.c
   wcs_sleep.c
   wcs_verify.c
+# wcs_write_in_progress_wait.o      in  sr_unix
+# wcs_wtstart.o      in  sr_unix
   wrtcatopt.c
   xfer_name.c
   xfer_table.c
+# zcall_package.o      in  sr_unix
   zco_init.c
   zdate_form_init.c
+# zl_cmd_qlf.o      in  sr_unix
   zlcompile.c
+# zlmov_lnames.o      in  sr_unix
   zlput_rname.c
   zr_find.c
   zr_get_free.c
   zr_init.c
   zr_put_free.c
   zr_remove.c
+# zro_gettok.o      in  sr_unix
   zro_init.c
+# zro_load.o      in  sr_unix
+# zro_search.o      in  sr_unix
+# zro_shlibs.o      in  sr_unix
   zshow_ch.c
+# zshow_devices.o      in  sr_unix
   zshow_format_lock.c
   zshow_gvstats.c
   zshow_locks.c
@@ -1243,6 +1297,7 @@ set(GTM_MUMPS_PORT_SRC_C
   zshow_stack.c
   zshow_svn.c
   zshow_zbreaks.c
+# zshow_zcalls.o      in  sr_unix
   zshow_zwrite.c
   ztrap_form_init.c
   ztrap_new_init.c
@@ -1379,6 +1434,15 @@ set(GTM_MUPIP_PORT_SRC_C
   repl_filter.c
   repl_tr_good.c
   replic_gbldefs.c
+  updhelper_end.c
+  updhelper_init.c
+  updhelper_reader.c
+  updhelper_writer.c
+  updproc.c
+  updproc_end.c
+  updproc_get_gblname.c
+  updproc_init.c
+  updproc_open_files.c
   )
 
 set(GTM_DSE_SRC_C
