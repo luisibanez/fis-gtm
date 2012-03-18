@@ -281,26 +281,6 @@ if(ARCHITECTURE_IS_64_BITS)
     make_dmode.c
     map_sym.c
     mem_access.c
-    mu_all_version_standalone.c
-    mu_cre_file.c
-    mu_cre_structs.c
-    mu_decrypt.c
-    mu_extract.c
-    mu_file_size.c
-    mu_getlst.c
-    mu_gvis.c
-    mu_int_ch.c
-    mu_op_open.c
-    mu_outofband_setup.c
-    mu_replpool_grab_sem.c
-    mu_replpool_remove_sem.c
-    mu_rndwn_all.c
-    mu_rndwn_file.c
-    mu_rndwn_repl_instance.c
-    mu_rndwn_replpool.c
-    mu_signal_process.c
-    mu_term_setup.c
-    mu_trig_trgfile.c
     mubexpfilnam.c
     mubfilcpy.c
     mubgetfil.c
@@ -327,13 +307,13 @@ if(ARCHITECTURE_IS_64_BITS)
     mupip_set_jnlfile.c
     mupip_trigger.c
     mupip_upgrade_standalone.c
-    mur_cre_file_extfmt.c
-    mur_read_file_sp.c
     murgetlst.c
     mutex.c
+#   mutex_deadlock_check.c   in sr_port
     mutex_sock_cleanup.c
     mutex_sock_init.c
     mutex_wake_proc.c
+    mu_decrypt.c
     obj_code.c
     obj_file.c
     ojchildioclean.c
@@ -483,11 +463,11 @@ if(NEED_TO_ADD_SOURCES)
   set(GTM_MUMPS2_SRC_C
     ${GTM_MUMPS2_SRC_C}
     jnl_file_open.c
-    make_mode.c
+    make_mode.c     # apparently used in 64 bits...
     )
 endif(NEED_TO_ADD_SOURCES)
 
-set(GTM_LKE_PORT_SRC_C
+set(GTM_LKE_SRC_C
   lke.c
   lke_cmd.c
   lke_ctrlc_handler.c
@@ -497,10 +477,37 @@ set(GTM_LKE_PORT_SRC_C
   lke_setgdr.c
   )
 
-add_library(lke
-  ${GTM_LKE_PORT_SRC_C}
+set(GTM_MUPIP_SRC_C
+  mur_cre_file_extfmt.c
+  mur_read_file_sp.c
+  mu_all_version_standalone.c
+  mu_cre_file.c
+  mu_cre_structs.c
+  mu_extract.c
+  mu_file_size.c
+  mu_getlst.c
+  mu_gvis.c
+  mu_int_ch.c
+  mu_op_open.c
+  mu_outofband_setup.c
+  mu_replpool_grab_sem.c
+  mu_replpool_remove_sem.c
+  mu_rndwn_all.c
+  mu_rndwn_file.c
+  mu_rndwn_repl_instance.c
+  mu_rndwn_replpool.c
+  mu_signal_process.c
+  mu_term_setup.c
+  mu_trig_trgfile.c
   )
 
+add_library(lke
+  ${GTM_LKE_SRC_C}
+  )
+
+add_library(mupip
+  ${GTM_MUPIP_SRC_C}
+  )
 
 add_library(mumps
   ${GTM_MUMPS2_SRC_C}

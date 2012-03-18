@@ -636,7 +636,7 @@ set(GTM_MUMPS_PORT_SRC_C
   jnl_write_pblk.c
   jnl_write_poolonly.c
   jnl_write_ztp_logical.c
-# jnlpool_init.o
+# jnlpool_init.o     in sr_unix
   job_addr.c
 # jobchild_init.o
   jobexam_process.c
@@ -664,6 +664,7 @@ set(GTM_MUMPS_PORT_SRC_C
   lookup_variable_htent.c
   lower_to_upper.c
   lref.c
+# lref_parse.o     in sr_unix
   lv_getslot.c
   lv_kill.c
   lv_killarray.c
@@ -722,17 +723,23 @@ set(GTM_MUMPS_PORT_SRC_C
   m_zstep.c
   m_zsystem.c
   m_ztcommit.c
+# m_ztrigger.o    in sr_unix
   m_ztstart.c
   m_zwatch.c
   m_zwithdraw.c
   m_zwrite.c
+# make_cimode.o    in Sr_unix
   make_commarg.c
+# make_dmode.o     in sr_unix
   make_gvsubsc.c
+# make_mode.o     in sr_unix
   maketriple.c
+# map_sym.o      in sr_unix
   matchc.c
   mcalloc.c
   mcfree.c
   mdb_condition_handler.c
+# mem_access.o     in sr_unix
   memvcmp.c
   merge_desc_check.c
   mlabel2xtern.c
@@ -761,77 +768,18 @@ set(GTM_MUMPS_PORT_SRC_C
   mprof_stack.c
   mprof_tree.c
   mtables.c
-  mu_clsce.c
-  mu_dwngrd_header.c
-  mu_extr_gblout.c
-  mu_extr_getblk.c
-  mu_extr_ident.c
-  mu_freeze_ch.c
+# mu_decrypt.o    in sr_unix
   mu_gv_cur_reg_init.c
-  mu_gv_stack_init.c
-  mu_int_blk.c
-  mu_int_err.c
-  mu_int_fhead.c
-  mu_int_getkey.c
-  mu_int_init.c
-  mu_int_maps.c
-  mu_int_read.c
-  mu_int_reg.c
-  mu_int_reg_ch.c
   mu_int_wait_rdonly.c
-  mu_int_write.c
-  mu_put_gvdata.c
-  mu_reduce_level.c
-  mu_reorg.c
-  mu_reorg_upgrd_dwngrd.c
-  mu_split.c
-  mu_swap_blk.c
-  mu_upgrd_dngrd_confirmed.c
-  mu_upgrd_header.c
-  mubclnup.c
-  mubfndreg.c
-  mucregini.c
+# mumps_clitab.o   in sr_unix
   mupfndfil.c
-  mur_apply_pblk.c
-  mur_back_process.c
-  mur_block_count_correct.c
-  mur_blocks_free.c
-  mur_close_file_extfmt.c
-  mur_close_files.c
-  mur_db_files_from_jnllist.c
-  mur_do_wildcard.c
-  mur_forward.c
-  mur_forward_play_cur_jrec.c
-  mur_forward_play_multireg_tp.c
-  mur_gbldefs.c
-  mur_get_options.c
-  mur_get_pini.c
-  mur_init.c
-  mur_insert_prev.c
-  mur_interactive.c
-  mur_jctl_from_next_gen.c
-  mur_jnl_ext.c
-  mur_multi_rehash.c
-  mur_open_files.c
-  mur_output_record.c
-  mur_output_show.c
-  mur_pini_addr_reset.c
-  mur_pini_state.c
-  mur_process_intrpt_recov.c
-  mur_process_seqno_table.c
-  mur_process_timequal.c
-  mur_process_token_table.c
-  mur_put_aimg_rec.c
-  mur_read_file.c
-  mur_rem_jctls.c
-  mur_report_error.c
-  mur_select_rec.c
-  mur_sort_files.c
-  mur_token_lookup.c
-  mur_tp_resolve_time.c
-  mur_validate_checksum.c
-  mur_ztp_lookback.c
+# mupip_crypt.o    in sr_unix
+  mupip_load_ch.c
+# mutex.o
   mutex_deadlock_check.c
+# mutex_sock_cleanup.o
+# mutex_sock_init.o
+# mutex_wake_proc.o
   mval2fao.c
   mval2subsc.c
   mval_lex.c
@@ -1256,7 +1204,7 @@ set(GTM_MUMPS_PORT_SRC_C
 #
 #  Prepare sources for library libmupip
 #
-set(GTM_MUPIP_SRC_C
+set(GTM_MUPIP_PORT_SRC_C
   desired_db_format_set.c
   ext2jnl.c
   gtm_tempnam.c
@@ -1283,6 +1231,9 @@ set(GTM_MUPIP_SRC_C
   gv_select.c
   jnl_setver.c
   jnlpool_hasnt_overflowed.c
+  mubclnup.c
+  mubfndreg.c
+  mucregini.c
   mupip_backup.c
   mupip_create.c
   mupip_downgrade.c
@@ -1290,7 +1241,6 @@ set(GTM_MUPIP_SRC_C
   mupip_freeze.c
   mupip_integ.c
   mupip_intrpt.c
-  mupip_load_ch.c
   mupip_recover.c
   mupip_reorg.c
   mupip_set.c
@@ -1303,6 +1253,78 @@ set(GTM_MUPIP_SRC_C
   mupip_set_journal_parse.c
   mupip_stop.c
   mupip_upgrade.c
+  mur_apply_pblk.c
+  mur_back_process.c
+  mur_block_count_correct.c
+  mur_blocks_free.c
+  mur_close_file_extfmt.c
+  mur_close_files.c
+# mur_cre_file_extfmt.o     in sr_unix
+  mur_db_files_from_jnllist.c
+  mur_do_wildcard.c
+  mur_forward.c
+  mur_forward_play_cur_jrec.c
+  mur_forward_play_multireg_tp.c
+  mur_gbldefs.c
+  mur_get_options.c
+  mur_get_pini.c
+  mur_init.c
+  mur_insert_prev.c
+  mur_interactive.c
+  mur_jctl_from_next_gen.c
+  mur_jnl_ext.c
+  mur_multi_rehash.c
+  mur_open_files.c
+  mur_output_record.c
+  mur_output_show.c
+  mur_pini_addr_reset.c
+  mur_pini_state.c
+  mur_process_intrpt_recov.c
+  mur_process_seqno_table.c
+  mur_process_timequal.c
+  mur_process_token_table.c
+  mur_put_aimg_rec.c
+  mur_read_file.c
+# mur_read_file_sp.o   in sr_unix
+  mur_rem_jctls.c
+  mur_report_error.c
+  mur_select_rec.c
+  mur_sort_files.c
+  mur_token_lookup.c
+  mur_tp_resolve_time.c
+  mur_validate_checksum.c
+  mur_ztp_lookback.c
+  mu_clsce.c
+# mu_cre_file.o
+# mu_cre_structs.o
+  mu_dwngrd_header.c
+  mu_extr_gblout.c
+  mu_extr_getblk.c
+  mu_extr_ident.c
+# mu_extract.o
+# mu_file_size.o
+  mu_freeze_ch.c
+  mu_gv_stack_init.c
+  mu_int_blk.c
+  mu_int_err.c
+  mu_int_fhead.c
+  mu_int_getkey.c
+  mu_int_init.c
+  mu_int_maps.c
+  mu_int_read.c
+  mu_int_reg.c
+  mu_int_reg_ch.c
+  mu_int_wait_rdonly.c
+  mu_int_write.c
+  mu_put_gvdata.c
+  mu_reduce_level.c
+  mu_reorg.c
+  mu_reorg_upgrd_dwngrd.c
+  mu_split.c
+  mu_swap_blk.c
+  mu_upgrd_dngrd_confirmed.c
+  mu_upgrd_header.c
+
   )
 
 set(GTM_DSE_SRC_C
@@ -1417,6 +1439,9 @@ add_library(dse
   ${GTM_DSE_SRC_C}
   )
 
+add_library(mumpipport
+  ${GTM_MUPIP_PORT_SRC_C}
+  )
 
 add_library(mumpsport
   ${GTM_MUMPS_PORT_SRC_C}
