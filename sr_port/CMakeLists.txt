@@ -795,8 +795,18 @@ set(GTM_MUMPS_PORT_SRC_C
   nref.c
   numcmp.c
   numexpr.c
+# obj_code.o     in sr_unix
+# obj_file.o     in sr_unix
+# obj_filesp.o     in sr_unix
   oc_tab.c
   oc_tab_graphic.c
+# ojchildioclean.o   in sr_unix
+# ojchildioset.o   in sr_unix
+# ojchildparms.o   in sr_unix
+# ojchkfs.o   in sr_unix
+# ojgetch_env.o   in sr_unix
+# ojparams.o   in sr_unix
+# ojstartchild.o   in sr_unix
   one_job_param.c
   op_add.c
   op_bindparm.c
@@ -816,12 +826,19 @@ set(GTM_MUMPS_PORT_SRC_C
   op_exfunret.c
   op_exfunretals.c
   op_exp.c
+# op_fgnlookup.o     in sr_unix
   op_fnascii.c
   op_fnchar.c
   op_fndata.c
+# op_fnextract.o     in sr_unix
+# op_fnfgncal.o     in sr_unix
   op_fnfind.c
   op_fnfnumber.c
   op_fnget2.c
+# op_fngetdvi.o     in sr_unix
+# op_fngetjpi.o     in sr_unix
+# op_fngetlki.o     in sr_unix
+# op_fngetsyi.o     in sr_unix
   op_fngvget.c
   op_fngvget1.c
   op_fngvget2.c
@@ -836,9 +853,13 @@ set(GTM_MUMPS_PORT_SRC_C
   op_fnnext.c
   op_fno2.c
   op_fnorder.c
+# op_fnp1.o             in sr_unix
+# op_fnpiece.o             in sr_unix
+# op_fnpopulation.o             in sr_unix
   op_fnqlength.c
   op_fnqsubscript.c
   op_fnquery.c
+# op_fnrandom.o       in sr_unix
   op_fnreverse.c
   op_fnstack1.c
   op_fnstack2.c
@@ -856,18 +877,28 @@ set(GTM_MUMPS_PORT_SRC_C
   op_fnzbitset.c
   op_fnzbitstr.c
   op_fnzbitxor.c
+# op_fnzcall.o      in sr_unix
+# op_fnzconvert.o      in sr_unix
   op_fnzdata.c
   op_fnzdate.c
+# op_fnzfile.o      in sr_unix
   op_fnzjobexam.c
+# op_fnzlkid.o      in sr_unix
   op_fnzm.c
   op_fnzp1.c
+# op_fnzparse.o    in sr_unix
+# op_fnzpid.o    in sr_unix
   op_fnzpiece.c
   op_fnzpopulation.c
   op_fnzprevious.c
+# op_fnzpriv.o      in sr_unix
   op_fnzqgblmod.c
+# op_fnzsearch.o     in sr_unix
+# op_fnzsetprv.o     in sr_unix
   op_fnzsigproc.c
   op_fnzsubstr.c
   op_fnztrigger.c
+# op_fnztrnlnm.o      in  sr_unix
   op_fnzwidth.c
   op_forfreeindx.c
   op_fornestlvl.c
@@ -893,6 +924,7 @@ set(GTM_MUMPS_PORT_SRC_C
   op_halt.c
   op_hang.c
   op_hardret.c
+# op_horolog.o      in  sr_unix
   op_idiv.c
   op_igetsrc.c
   op_incrlock.c
@@ -914,6 +946,7 @@ set(GTM_MUMPS_PORT_SRC_C
   op_indtext.c
   op_iocontrol.c
   op_iretmval.c
+# op_job.o      in  sr_unix
   op_kill.c
   op_killalias.c
   op_killaliasall.c
@@ -946,8 +979,11 @@ set(GTM_MUMPS_PORT_SRC_C
   op_setalsct2alsct.c
   op_setalsctin2als.c
   op_setalsin2alsct.c
+# op_setextract.o      in  sr_unix
   op_setfnretin2als.c
   op_setfnretin2alsct.c
+# op_setp1.o      in  sr_unix
+# op_setpiece.o      in  sr_unix
   op_setzbrk.c
   op_setzextract.c
   op_setzp1.c
@@ -972,14 +1008,19 @@ set(GTM_MUMPS_PORT_SRC_C
   op_xnew.c
   op_zalloc2.c
   op_zallocate.c
+# op_zattach.o      in  sr_unix
   op_zbreak.c
   op_zcompile.c
   op_zcont.c
   op_zdealloc2.c
   op_zdeallocate.c
+# op_zedit.o      in  sr_unix
   op_zg1.c
   op_zgoto.c
   op_zhalt.c
+# op_zhelp_xfr.o      in  sr_unix
+# op_zlink.o      in  sr_unix
+# op_zmess.o      in  sr_unix
   op_zprevious.c
   op_zprint.c
   op_zshow.c
@@ -989,10 +1030,13 @@ set(GTM_MUMPS_PORT_SRC_C
   op_zstepret.c
   op_zsystem.c
   op_ztcommit.c
+# op_ztrigger.o      in  sr_unix
   op_ztstart.c
   op_zwritesvn.c
+# outc.o      in  sr_unix
   outofband_action.c
   outofband_clear.c
+# parse_file.o      in  sr_unix
   parse_until_rparen_or_space.c
   pat_compress.c
   pat_unwind.c
@@ -1000,10 +1044,12 @@ set(GTM_MUMPS_PORT_SRC_C
   patstr.c
   pattab.c
   performcaslatchcheck.c
+# pipeint_stats.o      in  sr_unix
   preemptive_ch.c
   prepare_unique_name.c
   print_exit_stats.c
   print_target.c
+# probe.o      in  sr_unix
   process_deferred_stale.c
   process_gvt_pending_list.c
   promodemo.c
@@ -1027,28 +1073,32 @@ set(GTM_MUMPS_PORT_SRC_C
   put_tnxt.c
   put_tref.c
   put_tsiz.c
-  read_db_files_from_gld.c
+# random.o      in  sr_unix
+# rc_cpt_ops.o      in  sr_unix
   real_len.c
   region_freeze.c
   region_init.c
   region_init_ch.c
   reinit_externs.c
+# rel_crit.o      in  sr_unix
+# rel_lock.o      in  sr_unix
   rel_mmseg.c
   release_private_code_copy.c
   relqueop.c
   relqueopi.c
+# remove_rms.o      in  sr_unix
   rename_file_if_exists.c
-  repl_comm.c
   repl_errno.c
-  repl_filter.c
+# repl_instance.o      in  sr_unix
+# repl_sem.o      in  sr_unix
   repl_sort_tr_buff.c
-  repl_tr_good.c
-  replic_gbldefs.c
   replication_ch.c
+# resetterm.o      in sr_unix
   resolve_blocks.c
   resolve_lab.c
   resolve_ref.c
   rtnlaboff2entryref.c
+# rts_error.o      in sr_unix
   rwformat.c
   s2n.c
   s2pool.c
@@ -1324,7 +1374,11 @@ set(GTM_MUPIP_PORT_SRC_C
   mu_swap_blk.c
   mu_upgrd_dngrd_confirmed.c
   mu_upgrd_header.c
-
+  read_db_files_from_gld.c
+  repl_comm.c
+  repl_filter.c
+  repl_tr_good.c
+  replic_gbldefs.c
   )
 
 set(GTM_DSE_SRC_C
