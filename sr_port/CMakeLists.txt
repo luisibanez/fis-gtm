@@ -24,24 +24,24 @@ include_directories(
   )
 
 
-set(GTM_MUMPS_SRC_C
+set(GTM_MUMPS_PORT_SRC_C
   act_in_gvt.c
   actuallist.c
   add_atom.c
-# add_inter.c
+# add_inter.c    in sr_unix
   adjust_frames.c
   advancewindow.c
   alias_funcs.c
   alloc_reg.c
-# append_time_stamp.c
+# append_time_stamp.c    in sr_unix
   asc2i.c
   asc_hex2i.c
-# auto_zlink.c
+# auto_zlink.c      in sr_unix
 # auto_zlink_sp.c
   azl_geturxlab.c
   azl_geturxrtn.c
   backup_block.c
-# backup_buffer_flush.c
+# backup_buffer_flush.c    in sr_unix
   base_frame.c
   bit_clear.c
   bit_set.c
@@ -76,97 +76,97 @@ set(GTM_MUMPS_SRC_C
   cache_table_rebuild.c
   cacheflush.c
 # caller_id.o
-# callg.o
-# callintogtmxfer.o
-# ccp_cluster_lock_wake.o
-# ccp_fid_msg.o
-# ccp_sendmsg.o
-# ccp_userwait.o
+# callg.o              in sr_unix
+# callintogtmxfer.o    in sr_unix
+# ccp_cluster_lock_wake.o    in sr_unix
+# ccp_fid_msg.o    in sr_unix
+# ccp_sendmsg.o    in sr_unix
+# ccp_userwait.o    in sr_unix
   cdbg_dump.c
-# ce_init.o
-# ce_substitute.o
-# cenable.o
+# ce_init.o    in sr_unix
+# ce_substitute.o    in sr_unix
+# cenable.o    in sr_unix
   ceprep_file.c
   cert_blk.c
   cg_var.c
-# ch_cond_core.o
-# ch_overrun.o
-# change_fhead_timer.o
+# ch_cond_core.o    in sr_unix
+# ch_overrun.o    in sr_unix
+# change_fhead_timer.o    in sr_unix
   change_reg.c
   chktchain.c
-# ci_ret_code.o
-# cli.o
-# cli_disallow.o
+# ci_ret_code.o    in sr_unix
+# cli.o    in sr_unix
+# cli_disallow.o    in sr_unix
   cli_get_str_ele.c
-# cli_lex.o
-# cli_parse.o
+# cli_lex.o    in sr_unix
+# cli_parse.o    in sr_unix
   cli_port.c
   cmd.c
-# code_gen.o
+# code_gen.o  in ??
   coerce.c
   collseq.c
   comp_fini.c
   comp_indr.c
   comp_init.c
-# comp_lits.o
+# comp_lits.o                 sr_unix
   compile_pattern.c
   compiler_ch.c
   compiler_startup.c
-# continue_handler.o
-# continue_proc.o
+# continue_handler.o in sr_unix
+# continue_proc.o in sr_unix
   copy_stack_frame.c
   cre_jnl_file.c
   cre_jnl_file_intrpt_rename.c
   cre_private_code_copy.c
   create_dummy_gbldir.c
   create_fatal_error_zshow_dmp.c
-# crit_wake.o
+# crit_wake.o in sr_unix in sr_unix
   crit_wake_alarm.c
-# ctrap_set.o
-# ctrlc_handler.o
-# ctrlc_set.o
-# ctrly_set.o
+# ctrap_set.o in sr_unix
+# ctrlc_handler.o in sr_unix
+# ctrlc_set.o in sr_unix
+# ctrly_set.o in sr_unix
   cvtparm.c
-# cvtprot.o
-# cvttime.o
+# cvtprot.o in sr_unix
+# cvttime.o in sr_unix
   db_auto_upgrade.c
   db_common_init.c
   db_csh_get.c
   db_csh_getn.c
   db_csh_ini.c
   db_csh_ref.c
-# dbfilop.o
-# dbinit_ch.o
-# dbopen_ch.o
-# dec_err.o
+# dbfilop.o in sr_unix
+# dbinit_ch.o in sr_unix
+# dbopen_ch.o in sr_unix
+# dec_err.o in sr_unix
   deferred_events.c
-# deferred_signal_handler.o
+# deferred_signal_handler.o in sr_unix
   deviceparameters.c
   dfa_calc.c
-# disk_block_available.o
-# dm_read.o
+# disk_block_available.o     in sr_unix
+# dm_read.o     in sr_unix
   dm_setup.c
   do_indir_do.c
   do_patalt.c
   do_patfixed.c
   do_patsplit.c
   do_pattern.c
-# do_semop.o
-# do_shmat.o
-# do_verify.o
-# do_write.o
-# do_xform.o
+# do_semop.o     in sr_unix
+# do_shmat.o     in sr_unix
+# do_verify.o     in sr_unix
+# do_write.o     in sr_unix
+# do_xform.o     in sr_unix
   dollar_quit.c
   dollar_system_init.c
   dollar_zlevel.c
-# dollarh.c
+# dollarh.c     in sr_unix
   dollarx.c
   dpgbldir.c
-# dpgbldir_sysops.o
-# dsk_read.o
-# dsk_write.o
-# dsk_write_nocache.o
-# dskspace_msg_timer.o
+# dpgbldir_sysops.o     in sr_unix
+# dsk_read.o     in sr_unix
+# dsk_write.o     in sr_unix
+# dsk_write_nocache.o     in sr_unix
+# dskspace_msg_timer.o     in sr_unix
   dump_lockhist.c
   dumptable.c
   eb_muldiv.c
@@ -175,12 +175,12 @@ set(GTM_MUMPS_SRC_C
   ecode_get.c
   ecode_init.c
   ecode_set.c
-# emit_code.o
-# emit_code_sp.o
+# emit_code.o           in ???
+# emit_code_sp.o           in ???
   entryref.c
   err_check.c
-# err_init.o
-# error_return.o
+# err_init.o         in sr_unix
+# error_return.o         in sr_unix
   eval_expr.c
   ex_tail.c
   exfun_frame.c
@@ -189,8 +189,8 @@ set(GTM_MUMPS_SRC_C
   expratom.c
   expritem.c
   extern_func.c
-# exttab_parse.o
-# exttime.o
+# exttab_parse.o    in sr_unix
+# exttime.o    in sr_unix
   f_ascii.c
   f_data.c
   f_extract.c
@@ -373,13 +373,11 @@ set(GTM_MUMPS_SRC_C
 # gtmsource_jnl_release_timer.o
 # gtmsource_losttncomplete.o
 # gtmsource_needrestart.o
-  gtmsource_poll_actions.c
-  gtmsource_reinit_logseqno.c
   gv_bind_name.c
   gv_init_reg.c
   gv_match.c
   gv_rundown.c
-  gv_select.c
+# gv_trigger.o  in ??
   gv_xform_key.c
   gvcst_blk_build.c
   gvcst_blk_search.c
@@ -394,6 +392,7 @@ set(GTM_MUMPS_SRC_C
   gvcst_get.c
   gvcst_incr.c
   gvcst_init.c
+# gvcst_init_sysops.o  in  ??
   gvcst_kill.c
   gvcst_kill_blk.c
   gvcst_kill_sort.c
@@ -418,6 +417,7 @@ set(GTM_MUMPS_SRC_C
   gvstats_rec.c
   gvstrsub.c
   gvsub2str.c
+# gvusr.o      in ??
   gvzwr_arg.c
   gvzwr_fini.c
   gvzwr_init.c
@@ -433,40 +433,68 @@ set(GTM_MUMPS_SRC_C
   hashtab_rehash_ch.c
   hashtab_str.c
   have_crit.c
+# heartbeat_timer.o
   i2asc.c
   i2hex.c
   i2hex_blkfill.c
   i2hex_nofill.c
+# incr_link.o
   ind_cg_var.c
   ind_code.c
   indir_lits.c
   indirection.c
+# init_gtm.o       in ??
   init_secshr_addrs.c
   ins_errtriple.c
   ins_triple.c
   insert_region.c
+# inst_flush.o       in ??
   int_label.c
   intexpr.c
   io_find_mvstent.c
+# io_get_fgn_driver.o   in ??
   io_init.c
   io_init_ch.c
+# io_init_name.o    in ??
+# io_is_rm.o    in ??
+# io_is_sn.o    in ??
+# io_is_tt.o    in ??
+# io_open_try.o    in ??
   io_rundown.c
+# io_type.o      in ??
+# iob_close.o      in ??
+# iob_flush.o      in ??
+# iob_open_rd.o      in ??
+# iob_open_wt.o      in ??
+# iob_read.o      in ??
+# iob_write.o      in ??
+# ioff_open.o      in ??
   iomt_ansilab_manager.c
+# iomt_ch.o      in ??
   iomt_close.c
+# iomt_closesp.o   in ??
   iomt_dummy.c
   iomt_eof.c
   iomt_erase.c
   iomt_flush.c
   iomt_getrec.c
+# iomt_info.o
+# iomt_open.o
+# iomt_opensp.o
+# iomt_qio.o
   iomt_rddoslab.c
+# iomt_rdlblk.o
   iomt_rdone.c
   iomt_rdstream.c
   iomt_read.c
   iomt_readblk.c
   iomt_readfl.c
+# iomt_reopen.o
   iomt_rewind.c
+# iomt_sense.o
   iomt_skipfile.c
   iomt_skiprecord.c
+# iomt_tm.o
   iomt_use.c
   iomt_vlflush.c
   iomt_write.c
@@ -475,6 +503,7 @@ set(GTM_MUMPS_SRC_C
   iomt_wtdoslab.c
   iomt_wteol.c
   iomt_wtff.c
+# iomt_wtlblk.o
   iomt_wtone.c
   ionl_close.c
   ionl_dummy.c
@@ -489,6 +518,18 @@ set(GTM_MUMPS_SRC_C
   ionl_wtff.c
   ionl_wtone.c
   iop_parms_size.c
+# iopi_iocontrol.o
+# iopi_open.o
+# iorm_close.o
+# iorm_flush.o
+# iorm_get.o
+# iorm_open.o
+# iorm_rdone.o
+# iorm_read.o
+# iorm_readfl.o
+# iorm_use.o
+# iorm_write.o
+# iorm_wteol.o
   iorm_wtff.c
   iorm_wtone.c
   iosocket_bind.c
@@ -529,8 +570,17 @@ set(GTM_MUMPS_SRC_C
   iotcp_wteol.c
   iotcp_wtff.c
   iotcp_wtone.c
+# iott_close.o
   iott_dummy.c
+# iott_edit.o
   iott_escape.c
+# iott_flush.o
+# iott_open.o
+# iott_rdone.o
+# iott_read.o
+# iott_readfl.o
+# iott_use.o
+# iott_write.o
   iott_wrterr.c
   iott_wteol.c
   iott_wtff.c
@@ -538,28 +588,43 @@ set(GTM_MUMPS_SRC_C
   ious_close.c
   ious_dummy.c
   ious_flush.c
+# ious_iocontrol.o
+# ious_open.o
+# ious_rdone.o
+# ious_read.o
+# ious_readfl.o
   ious_use.c
+# ious_write.o
   ious_wteol.c
   ious_wtff.c
+# ious_wtone.o
+# ipcrmid.o
   is_canonic_name.c
   is_equ.c
+# is_file_identical.o
   is_ident.c
+# is_proc_alive.o
+# is_raw_dev.o
   jfh_from_jnl_info.c
   jmp_opto.c
   jnl2ext.c
   jnl_ensure_open.c
   jnl_file_close.c
+# jnl_file_extend.o
   jnl_file_lost.c
+# jnl_file_open.o
   jnl_file_open_common.c
   jnl_file_open_switch.c
   jnl_flush.c
   jnl_format.c
+# jnl_fsync.o
   jnl_get_checksum.c
   jnl_get_checksum_entire.c
+# jnl_output_sp.o
+# jnl_prc_vector.o
   jnl_put_jrt_pfin.c
   jnl_put_jrt_pini.c
   jnl_send_oper.c
-  jnl_setver.c
   jnl_wait.c
   jnl_write.c
   jnl_write_aimg_rec.c
@@ -571,9 +636,11 @@ set(GTM_MUMPS_SRC_C
   jnl_write_pblk.c
   jnl_write_poolonly.c
   jnl_write_ztp_logical.c
-  jnlpool_hasnt_overflowed.c
+# jnlpool_init.o
   job_addr.c
+# jobchild_init.o
   jobexam_process.c
+# jobexam_signal_handler.o
   jobinterrupt_event.c
   jobinterrupt_init.c
   jobinterrupt_process.c
@@ -589,15 +656,8 @@ set(GTM_MUMPS_SRC_C
   line.c
   linetail.c
   lk_check_own.c
-  lke_clear.c
-  lke_clearlock.c
-  lke_cleartree.c
-  lke_exit.c
-  lke_getcli.c
-  lke_getki.c
-  lke_show.c
-  lke_showlock.c
-  lke_showtree.c
+# lke_cmd_disallow.c    in sr_unix
+# lke_ctrlc_handler.c   in sr_unix
   lkglvn.c
   lkinit.c
   logical_truth_value.c
@@ -1220,6 +1280,9 @@ set(GTM_MUPIP_SRC_C
   gtmsource_exit.c
   gtmsource_poll_actions.c
   gtmsource_reinit_logseqno.c
+  gv_select.c
+  jnl_setver.c
+  jnlpool_hasnt_overflowed.c
   mupip_backup.c
   mupip_create.c
   mupip_downgrade.c
@@ -1310,8 +1373,8 @@ set(GTM_PORT_SRC_C_EXTRAS
 #  Select sources specific for 32 bits
 #
 if(ARCHITECTURE_IS_32_BITS)
-  set(GTM_MUMPS_SRC_C
-    ${GTM_MUMPS_SRC_C}
+  set(GTM_MUMPS_PORT_SRC_C
+    ${GTM_MUMPS_PORT_SRC_C}
     )
 endif()
 
@@ -1321,14 +1384,29 @@ endif()
 #  Select sources specific for 64 bits
 #
 if(ARCHITECTURE_IS_64_BITS)
-  set(GTM_MUMPS_SRC_C
-    ${GTM_MUMPS_SRC_C}
+  set(GTM_MUMPS_PORT_SRC_C
+    ${GTM_MUMPS_PORT_SRC_C}
     emit_code.c
     code_gen.c
     shrink_trips.c
     )
 endif()
 
+set(GTM_LKE_PORT_SRC_C
+  lke_clear.c
+  lke_clearlock.c
+  lke_cleartree.c
+  lke_exit.c
+# lke_fileio.c    in  sr_unix
+# lke_getansw.c   in  sr_unix
+  lke_getcli.c
+  lke_getki.c
+# lke_help.c      in  sr_unix
+# lke_setgdr.c    in sr_unix
+  lke_show.c
+  lke_showlock.c
+  lke_showtree.c
+  )
 
 add_library(gnpclient
   ${GTM_GNPCLIENT_SRC_C}
@@ -1340,8 +1418,12 @@ add_library(dse
   )
 
 
-add_library(mumps
-  ${GTM_MUMPS_SRC_C}
+add_library(mumpsport
+  ${GTM_MUMPS_PORT_SRC_C}
+  )
+
+add_library(lkeport
+  ${GTM_LKE_PORT_SRC_C}
   )
 
 #

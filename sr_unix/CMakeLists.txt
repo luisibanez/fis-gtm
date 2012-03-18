@@ -21,7 +21,7 @@ include_directories(
   ${fis-gtm_SOURCE_DIR}/sr_linux
   )
 
-set(GTM_UNIX_SRC
+set(GTM_MUMPS2_SRC_C
   add_inter.c
   append_time_stamp.c
   backup_buffer_flush.c
@@ -74,8 +74,8 @@ set(GTM_UNIX_SRC
   )
 
 if(ARCHITECTURE_IS_64_BITS)
-  set(GTM_UNIX_SRC
-    ${GTM_UNIX_SRC}
+  set(GTM_MUMPS2_SRC_C
+    ${GTM_MUMPS2_SRC_C}
     auto_zlink.c
     bin_load.c
     callg.c
@@ -274,14 +274,7 @@ if(ARCHITECTURE_IS_64_BITS)
     jobchild_init.c
     jobexam_signal_handler.c
     list_file.c
-    lke.c
-    lke_cmd.c
     lke_cmd_disallow.c
-    lke_ctrlc_handler.c
-    lke_fileio.c
-    lke_getansw.c
-    lke_help.c
-    lke_setgdr.c
     lref_parse.c
     m_ztrigger.c
     make_cimode.c
@@ -476,8 +469,8 @@ endif()
 
 
 if(ARCHITECTURE_IS_32_BITS)
-  set(GTM_UNIX_SRC
-    ${GTM_UNIX_SRC}
+  set(GTM_MUMPS2_SRC_C
+    ${GTM_MUMPS2_SRC_C}
     daemon_ch.c
     daemon_crit.c
     extract_signal_info.c
@@ -487,16 +480,30 @@ endif()
 
 
 if(NEED_TO_ADD_SOURCES)
-  set(GTM_UNIX_SRC
-    ${GTM_UNIX_SRC}
+  set(GTM_MUMPS2_SRC_C
+    ${GTM_MUMPS2_SRC_C}
     jnl_file_open.c
     make_mode.c
     )
 endif(NEED_TO_ADD_SOURCES)
 
+set(GTM_LKE_PORT_SRC_C
+  lke.c
+  lke_cmd.c
+  lke_ctrlc_handler.c
+  lke_fileio.c
+  lke_getansw.c
+  lke_help.c
+  lke_setgdr.c
+  )
 
-add_library(gtm_unix
-  ${GTM_UNIX_SRC}
+add_library(lke
+  ${GTM_LKE_PORT_SRC_C}
+  )
+
+
+add_library(mumps
+  ${GTM_MUMPS2_SRC_C}
   )
 
 #
