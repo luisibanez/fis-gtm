@@ -77,11 +77,9 @@ if(ARCHITECTURE_IS_64_BITS)
   set(GTM_MUMPS2_SRC_C
     ${GTM_MUMPS2_SRC_C}
     auto_zlink.c
-    bin_load.c
     callg.c
     cmistub.c
     comp_lits.c
-    db_ipcs_reset.c
     dse.c
     dse_cmd.c
     dse_cmd_disallow.c
@@ -116,7 +114,6 @@ if(ARCHITECTURE_IS_64_BITS)
     getstorage.c
     getzmode.c
     getzprocess.c
-    go_load.c
     golevel.c
     goq_load.c
     grab_crit.c
@@ -163,38 +160,10 @@ if(ARCHITECTURE_IS_64_BITS)
     gtmci_isv.c
     gtmci_signals.c
     gtmcrypt_entry.c
-    gtmrecv.c
-    gtmrecv_end.c
-    gtmrecv_fetchresync.c
-    gtmrecv_poll_actions.c
-    gtmrecv_process.c
-    gtmrecv_shutdown.c
     gtmsecshr.c
     gtmsecshr_sock_cleanup.c
     gtmsecshr_sock_init.c
     gtmsecshr_wrapper.c
-    gtmsource.c
-    gtmsource_changelog.c
-    gtmsource_checkhealth.c
-    gtmsource_end.c
-    gtmsource_flush_fh.c
-    gtmsource_get_opt.c
-    gtmsource_heartbeat.c
-    gtmsource_jnl_release_timer.c
-    gtmsource_jnlpool.c
-    gtmsource_losttncomplete.c
-    gtmsource_mode_change.c
-    gtmsource_needrestart.c
-    gtmsource_process.c
-    gtmsource_process_ops.c
-    gtmsource_readfiles.c
-    gtmsource_readpool.c
-    gtmsource_rootprimary_init.c
-    gtmsource_seqno_init.c
-    gtmsource_showbacklog.c
-    gtmsource_shutdown.c
-    gtmsource_statslog.c
-    gtmsource_stopfilter.c
     gv_trigger.c
     gvcmx_canremlk_stub.c
     gvcmx_reqremlk_stub.c
@@ -269,7 +238,6 @@ if(ARCHITECTURE_IS_64_BITS)
     jnl_fsync.c
     jnl_output_sp.c
     jnl_prc_vector.c
-    jnlext_write.c
     jnlpool_init.c
     jobchild_init.c
     jobexam_signal_handler.c
@@ -283,31 +251,11 @@ if(ARCHITECTURE_IS_64_BITS)
     mem_access.c
     mubexpfilnam.c
     mubfilcpy.c
-    mubgetfil.c
-    mubinccpy.c
-    mucblkini.c
     mumps_clitab.c
     mup_bak_sys.c
     mupip.c
     mupip_cmd.c
-    mupip_cmd_disallow.c
     mupip_crypt.c
-    mupip_ctrl.c
-    mupip_cvtgbl.c
-    mupip_cvtpgm.c
-    mupip_endiancvt.c
-    mupip_exit.c
-    mupip_exit_handler.c
-    mupip_ftok.c
-    mupip_help.c
-    mupip_quit.c
-    mupip_restore.c
-    mupip_rundown.c
-    mupip_set_file.c
-    mupip_set_jnlfile.c
-    mupip_trigger.c
-    mupip_upgrade_standalone.c
-    murgetlst.c
     mutex.c
 #   mutex_deadlock_check.c   in sr_port
     mutex_sock_cleanup.c
@@ -361,18 +309,11 @@ if(ARCHITECTURE_IS_64_BITS)
     probe.c
     random.c
     rc_cpt_ops.c
-    recvpool_init.c
     reg_cmcheck.c
     rel_crit.c
     rel_lock.c
     remove_rms.c
-    repl_inst_create.c
-    repl_inst_dump.c
-    repl_inst_edit.c
     repl_instance.c
-    repl_ipc_cleanup.c
-    repl_log.c
-    repl_log_init.c
     repl_sem.c
     resetterm.c
     rts_error.c
@@ -388,12 +329,8 @@ if(ARCHITECTURE_IS_64_BITS)
     sig_init.c
     sleep.c
     source_file.c
-    ss_anal_shdw_file.c
     ss_context_mgr.c
-    ss_get_block.c
-    ss_initiate.c
     ss_lock_facility.c
-    ss_read_block.c
     ss_release.c
     ss_shdw_mgr.c
     ss_write_block.c
@@ -421,7 +358,6 @@ if(ARCHITECTURE_IS_64_BITS)
     trigger_trgfile.c
     trigger_update.c
     trigger_user_name.c
-    upd_log_init.c
     urx_remove.c
     util_exit_handler.c
     util_in_open.c
@@ -478,8 +414,38 @@ set(GTM_LKE_SRC_C
   )
 
 set(GTM_MUPIP_SRC_C
-  mur_cre_file_extfmt.c
-  mur_read_file_sp.c
+  bin_load.c
+  db_ipcs_reset.c
+  go_load.c
+  gtmrecv.c
+  gtmrecv_end.c
+  gtmrecv_fetchresync.c
+  gtmrecv_poll_actions.c
+  gtmrecv_process.c
+  gtmrecv_shutdown.c
+  gtmsource.c
+  gtmsource_changelog.c
+  gtmsource_checkhealth.c
+  gtmsource_end.c
+  gtmsource_flush_fh.c
+  gtmsource_get_opt.c
+  gtmsource_heartbeat.c
+  gtmsource_jnl_release_timer.c
+  gtmsource_jnlpool.c
+  gtmsource_losttncomplete.c
+  gtmsource_mode_change.c
+  gtmsource_needrestart.c
+  gtmsource_process.c
+  gtmsource_process_ops.c
+  gtmsource_readfiles.c
+  gtmsource_readpool.c
+  gtmsource_rootprimary_init.c
+  gtmsource_seqno_init.c
+  gtmsource_showbacklog.c
+  gtmsource_shutdown.c
+  gtmsource_statslog.c
+  gtmsource_stopfilter.c
+  jnlext_write.c
   mu_all_version_standalone.c
   mu_cre_file.c
   mu_cre_structs.c
@@ -499,6 +465,40 @@ set(GTM_MUPIP_SRC_C
   mu_signal_process.c
   mu_term_setup.c
   mu_trig_trgfile.c
+  mubgetfil.c
+  mubinccpy.c
+  mucblkini.c
+  mupip_cmd_disallow.c
+  mupip_ctrl.c
+  mupip_cvtgbl.c
+  mupip_cvtpgm.c
+  mupip_endiancvt.c
+  mupip_exit.c
+  mupip_exit_handler.c
+  mupip_ftok.c
+  mupip_help.c
+  mupip_quit.c
+  mupip_restore.c
+  mupip_rundown.c
+  mupip_set_file.c
+  mupip_set_jnlfile.c
+  mupip_trigger.c
+  mupip_upgrade_standalone.c
+  mur_cre_file_extfmt.c
+  mur_read_file_sp.c
+  murgetlst.c
+  recvpool_init.c
+  repl_inst_create.c
+  repl_inst_dump.c
+  repl_inst_edit.c
+  repl_ipc_cleanup.c
+  repl_log.c
+  repl_log_init.c
+  ss_anal_shdw_file.c
+  ss_get_block.c
+  ss_initiate.c
+  ss_read_block.c
+  upd_log_init.c
   )
 
 add_library(lke

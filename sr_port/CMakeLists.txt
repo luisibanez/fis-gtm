@@ -607,7 +607,6 @@ set(GTM_MUMPS_PORT_SRC_C
 # is_raw_dev.o
   jfh_from_jnl_info.c
   jmp_opto.c
-  jnl2ext.c
   jnl_ensure_open.c
   jnl_file_close.c
 # jnl_file_extend.o
@@ -1310,45 +1309,138 @@ set(GTM_MUMPS_PORT_SRC_C
 #  Prepare sources for library libmupip
 #
 set(GTM_MUPIP_PORT_SRC_C
+# bin_load.o      in  sr_unix
+# db_ipcs_reset.o      in  sr_unix
   desired_db_format_set.c
   ext2jnl.c
+# go_load.o      in  sr_unix
   gtm_tempnam.c
+# gtm_zlib.o      in  sr_unix
+# gtmrecv.o      in  sr_unix
   gtmrecv_ch.c
   gtmrecv_changelog.c
   gtmrecv_checkhealth.c
   gtmrecv_comm_init.c
+# gtmrecv_end.o      in  sr_unix
   gtmrecv_end_helpers.c
   gtmrecv_exit.c
+# gtmrecv_fetchresync.o      in  sr_unix
   gtmrecv_get_opt.c
   gtmrecv_helpers_init.c
+# gtmrecv_poll_actions.o      in  sr_unix
+# gtmrecv_process.o      in  sr_unix
   gtmrecv_reap_helpers.c
   gtmrecv_reinit_logseqno.c
   gtmrecv_showbacklog.c
+# gtmrecv_shutdown.o      in  sr_unix
   gtmrecv_start_helpers.c
   gtmrecv_statslog.c
   gtmrecv_upd_proc_init.c
+# gtmsource.o      in  sr_unix
   gtmsource_ch.c
+# gtmsource_changelog.o      in  sr_unix
+# gtmsource_checkhealth.o      in  sr_unix
   gtmsource_comm_init.c
   gtmsource_ctl_init.c
+# gtmsource_end.o      in  sr_unix
   gtmsource_exit.c
+# gtmsource_flush_fh.o      in  sr_unix
+# gtmsource_get_opt.o      in  sr_unix
+# gtmsource_heartbeat.o      in  sr_unix
+# gtmsource_jnlpool.o      in  sr_unix
+# gtmsource_mode_change.o      in  sr_unix
   gtmsource_poll_actions.c
+# gtmsource_process.o      in  sr_unix
+# gtmsource_process_ops.o      in  sr_unix
+# gtmsource_readfiles.o      in  sr_unix
+# gtmsource_readpool.o      in  sr_unix
   gtmsource_reinit_logseqno.c
+# gtmsource_rootprimary_init.o      in  sr_unix
+# gtmsource_seqno_init.o      in  sr_unix
+# gtmsource_showbacklog.o      in  sr_unix
+# gtmsource_shutdown.o      in  sr_unix
+# gtmsource_statslog.o      in  sr_unix
+# gtmsource_stopfilter.o      in  sr_unix
   gv_select.c
+  jnl2ext.c
   jnl_setver.c
+# jnlext_write.o      in  sr_unix
   jnlpool_hasnt_overflowed.c
+# mu_all_version_standalone.o
+  mu_clsce.c
+# mu_cre_file.o
+# mu_cre_structs.o
+  mu_dwngrd_header.c
+  mu_extr_gblout.c
+  mu_extr_getblk.c
+  mu_extr_ident.c
+# mu_extract.o
+# mu_file_size.o
+  mu_freeze_ch.c
+# mu_getlst.o      in  sr_unix
+  mu_gv_stack_init.c
+# mu_gvis.o      in  sr_unix
+  mu_int_blk.c
+  mu_int_err.c
+  mu_int_fhead.c
+  mu_int_getkey.c
+  mu_int_init.c
+  mu_int_maps.c
+  mu_int_read.c
+  mu_int_reg.c
+  mu_int_reg_ch.c
+  mu_int_write.c
+# mu_op_open.o      in  sr_unix
+# mu_outofband_setup.o      in  sr_unix
+  mu_put_gvdata.c
+  mu_reduce_level.c
+  mu_reorg.c
+  mu_reorg_upgrd_dwngrd.c
+# mu_replpool_grab_sem.o
+# mu_replpool_remove_sem.o
+# mu_rndwn_all.o
+# mu_rndwn_file.o
+# mu_rndwn_repl_instance.o
+# mu_rndwn_replpool.o
+# mu_signal_process.o
+  mu_split.c
+  mu_swap_blk.c
+# mu_term_setup.o      in  sr_unix
+# mu_trig_trgfile.o      in  sr_unix
+  mu_upgrd_dngrd_confirmed.c
+  mu_upgrd_header.c
   mubclnup.c
+# mubexpfilnam.o      in  sr_unix
+# mubfilcpy.o      in  sr_unix
   mubfndreg.c
+# mubgetfil.o      in  sr_unix
+# mubinccpy.o      in  sr_unix
+# mucblkini.o      in  sr_unix
   mucregini.c
+# mup_bak_sys.o      in  sr_unix
   mupip_backup.c
+# mupip_cmd_disallow.o      in  sr_unix
   mupip_create.c
+# mupip_ctrl.o      in  sr_unix
+# mupip_cvtgbl.o      in  sr_unix
+# mupip_cvtpgm.o      in  sr_unix
   mupip_downgrade.c
+# mupip_endiancvt.o      in  sr_unix
+# mupip_exit.o      in  sr_unix
+# mupip_exit_handler.o      in  sr_unix
   mupip_extend.c
   mupip_freeze.c
+# mupip_ftok.o      in  sr_unix
+# mupip_help.o      in  sr_unix
   mupip_integ.c
   mupip_intrpt.c
+# mupip_quit.o      in  sr_unix
   mupip_recover.c
   mupip_reorg.c
+# mupip_restore.o      in  sr_unix
+# mupip_rundown.o      in  sr_unix
   mupip_set.c
+# mupip_set_file.o      in  sr_unix
   mupip_set_jnl_ch.c
   mupip_set_jnl_cleanup.c
   mupip_set_jnlfile_aux.c
@@ -1357,7 +1449,9 @@ set(GTM_MUPIP_PORT_SRC_C
   mupip_set_journal_newstate.c
   mupip_set_journal_parse.c
   mupip_stop.c
+# mupip_trigger.o      in  sr_unix
   mupip_upgrade.c
+# mupip_upgrade_standalone.o      in  sr_unix
   mur_apply_pblk.c
   mur_back_process.c
   mur_block_count_correct.c
@@ -1399,41 +1493,24 @@ set(GTM_MUPIP_PORT_SRC_C
   mur_tp_resolve_time.c
   mur_validate_checksum.c
   mur_ztp_lookback.c
-  mu_clsce.c
-# mu_cre_file.o
-# mu_cre_structs.o
-  mu_dwngrd_header.c
-  mu_extr_gblout.c
-  mu_extr_getblk.c
-  mu_extr_ident.c
-# mu_extract.o
-# mu_file_size.o
-  mu_freeze_ch.c
-  mu_gv_stack_init.c
-  mu_int_blk.c
-  mu_int_err.c
-  mu_int_fhead.c
-  mu_int_getkey.c
-  mu_int_init.c
-  mu_int_maps.c
-  mu_int_read.c
-  mu_int_reg.c
-  mu_int_reg_ch.c
-  mu_int_wait_rdonly.c
-  mu_int_write.c
-  mu_put_gvdata.c
-  mu_reduce_level.c
-  mu_reorg.c
-  mu_reorg_upgrd_dwngrd.c
-  mu_split.c
-  mu_swap_blk.c
-  mu_upgrd_dngrd_confirmed.c
-  mu_upgrd_header.c
+# murgetlst.o      in  sr_unix
   read_db_files_from_gld.c
+# recvpool_init.o      in  sr_unix
   repl_comm.c
   repl_filter.c
+# repl_inst_create.o      in  sr_unix
+# repl_inst_dump.o      in  sr_unix
+# repl_inst_edit.o      in  sr_unix
+# repl_ipc_cleanup.o      in  sr_unix
+# repl_log.o      in  sr_unix
+# repl_log_init.o      in  sr_unix
   repl_tr_good.c
   replic_gbldefs.c
+# ss_anal_shdw_file.o      in  sr_unix
+# ss_get_block.o      in  sr_unix
+# ss_initiate.o      in  sr_unix
+# ss_read_block.o      in  sr_unix
+# upd_log_init.o      in  sr_unix
   updhelper_end.c
   updhelper_init.c
   updhelper_reader.c
