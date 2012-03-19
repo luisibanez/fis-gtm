@@ -25,20 +25,16 @@ add_library(gtm_port_cm
   gtcm_action_pending.c
   gtcm_add_region.c
   gtcm_bind_name.c
-  gtcm_err_compat.c
   gtcm_exi_handler.c
   gtcm_find_proc.c
   gtcm_find_reghead.c
   gtcm_find_region.c
   gtcm_init_ast.c
   gtcm_int_unpack.c
-  gtcm_is_query_queryget.c
   gtcm_jnl_switched.c
   gtcm_link_accept.c
   gtcm_neterr.c
-  gtcm_protocol.c
   gtcm_read_ast.c
-  gtcm_release_name.c
   gtcm_remove_from_action_queue.c
   gtcm_shutdown_ast.c
   gtcm_write_ast.c
@@ -133,5 +129,16 @@ set(GTM_GNPCLIENT_PORT_CM_SRC_C
 
 add_library(gnpclientportcm
   ${GTM_GNPCLIENT_PORT_CM_SRC_C}
+  )
+
+set(GTM_CMI_SOCKET_TCP_PORT_CM_SRC_C
+  gtcm_err_compat.c
+  gtcm_is_query_queryget.c
+  gtcm_protocol.c
+  gtcm_release_name.c
+  )
+
+add_library(cmisockettcpportcm
+  ${GTM_CMI_SOCKET_TCP_PORT_CM_SRC_C}
   )
 

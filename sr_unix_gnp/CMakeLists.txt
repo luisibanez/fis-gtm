@@ -23,7 +23,7 @@ include_directories(
   )
 
 
-set(GTM_UNIX_GNP_SRC
+set(GTM_CMI_SOCKET_TCP_UNIX_SRC_C
   cmi_alloc.c
   cmi_close.c
   cmi_debug.c
@@ -40,9 +40,9 @@ set(GTM_UNIX_GNP_SRC
   cmj_exception.c
   cmj_fini.c
   cmj_firstone.c
-  cmj_getdeferred.c
   cmj_get_port.c
   cmj_getsockaddr.c
+  cmj_getdeferred.c
   cmj_handler.c
   cmj_housekeeping.c
   cmj_incoming_call.c
@@ -57,6 +57,9 @@ set(GTM_UNIX_GNP_SRC
   cmj_write.c
   cmu_getclb.c
   cmu_ntdroot.c
+  )
+
+set(OTHER_SRC_C
   gtcm_ch.c
   gtcmd_ini_reg.c
   gtcm_exi_ch.c
@@ -68,7 +71,7 @@ set(GTM_UNIX_GNP_SRC
   gvcmz_errmsg.c
   )
 
-add_library(gtm_unix_gnp
-  ${GTM_UNIX_GNP_SRC}
+add_library(cmisockettcp
+  ${GTM_CMI_SOCKET_TCP_UNIX_SRC_C}
   )
 
