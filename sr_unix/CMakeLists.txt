@@ -82,12 +82,6 @@ if(ARCHITECTURE_IS_64_BITS)
     comp_lits.c
     dse.c
     dse_cmd.c
-    dse_cmd_disallow.c
-    dse_ctrlc_handler.c
-    dse_help.c
-    dse_open.c
-    dse_puttime.c
-    dse_remove.c
     gtm_unlink_all.c
     gtm_trigger.c
     incr_link.c
@@ -501,6 +495,15 @@ set(GTM_MUPIP_SRC_C
   upd_log_init.c
   )
 
+set(GTM_DSE_UNIX_SRC_C
+  dse_cmd_disallow.c
+  dse_ctrlc_handler.c
+  dse_help.c
+  dse_open.c
+  dse_puttime.c
+  dse_remove.c
+  )
+
 add_library(lke
   ${GTM_LKE_SRC_C}
   )
@@ -511,6 +514,10 @@ add_library(mupip
 
 add_library(mumps
   ${GTM_MUMPS2_SRC_C}
+  )
+
+add_library(dseunix
+  ${GTM_DSE_UNIX_SRC_C}
   )
 
 #

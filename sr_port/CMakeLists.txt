@@ -1531,9 +1531,9 @@ set(GTM_DSE_SRC_C
   dse_chng_bhead.c
   dse_chng_fhead.c
   dse_chng_rhead.c
-# dse_cmd_disallow.o
+# dse_cmd_disallow.o    in sr_unix
   dse_crit.c
-# dse_ctrlc_handler.o
+# dse_ctrlc_handler.o    in sr_unix
   dse_data.c
   dse_dmp.c
   dse_dmp_fhead.c
@@ -1548,7 +1548,7 @@ set(GTM_DSE_SRC_C
   dse_find_roots.c
   dse_flush.c
   dse_getki.c
-# dse_help.o
+# dse_help.o      in sr_unix
   dse_integ.c
   dse_is_blk_free.c
   dse_is_blk_in.c
@@ -1556,14 +1556,14 @@ set(GTM_DSE_SRC_C
   dse_lm_blk_free.c
   dse_m_rest.c
   dse_maps.c
-# dse_open.o
+# dse_open.o      in sr_unix
   dse_order.c
   dse_over.c
   dse_page.c
-# dse_puttime.o
+# dse_puttime.o      in sr_unix
   dse_r_dmp.c
   dse_range.c
-# dse_remove.o
+# dse_remove.o      in sr_unix
   dse_rest.c
   dse_rmrec.c
   dse_rmsb.c
@@ -1631,7 +1631,7 @@ add_library(gnpclientport
   )
 
 
-add_library(dse
+add_library(dseport
   ${GTM_DSE_SRC_C}
   )
 
