@@ -78,7 +78,6 @@ if(ARCHITECTURE_IS_64_BITS)
     ${GTM_MUMPS2_SRC_C}
     auto_zlink.c
     callg.c
-    cmistub.c
     comp_lits.c
     dse.c
     dse_cmd.c
@@ -113,8 +112,6 @@ if(ARCHITECTURE_IS_64_BITS)
     grab_crit.c
     grab_lock.c
     gt_timers.c
-    gtcmstub.c
-    gtcmtrstub.c
     gtm.c
     gtm_bintim.c
     gtm_c_stack_trace_semop.c
@@ -159,14 +156,7 @@ if(ARCHITECTURE_IS_64_BITS)
     gtmsecshr_sock_init.c
     gtmsecshr_wrapper.c
     gv_trigger.c
-    gvcmx_canremlk_stub.c
-    gvcmx_reqremlk_stub.c
-    gvcmx_resremlk_stub.c
-    gvcmx_susremlk_stub.c
-    gvcmz_bunch_stub.c
-    gvcmz_error_stub.c
-    gvcmz_neterr_stub.c
-    gvcmz_zflush_stub.c
+
     gvcst_init_sysops.c
     gvusr.c
     heartbeat_timer.c
@@ -504,6 +494,21 @@ set(GTM_DSE_UNIX_SRC_C
   dse_remove.c
   )
 
+set(GTM_STUB_UNIX_SRC_C
+  gtcmstub.c
+  cmistub.c
+  gtcmtrstub.c
+  gvcmx_canremlk_stub.c
+  gvcmx_reqremlk_stub.c
+  gvcmx_resremlk_stub.c
+  gvcmx_susremlk_stub.c
+  gvcmz_bunch_stub.c
+  gvcmz_error_stub.c
+  gvcmz_neterr_stub.c
+  gvcmz_zflush_stub.c
+  )
+
+
 add_library(lke
   ${GTM_LKE_SRC_C}
   )
@@ -518,6 +523,10 @@ add_library(mumps
 
 add_library(dseunix
   ${GTM_DSE_UNIX_SRC_C}
+  )
+
+add_library(stubunix
+  ${GTM_STUB_UNIX_SRC_C}
   )
 
 #
