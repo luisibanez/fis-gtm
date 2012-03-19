@@ -1,17 +1,3 @@
-if(ARCHITECTURE_IS_32_BITS)
-  include_directories(
-    ${fis-gtm_SOURCE_DIR}/sr_i386
-    ${fis-gtm_SOURCE_DIR}/sr_unix_nsb
-    )
-endif()
-
-
-if(ARCHITECTURE_IS_64_BITS)
-  include_directories(
-    ${fis-gtm_SOURCE_DIR}/sr_x86_64
-    )
-endif()
-
 
 include_directories(
   ${fis-gtm_SOURCE_DIR}/sr_port_cm
@@ -387,10 +373,7 @@ if(NEED_TO_ADD_SOURCES)
     )
 endif(NEED_TO_ADD_SOURCES)
 
-set(GTM_LKE_SRC_C
-  lke.c
-  lke_cmd.c
-  lke_ctrlc_handler.c
+set(GTM_LKE_UNIX_SRC_C
   lke_fileio.c
   lke_getansw.c
   lke_help.c
@@ -509,15 +492,15 @@ set(GTM_STUB_UNIX_SRC_C
   )
 
 
-add_library(lke
-  ${GTM_LKE_SRC_C}
+add_library(lkeunix
+  ${GTM_LKE_UNIX_SRC_C}
   )
 
 add_library(mupip
   ${GTM_MUPIP_SRC_C}
   )
 
-add_library(mumps
+add_library(mumpsunix
   ${GTM_MUMPS2_SRC_C}
   )
 
@@ -539,4 +522,5 @@ add_library(dbcertifyunix
   dbcertify_parse_and_dispatch.c
   dbcertify_signal_handler.c
   )
+
 

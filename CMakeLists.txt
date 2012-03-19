@@ -96,7 +96,25 @@ include_directories(
   ${fis-gtm_BINARY_DIR}/pro
   ${fis-gtm_BINARY_DIR}/pro/obj
   ${fis-gtm_BINARY_DIR}/pro/utf8
+  ${fis-gtm_SOURCE_DIR}/sr_port
+  ${fis-gtm_SOURCE_DIR}/sr_unix
   )
+
+
+if(ARCHITECTURE_IS_32_BITS)
+  include_directories(
+    ${fis-gtm_SOURCE_DIR}/sr_i386
+    ${fis-gtm_SOURCE_DIR}/sr_unix_nsb
+    )
+endif()
+
+
+if(ARCHITECTURE_IS_64_BITS)
+  include_directories(
+    ${fis-gtm_SOURCE_DIR}/sr_x86_64
+    )
+endif()
+
 
 
 #
@@ -122,3 +140,25 @@ if(ARCHITECTURE_IS_64_BITS)
   add_subdirectory(sr_x86_64)
 endif()
 
+
+#if(EXECUTABLES_READY)
+
+add_executable(dse
+  sr_unix/lke.c
+  sr_unix/lke_cmd.c
+  sr_unix/lke_ctrlc_handler.c
+  )
+
+target_link_libraries(dse
+#  dseunix
+#  dseport
+  lkeport
+  fisgtmproobj
+  fisgtmx64
+  mumpsport
+  mumpsunix
+  elf
+  dl
+  )
+
+# endif()
