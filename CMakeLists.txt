@@ -7,6 +7,8 @@ set(LIBRARY_OUTPUT_PATH ${fis-gtm_BINARY_DIR}/lib)
 option(USE_GCRYPT  "Use the gcrypt library for encryption" ON)
 option(USE_OPENSSL "Use the openssl library for encryption" OFF)
 
+set(LIBRARY_TYPE "SHARED")
+
 configure_file(
   ${fis-gtm_SOURCE_DIR}/gtmconfig.h.in
   ${fis-gtm_BINARY_DIR}/gtmconfig.h
@@ -141,17 +143,13 @@ if(ARCHITECTURE_IS_64_BITS)
 endif()
 
 
-#if(EXECUTABLES_READY)
+if( FIXED_ALL_EXECUTABLES )
 
-add_executable(dse
-  sr_unix/lke.c
-  sr_unix/lke_cmd.c
-  sr_unix/lke_ctrlc_handler.c
+add_executable(mumps
+  sr_unix/gtm_main.c
   )
 
-target_link_libraries(dse
-#  dseunix
-#  dseport
+target_link_libraries(mumps
   lkeport
   fisgtmproobj
   fisgtmx64
@@ -161,4 +159,160 @@ target_link_libraries(dse
   dl
   )
 
-# endif()
+
+add_executable(mupip
+  sr_unix/mupip.c
+  )
+
+target_link_libraries(mupip
+  mupipunix
+  lkeport
+  fisgtmproobj
+  fisgtmx64
+  mumpsport
+  mumpsunix
+  elf
+  dl
+  )
+
+
+
+add_executable(lke
+  sr_unix/lke.c
+  sr_unix/lke_cmd.c
+  sr_unix/lke_ctrlc_handler.c
+  )
+
+target_link_libraries(lke
+  lkeport
+  fisgtmproobj
+  fisgtmx64
+  mumpsport
+  mumpsunix
+  elf
+  dl
+  )
+
+
+add_executable(dse
+  sr_unix/dse.c
+  sr_unix/lke_cmd.c
+  sr_unix/lke_ctrlc_handler.c
+  )
+
+target_link_libraries(dse
+  lkeport
+  fisgtmproobj
+  fisgtmx64
+  mumpsport
+  mumpsunix
+  elf
+  dl
+  )
+
+
+add_executable(ftok
+  sr_unix/ftok.c
+  )
+
+target_link_libraries(ftok
+  lkeport
+  fisgtmproobj
+  fisgtmx64
+  mumpsport
+  mumpsunix
+  elf
+  dl
+  )
+
+
+add_executable(gtm
+  sr_unix/gtm.c
+  )
+
+target_link_libraries(gtm
+  lkeport
+  fisgtmproobj
+  fisgtmx64
+  mumpsport
+  mumpsunix
+  elf
+  dl
+  )
+
+
+add_executable(semstat2
+  sr_unix/semstat2.c
+  )
+
+target_link_libraries(semstat2
+  lkeport
+  fisgtmproobj
+  fisgtmx64
+  mumpsport
+  mumpsunix
+  elf
+  dl
+  )
+
+add_executable(gtmsecshr
+  sr_unix/gtmsecshr.c
+  )
+
+target_link_libraries(gtmsecshr
+  lkeport
+  fisgtmproobj
+  fisgtmx64
+  mumpsport
+  mumpsunix
+  elf
+  dl
+  )
+
+
+add_executable(gtcm_pkdisp
+  sr_unix_cm/gtcm_pkdisp.c
+  )
+
+target_link_libraries(gtcm_pkdisp
+  lkeport
+  fisgtmproobj
+  fisgtmx64
+  mumpsport
+  mumpsunix
+  elf
+  dl
+  )
+
+
+add_executable(gtcm_play
+  sr_unix_cm/gtcm_play.c
+  )
+
+target_link_libraries(gtcm_play
+  lkeport
+  fisgtmproobj
+  fisgtmx64
+  mumpsport
+  mumpsunix
+  elf
+  dl
+  )
+
+
+add_executable(gtcm_shmclean
+  sr_unix_cm/gtcm_shmclean.c
+  )
+
+target_link_libraries(gtcm_shmclean
+  lkeport
+  fisgtmproobj
+  fisgtmx64
+  mumpsport
+  mumpsunix
+  elf
+  dl
+  )
+
+
+endif()

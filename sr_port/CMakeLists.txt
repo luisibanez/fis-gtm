@@ -1626,31 +1626,31 @@ set(GTM_LKE_PORT_SRC_C
   lke_showtree.c
   )
 
-add_library(gnpclientport
+add_library(gnpclientport ${LIBRARY_TYPE}
   ${GTM_GNPCLIENT_SRC_C}
   )
 
 
-add_library(dseport
+add_library(dseport ${LIBRARY_TYPE}
   ${GTM_DSE_SRC_C}
   )
 
-add_library(mumpipport
+add_library(mumpipport ${LIBRARY_TYPE}
   ${GTM_MUPIP_PORT_SRC_C}
   )
 
-add_library(mumpsport
+add_library(mumpsport ${LIBRARY_TYPE}
   ${GTM_MUMPS_PORT_SRC_C}
   )
 
-add_library(lkeport
+add_library(lkeport ${LIBRARY_TYPE}
   ${GTM_LKE_PORT_SRC_C}
   )
 
 #
 #  Complimentary pieces are in sr_unix
 #
-add_library(dbcertifyport
+add_library(dbcertifyport ${LIBRARY_TYPE}
   dbcertify.c
   dbcertify_base_ch.c
   dbcertify_certify_phase.c

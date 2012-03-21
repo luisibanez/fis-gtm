@@ -56,7 +56,6 @@ set(GTM_MUMPS2_SRC_C
   dskspace_msg_timer.c
   err_init.c
   error_return.c
-  gtm_main.c
   )
 
 if(ARCHITECTURE_IS_64_BITS)
@@ -65,7 +64,6 @@ if(ARCHITECTURE_IS_64_BITS)
     auto_zlink.c
     callg.c
     comp_lits.c
-    dse.c
     dse_cmd.c
     gtm_unlink_all.c
     gtm_trigger.c
@@ -78,7 +76,6 @@ if(ARCHITECTURE_IS_64_BITS)
     file_head_read.c
     file_head_write.c
     file_input.c
-    ftok.c
     ftok_sems.c
     gds_rundown.c
     gdsfilext.c
@@ -98,7 +95,6 @@ if(ARCHITECTURE_IS_64_BITS)
     grab_crit.c
     grab_lock.c
     gt_timers.c
-    gtm.c
     gtm_bintim.c
     gtm_c_stack_trace_semop.c
     gtm_compile.c
@@ -137,7 +133,7 @@ if(ARCHITECTURE_IS_64_BITS)
     gtmci_isv.c
     gtmci_signals.c
     gtmcrypt_entry.c
-    gtmsecshr.c
+#   gtmsecshr.c      contains a main, make it executable
     gtmsecshr_sock_cleanup.c
     gtmsecshr_sock_init.c
     gtmsecshr_wrapper.c
@@ -223,7 +219,7 @@ if(ARCHITECTURE_IS_64_BITS)
     mubfilcpy.c
     mumps_clitab.c
     mup_bak_sys.c
-    mupip.c
+#   mupip.c         it has a main -> executable
     mupip_cmd.c
     mupip_crypt.c
     mutex.c
@@ -289,7 +285,7 @@ if(ARCHITECTURE_IS_64_BITS)
     rts_error.c
     same_device_check.c
     secshr_client.c
-    semstat2.c
+#    semstat2.c      contains a main, make it an executable
     send_msg.c
     set_jnl_file_close.c
     set_num_additional_processors.c
@@ -492,30 +488,30 @@ set(GTM_STUB_UNIX_SRC_C
   )
 
 
-add_library(lkeunix
+add_library(lkeunix ${LIBRARY_TYPE}
   ${GTM_LKE_UNIX_SRC_C}
   )
 
-add_library(mupip
+add_library(mupipunix ${LIBRARY_TYPE}
   ${GTM_MUPIP_SRC_C}
   )
 
-add_library(mumpsunix
+add_library(mumpsunix ${LIBRARY_TYPE}
   ${GTM_MUMPS2_SRC_C}
   )
 
-add_library(dseunix
+add_library(dseunix ${LIBRARY_TYPE}
   ${GTM_DSE_UNIX_SRC_C}
   )
 
-add_library(stubunix
+add_library(stubunix ${LIBRARY_TYPE}
   ${GTM_STUB_UNIX_SRC_C}
   )
 
 #
 #  Complimentary pieces are in sr_port
 #
-add_library(dbcertifyunix
+add_library(dbcertifyunix ${LIBRARY_TYPE}
   dbcertify_cmd.c
   dbcertify_dbfilop.c
   dbcertify_deferred_signal_handler.c

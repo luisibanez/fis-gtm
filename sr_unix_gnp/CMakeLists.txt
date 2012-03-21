@@ -71,7 +71,7 @@ set(OTHER_SRC_C
   gvcmz_errmsg.c
   )
 
-add_library(cmisockettcp
+add_library(cmisockettcp ${LIBRARY_TYPE}
   ${GTM_CMI_SOCKET_TCP_UNIX_SRC_C}
   )
 
