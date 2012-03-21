@@ -120,7 +120,7 @@ set(SRC_S
   )
 
 
-add_library(fisgtmx64 ${LIBRARY_TYPE}
+add_library(fisgtmx64 # ${LIBRARY_TYPE}
   ${SRC_C}
   ${SRC_S}
   )

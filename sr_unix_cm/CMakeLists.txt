@@ -87,7 +87,7 @@ set(GTM_UNIX_CM_SRC
   rc_srvc_xct.c
   )
 
-add_library(gtm_unix_cm ${LIBRARY_TYPE}
+add_library(gtmunixcm ${LIBRARY_TYPE}
   ${GTM_UNIX_CM_SRC}
   )
 

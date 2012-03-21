@@ -124,6 +124,7 @@ set(GTM_MUMPS_PORT_SRC_C
   crit_wake_alarm.c
 # ctrap_set.o in sr_unix
 # ctrlc_handler.o in sr_unix
+  ctrlc_handler_dummy.c
 # ctrlc_set.o in sr_unix
 # ctrly_set.o in sr_unix
   cvtparm.c
@@ -1287,7 +1288,7 @@ set(GTM_MUMPS_PORT_SRC_C
 # zro_load.o      in  sr_unix
 # zro_search.o      in  sr_unix
 # zro_shlibs.o      in  sr_unix
-  zshow_ch.c
+# zshow_ch.c       problem with undefined symbol: zwr_output_buff
 # zshow_devices.o      in  sr_unix
   zshow_format_lock.c
   zshow_gvstats.c
@@ -1575,15 +1576,18 @@ set(GTM_DSE_SRC_C
   skan_rnum.c
   )
 
+set(GTM_FRAME_SRC_C
+  unw_prof_frame_dummy.c
+  movtc.c
+  )
+
 set(GTM_GNPCLIENT_SRC_C
   # The rest of the sources are in sr_port_cm
   callg_signal.c
   )
 
 set(GTM_PORT_SRC_C_EXTRAS
-  movtc.c                     # Not found in manual build log
   caller_id.c                 # There is another caller_id.c in sr_linux
-  unw_prof_frame_dummy.c      # Not found in manual build log
   gtm_threadgbl_deftypes.c    # Not found in manual build log
   )
 
@@ -1626,16 +1630,19 @@ set(GTM_LKE_PORT_SRC_C
   lke_showtree.c
   )
 
+add_library(frameport ${LIBRARY_TYPE}
+  ${GTM_FRAME_SRC_C}
+  )
+
 add_library(gnpclientport ${LIBRARY_TYPE}
   ${GTM_GNPCLIENT_SRC_C}
   )
-
 
 add_library(dseport ${LIBRARY_TYPE}
   ${GTM_DSE_SRC_C}
   )
 
-add_library(mumpipport ${LIBRARY_TYPE}
+add_library(mupipport ${LIBRARY_TYPE}
   ${GTM_MUPIP_PORT_SRC_C}
   )
 

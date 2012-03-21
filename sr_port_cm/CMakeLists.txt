@@ -21,7 +21,7 @@ include_directories(
   ${fis-gtm_SOURCE_DIR}/sr_port
   )
 
-add_library(gtm_port_cm ${LIBRARY_TYPE}
+add_library(gtmportcm ${LIBRARY_TYPE}
   gtcm_action_pending.c
   gtcm_add_region.c
   gtcm_bind_name.c

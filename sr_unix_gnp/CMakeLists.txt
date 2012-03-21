@@ -57,9 +57,7 @@ set(GTM_CMI_SOCKET_TCP_UNIX_SRC_C
   cmj_write.c
   cmu_getclb.c
   cmu_ntdroot.c
-  )
-
-set(OTHER_SRC_C
+  gvcmz_errmsg.c
   gtcm_ch.c
   gtcmd_ini_reg.c
   gtcm_exi_ch.c
@@ -68,7 +66,6 @@ set(OTHER_SRC_C
   gtcm_gnp_server.c
   gtcm_open_cmerrlog.c
   gtcm_urgread_ast.c
-  gvcmz_errmsg.c
   )
 
 add_library(cmisockettcp ${LIBRARY_TYPE}
