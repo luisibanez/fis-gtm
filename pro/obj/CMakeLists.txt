@@ -25,7 +25,7 @@ set(GTM_MUMPS_PRO_SRC_C
   ttt.c
   )
 
-add_library(mumpspro
+add_library(mumpspro ${LIBRARY_TYPE}
   ${GTM_MUMPS_PRO_SRC_C}
   )
 
@@ -38,6 +38,6 @@ set(SRC_C
   ttt.c
   )
 
-add_library(fisgtmproobj
+add_library(fisgtmproobj ${LIBRARY_TYPE}
   ${SRC_C}
   )

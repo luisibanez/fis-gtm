@@ -29,7 +29,7 @@ set(GTM_UNIX_NSB_SRC
   shrink_jmps.c
   )
 
-add_library(gtm_unix_nsb
+add_library(gtm_unix_nsb ${LIBRARY_TYPE}
   ${GTM_UNIX_NSB_SRC}
   )
 

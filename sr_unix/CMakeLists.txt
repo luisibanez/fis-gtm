@@ -1,17 +1,3 @@
-if(ARCHITECTURE_IS_32_BITS)
-  include_directories(
-    ${fis-gtm_SOURCE_DIR}/sr_i386
-    ${fis-gtm_SOURCE_DIR}/sr_unix_nsb
-    )
-endif()
-
-
-if(ARCHITECTURE_IS_64_BITS)
-  include_directories(
-    ${fis-gtm_SOURCE_DIR}/sr_x86_64
-    )
-endif()
-
 
 include_directories(
   ${fis-gtm_SOURCE_DIR}/sr_port_cm
@@ -19,6 +5,7 @@ include_directories(
   ${fis-gtm_SOURCE_DIR}/pro/obj
   ${fis-gtm_SOURCE_DIR}/sr_unix
   ${fis-gtm_SOURCE_DIR}/sr_linux
+  ${fis-gtm_SOURCE_DIR}/sr_x86_regs
   )
 
 set(GTM_MUMPS2_SRC_C
@@ -70,7 +57,7 @@ set(GTM_MUMPS2_SRC_C
   dskspace_msg_timer.c
   err_init.c
   error_return.c
-  gtm_main.c
+  extract_signal_info.c
   )
 
 if(ARCHITECTURE_IS_64_BITS)
@@ -79,10 +66,10 @@ if(ARCHITECTURE_IS_64_BITS)
     auto_zlink.c
     callg.c
     comp_lits.c
-    dse.c
-    dse_cmd.c
     gtm_unlink_all.c
     gtm_trigger.c
+    gtm_tparm.c
+    gtm_tputs.c
     incr_link.c
     exttab_parse.c
     exttime.c
@@ -92,8 +79,6 @@ if(ARCHITECTURE_IS_64_BITS)
     file_head_read.c
     file_head_write.c
     file_input.c
-    ftok.c
-    ftok_sems.c
     gds_rundown.c
     gdsfilext.c
     generic_signal_handler.c
@@ -102,8 +87,10 @@ if(ARCHITECTURE_IS_64_BITS)
     get_full_path.c
     get_page_size.c
     get_src_line.c
+    getcaps.c
     geteditor.c
     getjobnum.c
+    getmaxfds.c
     getstorage.c
     getzmode.c
     getzprocess.c
@@ -112,7 +99,6 @@ if(ARCHITECTURE_IS_64_BITS)
     grab_crit.c
     grab_lock.c
     gt_timers.c
-    gtm.c
     gtm_bintim.c
     gtm_c_stack_trace_semop.c
     gtm_compile.c
@@ -132,6 +118,7 @@ if(ARCHITECTURE_IS_64_BITS)
     gtm_getpwuid.c
     gtm_icu.c
     gtm_init_env.c
+    gtm_isanlp.c
     gtm_permissions.c
     gtm_pipe.c
     gtm_putmsg.c
@@ -151,7 +138,7 @@ if(ARCHITECTURE_IS_64_BITS)
     gtmci_isv.c
     gtmci_signals.c
     gtmcrypt_entry.c
-    gtmsecshr.c
+#   gtmsecshr.c      contains a main, make it executable
     gtmsecshr_sock_cleanup.c
     gtmsecshr_sock_init.c
     gtmsecshr_wrapper.c
@@ -219,6 +206,7 @@ if(ARCHITECTURE_IS_64_BITS)
     is_proc_alive.c
     is_raw_dev.c
     jnl_file_extend.c
+    jnl_file_open.c
     jnl_fsync.c
     jnl_output_sp.c
     jnl_prc_vector.c
@@ -231,13 +219,14 @@ if(ARCHITECTURE_IS_64_BITS)
     m_ztrigger.c
     make_cimode.c
     make_dmode.c
+    make_mode.c     # apparently used in 64 bits...
     map_sym.c
     mem_access.c
     mubexpfilnam.c
     mubfilcpy.c
     mumps_clitab.c
     mup_bak_sys.c
-    mupip.c
+#   mupip.c         it has a main -> executable
     mupip_cmd.c
     mupip_crypt.c
     mutex.c
@@ -295,6 +284,7 @@ if(ARCHITECTURE_IS_64_BITS)
     rc_cpt_ops.c
     reg_cmcheck.c
     rel_crit.c
+    rel_quant.c
     rel_lock.c
     remove_rms.c
     repl_instance.c
@@ -303,7 +293,7 @@ if(ARCHITECTURE_IS_64_BITS)
     rts_error.c
     same_device_check.c
     secshr_client.c
-    semstat2.c
+#    semstat2.c      contains a main, make it an executable
     send_msg.c
     set_jnl_file_close.c
     set_num_additional_processors.c
@@ -373,7 +363,6 @@ if(ARCHITECTURE_IS_32_BITS)
     ${GTM_MUMPS2_SRC_C}
     daemon_ch.c
     daemon_crit.c
-    extract_signal_info.c
 #   sr_unix_nsb/comp_lits.c
     )
 endif()
@@ -382,15 +371,10 @@ endif()
 if(NEED_TO_ADD_SOURCES)
   set(GTM_MUMPS2_SRC_C
     ${GTM_MUMPS2_SRC_C}
-    jnl_file_open.c
-    make_mode.c     # apparently used in 64 bits...
     )
 endif(NEED_TO_ADD_SOURCES)
 
-set(GTM_LKE_SRC_C
-  lke.c
-  lke_cmd.c
-  lke_ctrlc_handler.c
+set(GTM_LKE_UNIX_SRC_C
   lke_fileio.c
   lke_getansw.c
   lke_help.c
@@ -486,6 +470,7 @@ set(GTM_MUPIP_SRC_C
   )
 
 set(GTM_DSE_UNIX_SRC_C
+  dse_cmd.c
   dse_cmd_disallow.c
   dse_ctrlc_handler.c
   dse_help.c
@@ -508,35 +493,43 @@ set(GTM_STUB_UNIX_SRC_C
   gvcmz_zflush_stub.c
   )
 
-
-add_library(lke
-  ${GTM_LKE_SRC_C}
+set(GTM_FTOK_SRC_C
+  ftok_sems.c
   )
 
-add_library(mupip
+add_library(ftokunix ${LIBRARY_TYPE}
+  ${GTM_FTOK_SRC_C}
+  )
+
+add_library(lkeunix ${LIBRARY_TYPE}
+  ${GTM_LKE_UNIX_SRC_C}
+  )
+
+add_library(mupipunix ${LIBRARY_TYPE}
   ${GTM_MUPIP_SRC_C}
   )
 
-add_library(mumps
+add_library(mumpsunix ${LIBRARY_TYPE}
   ${GTM_MUMPS2_SRC_C}
   )
 
-add_library(dseunix
+add_library(dseunix ${LIBRARY_TYPE}
   ${GTM_DSE_UNIX_SRC_C}
   )
 
-add_library(stubunix
+add_library(stubunix ${LIBRARY_TYPE}
   ${GTM_STUB_UNIX_SRC_C}
   )
 
 #
 #  Complimentary pieces are in sr_port
 #
-add_library(dbcertifyunix
+add_library(dbcertifyunix ${LIBRARY_TYPE}
   dbcertify_cmd.c
   dbcertify_dbfilop.c
   dbcertify_deferred_signal_handler.c
   dbcertify_parse_and_dispatch.c
   dbcertify_signal_handler.c
   )
+
 

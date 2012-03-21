@@ -9,6 +9,7 @@
  *								*
  ****************************************************************/
 
+#include "gtmconfig.h"
 #include "mdef.h"
 #include "gtm_statvfs.h"
 

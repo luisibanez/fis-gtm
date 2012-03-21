@@ -21,7 +21,7 @@ include_directories(
   ${fis-gtm_SOURCE_DIR}/sr_port
   )
 
-add_library(gtm_port_cm
+add_library(gtmportcm ${LIBRARY_TYPE}
   gtcm_action_pending.c
   gtcm_add_region.c
   gtcm_bind_name.c
@@ -127,7 +127,7 @@ set(GTM_GNPCLIENT_PORT_CM_SRC_C
   lock_cmtimeout.c
   )
 
-add_library(gnpclientportcm
+add_library(gnpclientportcm ${LIBRARY_TYPE}
   ${GTM_GNPCLIENT_PORT_CM_SRC_C}
   )
 
@@ -138,7 +138,7 @@ set(GTM_CMI_SOCKET_TCP_PORT_CM_SRC_C
   gtcm_release_name.c
   )
 
-add_library(cmisockettcpportcm
+add_library(cmisockettcpportcm ${LIBRARY_TYPE}
   ${GTM_CMI_SOCKET_TCP_PORT_CM_SRC_C}
   )
 

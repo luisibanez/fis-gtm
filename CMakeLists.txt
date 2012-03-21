@@ -7,6 +7,10 @@ set(LIBRARY_OUTPUT_PATH ${fis-gtm_BINARY_DIR}/lib)
 option(USE_GCRYPT  "Use the gcrypt library for encryption" ON)
 option(USE_OPENSSL "Use the openssl library for encryption" OFF)
 
+set(LIBRARY_TYPE "SHARED")
+
+find_package(Curses REQUIRED)
+
 configure_file(
   ${fis-gtm_SOURCE_DIR}/gtmconfig.h.in
   ${fis-gtm_BINARY_DIR}/gtmconfig.h
@@ -96,7 +100,41 @@ include_directories(
   ${fis-gtm_BINARY_DIR}/pro
   ${fis-gtm_BINARY_DIR}/pro/obj
   ${fis-gtm_BINARY_DIR}/pro/utf8
+  ${fis-gtm_SOURCE_DIR}/sr_port
+  ${fis-gtm_SOURCE_DIR}/sr_unix
   )
+
+
+#
+# Configure to build assembly files
+#
+set(can_use_assembler FALSE)
+
+# test wether it is a x86 machine and as/gas is available
+if("${CMAKE_SYSTEM_PROCESSOR}" MATCHES ".86")
+   enable_language(ASM-ATT)
+   if(CMAKE_ASM-ATT_COMPILER_WORKS)
+      set(can_use_assembler TRUE)
+   endif(CMAKE_ASM-ATT_COMPILER_WORKS)
+endif("${CMAKE_SYSTEM_PROCESSOR}" MATCHES ".86")
+
+
+
+
+if(ARCHITECTURE_IS_32_BITS)
+  include_directories(
+    ${fis-gtm_SOURCE_DIR}/sr_i386
+    ${fis-gtm_SOURCE_DIR}/sr_unix_nsb
+    )
+endif()
+
+
+if(ARCHITECTURE_IS_64_BITS)
+  include_directories(
+    ${fis-gtm_SOURCE_DIR}/sr_x86_64
+    )
+endif()
+
 
 
 #
@@ -121,4 +159,312 @@ endif()
 if(ARCHITECTURE_IS_64_BITS)
   add_subdirectory(sr_x86_64)
 endif()
+
+
+
+add_executable(mumps
+  sr_unix/gtm_main.c
+  )
+
+target_link_libraries(mumps
+  lkeport
+  lkeunix
+  fisgtmproobj
+  mumpsport
+  mumpsunix
+  mupipport
+  mupipunix
+  gtmlinux2
+  fisgtmproobj
+  fisgtmx64
+  gnpclientportcm
+  gnpclientport
+  cmisockettcpportcm
+  cmisockettcp
+  gtmportcm
+  gtmunixcm
+  ftokunix
+  frameport
+  ${CURSES_LIBRARIES}
+  elf
+  dl
+  pthread
+  m
+  )
+
+
+add_executable(dse
+  sr_unix/dse.c
+  sr_unix/lke_cmd.c
+  sr_unix/lke_ctrlc_handler.c
+  )
+
+target_link_libraries(dse
+  lkeport
+  lkeunix
+  mumpsport
+  mumpsunix
+  mupipport
+  mupipunix
+  dseport
+  dseunix
+  gtmlinux2
+  fisgtmproobj
+  fisgtmx64
+  gnpclientportcm
+  gnpclientport
+  cmisockettcpportcm
+  cmisockettcp
+  gtmportcm
+  gtmunixcm
+  ftokunix
+  frameport
+  ${CURSES_LIBRARIES}
+  elf
+  dl
+  pthread
+  m
+  )
+
+
+
+add_executable(mupip
+  sr_unix/mupip.c
+  )
+
+target_link_libraries(mupip
+  mupipport
+  mupipunix
+  lkeport
+  lkeunix
+  fisgtmproobj
+  fisgtmx64
+  mumpsport
+  mumpsunix
+  mumpsport
+  mumpsunix
+  gtmlinux2
+  fisgtmproobj
+  fisgtmx64
+  gnpclientportcm
+  gnpclientport
+  cmisockettcpportcm
+  cmisockettcp
+  gtmportcm
+  gtmunixcm
+  ftokunix
+  frameport
+  ${CURSES_LIBRARIES}
+  elf
+  dl
+  pthread
+  m
+  )
+
+
+add_executable(lke
+  sr_unix/lke.c
+  sr_unix/lke_cmd.c
+  sr_unix/lke_ctrlc_handler.c
+  )
+
+target_link_libraries(lke
+  lkeport
+  lkeunix
+  mumpsport
+  mumpsunix
+  mupipport
+  mupipunix
+  fisgtmx64
+  fisgtmproobj
+  gnpclientportcm
+  gnpclientport
+  cmisockettcpportcm
+  cmisockettcp
+  gtmunixcm
+  gtmportcm
+  gtmlinux2
+  frameport
+  ftokunix
+  ${CURSES_LIBRARIES}
+  elf
+  dl
+  pthread
+  m
+  )
+
+
+add_executable(ftok
+  sr_unix/ftok.c
+  )
+
+target_link_libraries(ftok
+  lkeport
+  fisgtmproobj
+  fisgtmx64
+  mumpsport
+  mumpsunix
+  mupipport
+  mupipunix
+  lkeunix
+  cmisockettcpportcm
+  cmisockettcp
+  gnpclientportcm
+  gnpclientport
+  gtmportcm
+  gtmunixcm
+  gtmlinux2
+  fisgtmx64
+  ftokunix
+  frameport
+  ${CURSES_LIBRARIES}
+  elf
+  pthread
+  dl
+  m
+  )
+
+
+add_executable(gtm
+  sr_unix/gtm.c
+  )
+
+target_link_libraries(gtm
+  dl
+  m
+  )
+
+
+
+add_executable(semstat2
+  sr_unix/semstat2.c
+  )
+
+target_link_libraries(semstat2
+  elf
+  dl
+  )
+
+
+add_executable(gtmsecshr
+  sr_unix/gtmsecshr.c
+  )
+
+target_link_libraries(gtmsecshr
+  mumpsport
+  mumpsunix
+  fisgtmproobj
+  fisgtmx64
+  lkeport
+  lkeunix
+  gtmportcm
+  gtmunixcm
+  gtmlinux2
+  gnpclientportcm
+  gnpclientport
+  cmisockettcpportcm
+  cmisockettcp
+  mupipport
+  mupipunix
+  ftokunix
+  frameport
+  ${CURSES_LIBRARIES}
+  pthread
+  elf
+  dl
+  m
+  )
+
+
+add_executable(gtcm_pkdisp
+  sr_unix_cm/gtcm_pkdisp.c
+  )
+
+target_link_libraries(gtcm_pkdisp
+  mumpsport
+  mumpsunix
+  fisgtmproobj
+  fisgtmx64
+  lkeport
+  lkeunix
+  gtmportcm
+  gtmunixcm
+  gtmlinux2
+  gnpclientportcm
+  gnpclientport
+  cmisockettcpportcm
+  cmisockettcp
+  mupipport
+  mupipunix
+  ftokunix
+  frameport
+  ${CURSES_LIBRARIES}
+  pthread
+  elf
+  dl
+  m
+  )
+
+
+add_executable(gtcm_play
+  sr_unix_cm/gtcm_play.c
+  )
+
+target_link_libraries(gtcm_play
+  mumpsport
+  mumpsunix
+  mupipport
+  mupipunix
+  stubunix
+  gtmunixcm
+  gtmlinux2
+  gtmportcm
+  gnpclientportcm
+  gnpclientport
+  cmisockettcp
+  cmisockettcpportcm
+  lkeport
+  lkeunix
+  fisgtmproobj
+  fisgtmx64
+  ftokunix
+  frameport
+  ${CURSES_LIBRARIES}
+  pthread
+  elf
+  dl
+  m
+  )
+
+
+add_executable(gtcm_shmclean
+  sr_unix_cm/gtcm_shmclean.c
+  )
+
+target_link_libraries(gtcm_shmclean
+  mumpsport
+  mumpsunix
+  mupipport
+  mupipunix
+  gtmportcm
+  gtmunixcm
+  gtmlinux2
+  gnpclientportcm
+  gnpclientport
+  stubunix
+  cmisockettcpportcm
+  cmisockettcp
+  lkeport
+  lkeunix
+  fisgtmproobj
+  fisgtmx64
+  ftokunix
+  frameport
+  ${CURSES_LIBRARIES}
+  pthread
+  elf
+  dl
+  m
+  )
+
 

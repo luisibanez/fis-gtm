@@ -35,12 +35,12 @@ set(GTM_UNIX_CM_SRC
   gtcm_loop.c
   gtcm_main.c
   gtcm_ping.c
-  gtcm_pkdisp.c
+# gtcm_pkdisp.c   has a main, make it executable.
   gtcm_pktdmp.c
-  gtcm_play.c
+# gtcm_play.c     has a main, make it executable.
   gtcm_prsopt.c
   gtcm_rep_err.c
-  gtcm_shmclean.c
+# gtcm_shmclean.c     has a main, make it executable.
   gtcm_term.c
   omi_buff_rsp.c
   omi_dbms_ch.c
@@ -87,7 +87,7 @@ set(GTM_UNIX_CM_SRC
   rc_srvc_xct.c
   )
 
-add_library(gtm_unix_cm
+add_library(gtmunixcm ${LIBRARY_TYPE}
   ${GTM_UNIX_CM_SRC}
   )
 

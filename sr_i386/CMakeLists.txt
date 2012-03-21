@@ -128,7 +128,7 @@ set(SRC_S
   )
 
 
-add_library(fisgtmi386
+add_library(fisgtmi386 ${LIBRARY_TYPE}
   ${SRC_C}
   ${SRC_S}
   )
