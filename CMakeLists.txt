@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 2.8)
 project(fis-gtm)
 
 set(LIBRARY_OUTPUT_PATH ${fis-gtm_BINARY_DIR}/lib)
+set(EXECUTABLE_OUTPUT_PATH ${fis-gtm_BINARY_DIR}/bin)
 
 option(USE_GCRYPT  "Use the gcrypt library for encryption" ON)
 option(USE_OPENSSL "Use the openssl library for encryption" OFF)
