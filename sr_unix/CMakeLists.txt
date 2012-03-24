@@ -428,7 +428,6 @@ set(GTM_MUPIP_SRC_C
   mu_cre_file.c
   mu_cre_structs.c
   mu_extract.c
-  mu_file_size.c
   mu_getlst.c
   mu_gvis.c
   mu_int_ch.c
