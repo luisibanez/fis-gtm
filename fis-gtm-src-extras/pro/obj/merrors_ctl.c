@@ -273,9 +273,9 @@ LITDEF	err_msg merrors[] = {
 	"MULTFORMPARM", "This formal parameter is multiply defined", 0,
 	"QUITARGUSE", "Quit cannot take an argument in this context", 0,
 	"NAMEEXPECTED", "A local variable name is expected in this context", 0,
-	"ACTLSTEXP", "Actuallist expected", 0,
+	"UNUSEDMSG438", "ACTLSTEXP: Last used in V5.4-002B", 0,
 	"NOTEXTRINSIC", "Quit does not return to an extrinsic function: argument not allowed", 0,
-	"FMLLSTPRESENT", "The actual list is absent from a call to a label with a formal list: !AD", 2,
+	"UNUSEDMSG440", "FMLLSTPRESENT: Last used in V5.4-002B", 0,
 	"FMLLSTMISSING", "The formal list is absent from a label called with an actual list: !AD", 2,
 	"ACTLSTTOOLONG", "More actual parameters than formal parameters: !AD", 2,
 	"ACTOFFSET", "Actuallist not allowed with offset", 0,
@@ -283,7 +283,7 @@ LITDEF	err_msg merrors[] = {
 	"GTMDUMPFAIL", "Could not create DUMP FILE", 0,
 	"JNLTMQUAL2", "Time qualifier LOOKBACK_TIME=\"!AZ\" is later than SINCE_TIME=\"!AZ\"", 2,
 	"GDINVALID", "Unrecognized Global Directory file format: !AD, expected label: !AD, found: !AD", 6,
-	"ASSERT", "Assert failed in !AD line !UL for expression (!AD) ", 5,
+	"ASSERT", "Assert failed in !AD line !UL for expression (!AD)", 5,
 	"MUFILRNDWNSUC", "File !AD successfully rundown", 2,
 	"LOADEDSZ", "Load error: END too small.  No records loaded.", 0,
 	"QUITARGLST", "Quit cannot take a list of arguments", 0,
@@ -595,7 +595,7 @@ LITDEF	err_msg merrors[] = {
 	"SOCKLISTEN", "Error listening on a socket", 0,
 	"LQLENGTHNA", "Listening queue length !UL not appropriate.  Must be between 1 and 5.", 1,
 	"ADDRTOOLONG", "Socket address !AD of length !UL is longer than the maximum permissible length !UL", 4,
-	"UNUSEDMSG760", "Listen and connect are not compatible", 0,
+	"UNUSEDMSG760", "LSNCONNOTCMP Last used in V5.4-002A", 0,
 	"CPBEYALLOC", "Attempt to copy beyond the allocated buffer", 0,
 	"DBRDONLY", "Database file !AD read only", 2,
 	"DUPTN", "Duplicate transaction found [TN = 0x!16@XQ] at offset 0x!XL in journal file !AD", 4,
@@ -621,7 +621,7 @@ LITDEF	err_msg merrors[] = {
 	"JNLSTATEOFF", "ROLLBACK or RECOVER BACKWARD cannot proceed as database file !AD does not have journaling ENABLED and ON", 2,
 	"RECVPOOLSETUP", "Receive Pool setup error", 0,
 	"REPLCOMM", "Replication subsystem communication failure", 0,
-	"NOREPLCTDREG", "Replication subsystem found no region replicated for global directory !AZ", 1,
+	"NOREPLCTDREG", "Replication subsystem found no region replicated for !AD !AZ", 3,
 	"REPLINFO", "!AD", 2,
 	"REPLWARN", "!AD", 2,
 	"REPLERR", "!AD", 2,
@@ -804,7 +804,7 @@ LITDEF	err_msg merrors[] = {
 	"DBTNLTCTN", "Transaction numbers greater than the current transaction were found", 0,
 	"DBTNRESET", "Cannot reset transaction number for this region", 0,
 	"MUTEXRSRCCLNUP", "Mutex subsystem leftover resource !AD removed", 2,
-	"SEMWT2LONG", "Waited too long for the access control lock for region !AD, lock held by pid, !UL", 3,
+	"SEMWT2LONG", "Process !UL waited !UL second(s) for the !AD lock for region !AD, lock held by pid !UL", 7,
 	"REPLINSTOPEN", "Error opening replication instance file !AD", 2,
 	"REPLINSTCLOSE", "Error closing replication instance file !AD", 2,
 	"JNLNOTFOUND", "File !AD does not exist -- possibly moved or deleted", 2,
@@ -946,11 +946,11 @@ LITDEF	err_msg merrors[] = {
 	"JNLALIGNSZCHG", "Journal ALIGNSIZE is rounded up to !UL blocks (closest next higher power of two)", 1,
 	"MAXTRACELEVEL", "The maximum traceable level of !UL has been exceeded. The frame information will not be maintained.", 1,
 	"GVFAILCORE", "A core file is being created for later analysis if necessary", 0,
-	"DBCDBNOCERTIFY", "Database !AD HAS NOT been certified due to the preceeding errors - rerun DBCERTIFY SCAN", 2,
+	"DBCDBNOCERTIFY", "Database !AD HAS NOT been certified due to the preceding errors - rerun DBCERTIFY SCAN", 2,
 	"DBFRZRESETSUC", "Freeze released successfully on database file !AD", 2,
 	"JNLFILEXTERR", "Error during extension of journal file !AD", 2,
 	"JOBEXAMDONE", "GT.M process !UL completed job examine to !AD", 3,
-	"JOBEXAMFAIL", "GT.M process !UL executing $ZJOBEXAM function failed with the preceeding error message", 1,
+	"JOBEXAMFAIL", "GT.M process !UL executing $ZJOBEXAM function failed with the preceding error message", 1,
 	"JOBINTRRQST", "Job interrupt requested", 0,
 	"ERRWZINTR", "Error while processing $ZINTERRUPT", 0,
 	"CLIERR", "!AD", 2,
@@ -1030,7 +1030,7 @@ LITDEF	err_msg merrors[] = {
 	"DBFRZRESETFL", "Freeze release failed on database file !AD", 2,
 	"JNLCYCLE", "Journal file !AD causes cycle in the journal file generations of database file !AD", 4,
 	"JNLPREVRECOV", "Journal file has nonzero value in prev_recov_end_of_data field", 0,
-	"RESOLVESEQNO", "Resolving until sequence number 0x!16@XQ", 1,
+	"RESOLVESEQNO", "Resolving until sequence number !@ZQ [0x!16@XQ]", 2,
 	"BOVTNGTEOVTN", "Journal file !AD has beginning transaction [0x!16@XQ] which is greater than end transaction [0x!16@XQ]", 4,
 	"BOVTMGTEOVTM", "Journal file !AD has beginning timestamp [0x!16@XQ] greater than end timestamp [0x!16@XQ]", 4,
 	"BEGSEQGTENDSEQ", "Journal file !AD has beginning sequence number [0x!16@XQ] greater than end sequence number [0x!16@XQ]", 4,
@@ -1076,7 +1076,7 @@ LITDEF	err_msg merrors[] = {
 	"VMSMEMORY2", "Central storage exhausted during allocation of dynamic file descriptor with !UL bytes - check page file quota and page file size", 1,
 	"LOADBGSZ2", "Load error: BEGIN too large.  No records loaded.", 0,
 	"LOADEDSZ2", "Load error: END too large.  No records loaded.", 0,
-	"REPLINSTMISMTCH", "Process has journal pool for !AD open but database !AD corresponds to !AD", 6,
+	"REPLINSTMISMTCH", "Process has replication instance file !AD (jnlpool shmid = !UL) open but database !AD is bound to instance file !AD (jnlpool shmid = !UL)", 8,
 	"REPLINSTREAD", "Error reading [0x!XL] bytes at offset [0x!16@XQ] from replication instance file !AD", 4,
 	"REPLINSTDBMATCH", "Replication instance file !AD has seqno [0x!16@XQ] while database has a different seqno [0x!16@XQ]", 4,
 	"REPLINSTNMSAME", "Primary and Secondary instances have the same replication instance name !AD", 2,
@@ -1089,9 +1089,9 @@ LITDEF	err_msg merrors[] = {
 	"REPLINSTSECUNDF", "Secondary replication instance name not defined", 0,
 	"REPLINSTSEQORD", "!AD has seqno [0x!16@XQ] which is less than last record seqno [0x!16@XQ] in replication instance file !AD", 6,
 	"REPLINSTSTNDALN", "Could not get exclusive access to replication instance file !AD", 2,
-	"REPLREQROLLBACK", "Replication instance file !AD indicates abnormal shutdown.  Run MUPIP JOURNAL ROLLBACK first", 2,
-	"REPLUPGRADEPRI", "Attempted operation requires primary instance !AD to support multi-site replication", 2,
-	"REPLUPGRADESEC", "Attempted operation requires secondary instance !AD to support multi-site replication", 2,
+	"REPLREQROLLBACK", "Replication instance file !AD indicates abnormal shutdown or an incomplete ROLLBACK. Run MUPIP JOURNAL ROLLBACK first", 2,
+	"UNUSEDMSG1255", "REPLUPGRADEPRI : Last used in V5.4-002B", 0,
+	"UNUSEDMSG1256", "REPLUPGRADESEC : Last used in V5.4-002B", 0,
 	"SRCSRVEXISTS", "Source server for secondary instance !AD is already running with pid !UL", 3,
 	"SRCSRVNOTEXIST", "Source server for secondary instance !AD is not alive", 2,
 	"SRCSRVTOOMANY", "Cannot start more than !UL source servers in replication instance !AD", 3,
@@ -1160,7 +1160,7 @@ LITDEF	err_msg merrors[] = {
 	"ICUSYMNOTFOUND", "Symbol !AD not found in the ICU libraries. ICU needs to be built with symbol-renaming disabled or gtm_icu_version environment variable needs to be properly specified", 2,
 	"STUCKACT", "Process stuck script invoked: !AD : !AD", 4,
 	"CALLINAFTERXIT", "After a gtm_exit, a process can never create a valid GT.M context", 0,
-	"LOCKSPACEFULL", "No room for LOCK. Use MUPIP SET to increase lock space for region !AD", 2,
+	"LOCKSPACEFULL", "No more room for LOCK slots on database file !AD", 2,
 	"IOERROR", "Error occured while doing !AD in !AD operation -- called from module !AD at line !UL", 7,
 	"MAXSSREACHED", "Maximum snapshots - !UL - for region !AD reached. Please wait for the existing snapshots to complete before starting a new one.", 3,
 	"SNAPSHOTNOV4", "Cannot downgrade (to V4) while snapshots are in progress. Currently !UL snapshots are in progress for region !AD.", 3,
@@ -1222,9 +1222,79 @@ LITDEF	err_msg merrors[] = {
 	"ZCINVALIDKEYWORD", "External call: Invalid keyword found. Cannot continue", 0,
 	"REPLNOMULTILINETRG", "Sequence number 0x!16@XQ contains a trigger definition too large for transmission to the current replicating instance, which does not support multi-line triggers - stopping replication", 1,
 	"DBSHMNAMEDIFF", "Database file !AD points to shared memory (id = !UL) which points to a different database file !AZ", 4,
-	"SHMREMOVED", "Shared Memory id !UL removed from the system", 1,
+	"SHMREMOVED", "Removed Shared Memory id !UL corresponding to file !AD", 3,
 	"DEVICEWRITEONLY", "Cannot read from a write-only device", 0,
 	"ICUERROR", "ICU returned status !UL which is either unrecognized or inconsistent with the operating context", 1,
+	"ZDATEBADDATE", "$ZDATE() date argument !AD is less than -365 (the $HOROLOG value for 01-JAN-1840) or greater than 364570088 (the $HOROLOG value for 31-DEC-999999)", 2,
+	"ZDATEBADTIME", "$ZDATE() time argument !AD is less than 0 or greater than 86399 (the $HOROLOG value for a second before midnight)", 2,
+	"COREINPROGRESS", "Previous core attempt failed; core generation bypassed", 0,
+	"MAXSEMGETRETRY", "Failed to get ftok semaphore after !UL tries because it is being continually deleted", 1,
+	"JNLNOREPL", "Replication not enabled for journal file !AD (database file !AD)", 4,
+	"JNLRECINCMPL", "Incomplete journal record at disk address 0x!XL for file !AD while attempting to read seqno 0x!16@XQ", 4,
+	"JNLALLOCGROW", "Increased Journal ALLOCATION from [!UL blocks] to [!UL blocks] to match AUTOSWITCHLIMIT for !AZ !AD", 5,
+	"INVTRCGRP", "Invalid trace group specified in $gtm_trace_groups: !AD", 2,
+	"MUINFOUINT6", "!AD : !UL [0x!XL] ; $H=!UL,!UL", 6,
+	"NOLOCKMATCH", "No matching locks were found in !AD", 2,
+	"BADREGION", "Region is not BG, MM, or CM", 0,
+	"LOCKSPACEUSE", "Estimated free lock space: !UL% of !UL pages", 2,
+	"JIUNHNDINT", "An error during $ZINTERRUPT processing was not handled: !AD", 2,
+	"GTMASSERT2", "!AD - Assert failed !AD line !UL for expression (!AD)", 7,
+	"ZTRIGNOTRW", "ZTRIGGER cannot operate on read-only region !AD", 2,
+	"TRIGMODREGNOTRW", "Trigger(s) cannot be added/changed/deleted because region !AD is read-only", 2,
+	"INSNOTJOINED", "Replicating Instance !AD is not a member of the same Group as Instance !AD", 4,
+	"INSROLECHANGE", "Supplementary Instance !AD and non-Supplementary Instance !AD belong to the same Group", 4,
+	"INSUNKNOWN", "Supplementary Instance !AD has no instance definition for non-Supplementary Instance !AD", 4,
+	"NORESYNCSUPPLONLY", "NORESYNC only supported for Supplementary Instances", 0,
+	"NORESYNCUPDATERONLY", "NORESYNC qualifier only allowed on a Supplementary Instance which allows local updates", 0,
+	"NOSUPPLSUPPL", "Instance !AD is configured to perform local updates so it cannot receive from Supplementary Instance !AD", 4,
+	"REPL2OLD", "Instance !AD uses a GT.M version that does not support connection with the current version on instance !AD", 4,
+	"RCVR2MANY", "The instance already has the maximum supportable number of receiver servers [!UL] active", 1,
+	"RLBKCONFIGBNDRY", "Rollback encountered journal records indicating current source !AD replaced old source !AD; cannot rollback past sequence number 0x!16@XQ", 5,
+	"SECNOTSUPPLEMENTARY", "!AD is a Supplementary Instance and so cannot act as a source to non-Supplementary Instance !AD ", 4,
+	"SUPRCVRNEEDSSUPSRC", "Instance !AD is not configured to perform local updates so it cannot act as a receiver for non-Supplementary Instance !AD", 4,
+	"SYNCTOSAMETYPE", "Source instance !AD and receiver instance !AD must either be both supplementary or both non-supplementary for them to synchronize their state", 4,
+	"TARGINSRUNNING", "Cannot change the instance definition of instance !AD while it is running", 2,
+	"UPDSYNC2MTINS", "Can only UPDATERESYNC with an empty instance file", 0,
+	"UPDSYNCINSTFILE", "Error with instance file name specified in UPDATERESYNC qualifier", 0,
+	"REUSEINSTNAME", "Error with instance name specified in REUSE qualifier", 0,
+	"RCVRMANYSTRMS", "Receiver server now connecting to source stream [!2UL] but had previously connected to a different stream [!2UL]", 2,
+	"RSYNCSTRMVAL", "RSYNC_STRM qualifier can only take on a value from 0 to 15", 0,
+	"RLBKSTRMSEQ", "Stream journal seqno of the instance after rollback is Stream !2UL : Seqno !@ZQ [0x!16@XQ]", 3,
+	"RESOLVESEQSTRM", "Resolving until stream sequence number Stream !2UL : Seqno !@ZQ [0x!16@XQ]", 3,
+	"REPLINSTDBSTRM", "Replication instance file !AD has seqno [0x!16@XQ] for Stream !2UL while database has a different seqno [0x!16@XQ]", 5,
+	"RESUMESTRMNUM", "Error with stream number specified in RESUME qualifier", 0,
+	"ORLBKSTART", "ONLINE ROLLBACK started on instance !AD corresponding to !AD", 4,
+	"ORLBKTERMNTD", "ONLINE ROLLBACK terminated on instance !AD corresponding to !AD with the above errors", 4,
+	"ORLBKCMPLT", "ONLINE ROLLBACK completed successfully on instance !AD corresponding to !AD", 4,
+	"ORLBKNOSTP", "ONLINE ROLLBACK proceeding with database updates. MUPIP STOP will no longer be allowed", 0,
+	"ORLBKFRZPROG", "!AD : waiting for FREEZE on region !AD (!AD) to clear", 6,
+	"ORLBKFRZOVER", "!AD : FREEZE on region !AD (!AD) cleared", 6,
+	"ORLBKNOV4BLK", "Region !AD (!AD) has V4 format blocks. Database upgrade required. ONLINE ROLLBACK cannot continue", 4,
+	"DBROLLEDBACK", "Concurrent ONLINE ROLLBACK detected on one or more regions. The current operation is no longer valid", 0,
+	"DSEWCREINIT", "Database cache reinitialized by DSE for region !AD", 2,
+	"RNDWNSKIPCNT", "A total of !UL process(es) skipped database rundown due to a concurrent ONLINE ROLLBACK", 1,
+	"REPLONLNRLBK", "ONLINE ROLLBACK detected. Starting afresh", 0,
+	"SRVLCKWT2LNG", "PID !UL is holding the source server lock. Waited for !UL minute(s). Now exiting", 2,
+	"IGNBMPMRKFREE", "Ignoring bitmap free-up operation for region !AD (!AD) due to concurrent ONLINE ROLLBACK", 4,
+	"PERMGENFAIL", "Failed to determine access permissions to use for creation of !AD for file !AD", 4,
+	"PERMGENDIAG", "Permissions: Proc(uid:!UL,gid:!UL), DB File(uid:!UL,gid:!UL,perm:!AD), Lib File(gid:!UL,perm:!AD), Group Mem(opener:!UL,owner:!UL)", 11,
+	"MUTRUNC1ATIME", "Process with PID !UL already performing truncate in region !AD", 3,
+	"MUTRUNCBACKINPROG", "Truncate detected concurrent backup in progress for region !AD", 2,
+	"MUTRUNCERROR", "Truncate of region !AD encountered service error !AD", 4,
+	"MUTRUNCFAIL", "Truncate failed after reorg", 0,
+	"MUTRUNCNOSPACE", "Region !AD has insufficient space to meet truncate target percentage of !UL", 3,
+	"MUTRUNCNOTBG", "Region !AD does not have access method BG ", 2,
+	"MUTRUNCNOV4", "Region !AD is not fully upgraded from V4 format.", 2,
+	"MUTRUNCPERCENT", "Truncate threshold percentage should be from 0 to 99", 0,
+	"MUTRUNCSSINPROG", "Truncate detected concurrent snapshot in progress for region !AD", 2,
+	"MUTRUNCSUCCESS", "Database file !AD truncated from 0x!XL blocks to 0x!XL at transaction 0x!16@XQ", 5,
+	"RSYNCSTRMSUPPLONLY", "RSYNC_STRM qualifier only supported for Supplementary Instances", 0,
+	"STRMNUMIS", "Stream # is !2UL", 1,
+	"STRMNUMMISMTCH1", "Stream !2UL exists on the receiver instance file but is unknown on the source instance", 1,
+	"STRMNUMMISMTCH2", "Stream !2UL exists on the source instance file but is unknown on the receiver instance", 1,
+	"STRMSEQMISMTCH", "Unable to play update on Stream !2UL with seqno [0x!16@XQ] as receiving instance has a different stream seqno [0x!16@XQ]", 3,
+	"LOCKSPACEINFO", "Region: !AD: processes on queue: !UL/!UL; LOCK slots in use: !UL/!UL; name space!ADfull", 8,
+	"JRTNULLFAIL", "Applying NULL journal record failed.  Failure code: !AD.", 2,
 };
 
 LITDEF	int ERR_ACK = 150372361;
@@ -1487,9 +1557,9 @@ LITDEF	int ERR_GVZPREVFAIL = 150374410;
 LITDEF	int ERR_MULTFORMPARM = 150374418;
 LITDEF	int ERR_QUITARGUSE = 150374426;
 LITDEF	int ERR_NAMEEXPECTED = 150374434;
-LITDEF	int ERR_ACTLSTEXP = 150374442;
+LITDEF	int ERR_UNUSEDMSG438 = 150374442;
 LITDEF	int ERR_NOTEXTRINSIC = 150374450;
-LITDEF	int ERR_FMLLSTPRESENT = 150374458;
+LITDEF	int ERR_UNUSEDMSG440 = 150374458;
 LITDEF	int ERR_FMLLSTMISSING = 150374466;
 LITDEF	int ERR_ACTLSTTOOLONG = 150374474;
 LITDEF	int ERR_ACTOFFSET = 150374482;
@@ -2304,8 +2374,8 @@ LITDEF	int ERR_REPLINSTSECUNDF = 150380946;
 LITDEF	int ERR_REPLINSTSEQORD = 150380954;
 LITDEF	int ERR_REPLINSTSTNDALN = 150380962;
 LITDEF	int ERR_REPLREQROLLBACK = 150380970;
-LITDEF	int ERR_REPLUPGRADEPRI = 150380978;
-LITDEF	int ERR_REPLUPGRADESEC = 150380986;
+LITDEF	int ERR_UNUSEDMSG1255 = 150380978;
+LITDEF	int ERR_UNUSEDMSG1256 = 150380986;
 LITDEF	int ERR_SRCSRVEXISTS = 150380994;
 LITDEF	int ERR_SRCSRVNOTEXIST = 150381002;
 LITDEF	int ERR_SRCSRVTOOMANY = 150381010;
@@ -2439,9 +2509,79 @@ LITDEF	int ERR_DBSHMNAMEDIFF = 150382026;
 LITDEF	int ERR_SHMREMOVED = 150382035;
 LITDEF	int ERR_DEVICEWRITEONLY = 150382042;
 LITDEF	int ERR_ICUERROR = 150382050;
+LITDEF	int ERR_ZDATEBADDATE = 150382058;
+LITDEF	int ERR_ZDATEBADTIME = 150382066;
+LITDEF	int ERR_COREINPROGRESS = 150382074;
+LITDEF	int ERR_MAXSEMGETRETRY = 150382082;
+LITDEF	int ERR_JNLNOREPL = 150382090;
+LITDEF	int ERR_JNLRECINCMPL = 150382098;
+LITDEF	int ERR_JNLALLOCGROW = 150382107;
+LITDEF	int ERR_INVTRCGRP = 150382114;
+LITDEF	int ERR_MUINFOUINT6 = 150382123;
+LITDEF	int ERR_NOLOCKMATCH = 150382131;
+LITDEF	int ERR_BADREGION = 150382138;
+LITDEF	int ERR_LOCKSPACEUSE = 150382147;
+LITDEF	int ERR_JIUNHNDINT = 150382154;
+LITDEF	int ERR_GTMASSERT2 = 150382164;
+LITDEF	int ERR_ZTRIGNOTRW = 150382170;
+LITDEF	int ERR_TRIGMODREGNOTRW = 150382178;
+LITDEF	int ERR_INSNOTJOINED = 150382186;
+LITDEF	int ERR_INSROLECHANGE = 150382194;
+LITDEF	int ERR_INSUNKNOWN = 150382202;
+LITDEF	int ERR_NORESYNCSUPPLONLY = 150382210;
+LITDEF	int ERR_NORESYNCUPDATERONLY = 150382218;
+LITDEF	int ERR_NOSUPPLSUPPL = 150382226;
+LITDEF	int ERR_REPL2OLD = 150382234;
+LITDEF	int ERR_RCVR2MANY = 150382242;
+LITDEF	int ERR_RLBKCONFIGBNDRY = 150382250;
+LITDEF	int ERR_SECNOTSUPPLEMENTARY = 150382258;
+LITDEF	int ERR_SUPRCVRNEEDSSUPSRC = 150382266;
+LITDEF	int ERR_SYNCTOSAMETYPE = 150382274;
+LITDEF	int ERR_TARGINSRUNNING = 150382282;
+LITDEF	int ERR_UPDSYNC2MTINS = 150382290;
+LITDEF	int ERR_UPDSYNCINSTFILE = 150382298;
+LITDEF	int ERR_REUSEINSTNAME = 150382306;
+LITDEF	int ERR_RCVRMANYSTRMS = 150382314;
+LITDEF	int ERR_RSYNCSTRMVAL = 150382322;
+LITDEF	int ERR_RLBKSTRMSEQ = 150382331;
+LITDEF	int ERR_RESOLVESEQSTRM = 150382339;
+LITDEF	int ERR_REPLINSTDBSTRM = 150382346;
+LITDEF	int ERR_RESUMESTRMNUM = 150382354;
+LITDEF	int ERR_ORLBKSTART = 150382363;
+LITDEF	int ERR_ORLBKTERMNTD = 150382370;
+LITDEF	int ERR_ORLBKCMPLT = 150382379;
+LITDEF	int ERR_ORLBKNOSTP = 150382387;
+LITDEF	int ERR_ORLBKFRZPROG = 150382395;
+LITDEF	int ERR_ORLBKFRZOVER = 150382403;
+LITDEF	int ERR_ORLBKNOV4BLK = 150382410;
+LITDEF	int ERR_DBROLLEDBACK = 150382418;
+LITDEF	int ERR_DSEWCREINIT = 150382427;
+LITDEF	int ERR_RNDWNSKIPCNT = 150382435;
+LITDEF	int ERR_REPLONLNRLBK = 150382442;
+LITDEF	int ERR_SRVLCKWT2LNG = 150382450;
+LITDEF	int ERR_IGNBMPMRKFREE = 150382459;
+LITDEF	int ERR_PERMGENFAIL = 150382466;
+LITDEF	int ERR_PERMGENDIAG = 150382475;
+LITDEF	int ERR_MUTRUNC1ATIME = 150382483;
+LITDEF	int ERR_MUTRUNCBACKINPROG = 150382491;
+LITDEF	int ERR_MUTRUNCERROR = 150382498;
+LITDEF	int ERR_MUTRUNCFAIL = 150382506;
+LITDEF	int ERR_MUTRUNCNOSPACE = 150382515;
+LITDEF	int ERR_MUTRUNCNOTBG = 150382522;
+LITDEF	int ERR_MUTRUNCNOV4 = 150382530;
+LITDEF	int ERR_MUTRUNCPERCENT = 150382538;
+LITDEF	int ERR_MUTRUNCSSINPROG = 150382547;
+LITDEF	int ERR_MUTRUNCSUCCESS = 150382555;
+LITDEF	int ERR_RSYNCSTRMSUPPLONLY = 150382562;
+LITDEF	int ERR_STRMNUMIS = 150382571;
+LITDEF	int ERR_STRMNUMMISMTCH1 = 150382578;
+LITDEF	int ERR_STRMNUMMISMTCH2 = 150382586;
+LITDEF	int ERR_STRMSEQMISMTCH = 150382594;
+LITDEF	int ERR_LOCKSPACEINFO = 150382603;
+LITDEF	int ERR_JRTNULLFAIL = 150382610;
 
 GBLDEF	err_ctl merrors_ctl = {
 	246,
 	"GTM",
 	&merrors[0],
-	1212};
+	1282};

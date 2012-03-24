@@ -66,6 +66,7 @@ if(ARCHITECTURE_IS_64_BITS)
     auto_zlink.c
     callg.c
     comp_lits.c
+    clear_cache_array.c
     gtm_unlink_all.c
     gtm_trigger.c
     gtm_tparm.c
@@ -81,6 +82,7 @@ if(ARCHITECTURE_IS_64_BITS)
     file_input.c
     gds_rundown.c
     gdsfilext.c
+    gdsfilext_nojnl.c
     generic_signal_handler.c
     genpat.c
     get_command_line.c
@@ -114,6 +116,7 @@ if(ARCHITECTURE_IS_64_BITS)
     gtm_file_remove.c
     gtm_file_stat.c
     gtm_fork_n_core.c
+    gtm_ftok.c
     gtm_getmsg.c
     gtm_getpwuid.c
     gtm_icu.c
@@ -124,6 +127,7 @@ if(ARCHITECTURE_IS_64_BITS)
     gtm_putmsg.c
     gtm_putmsg_list.c
     gtm_rename.c
+    gtm_semutils.c
     gtm_startup.c
     gtm_startup_chk.c
     gtm_stdio.c
@@ -222,6 +226,7 @@ if(ARCHITECTURE_IS_64_BITS)
     make_mode.c     # apparently used in 64 bits...
     map_sym.c
     mem_access.c
+    mmrhash.c
     mubexpfilnam.c
     mubfilcpy.c
     mumps_clitab.c
@@ -282,6 +287,7 @@ if(ARCHITECTURE_IS_64_BITS)
     probe.c
     random.c
     rc_cpt_ops.c
+    recover_truncate.c
     reg_cmcheck.c
     rel_crit.c
     rel_quant.c
@@ -314,6 +320,7 @@ if(ARCHITECTURE_IS_64_BITS)
     str_match.c
     suspend.c
     suspsigs_handler.c
+    t_recycled2free.c
     term_setup.c
     tp_grab_crit.c
     trans_log_name.c
@@ -385,6 +392,7 @@ set(GTM_MUPIP_SRC_C
   bin_load.c
   db_ipcs_reset.c
   go_load.c
+  gds_file_size.c
   gtmrecv.c
   gtmrecv_end.c
   gtmrecv_fetchresync.c
@@ -403,6 +411,7 @@ set(GTM_MUPIP_SRC_C
   gtmsource_losttncomplete.c
   gtmsource_mode_change.c
   gtmsource_needrestart.c
+  gtmsource_onln_rlbk_clnup.c
   gtmsource_process.c
   gtmsource_process_ops.c
   gtmsource_readfiles.c
@@ -411,6 +420,7 @@ set(GTM_MUPIP_SRC_C
   gtmsource_seqno_init.c
   gtmsource_showbacklog.c
   gtmsource_shutdown.c
+  gtmsource_srv_latch.c
   gtmsource_statslog.c
   gtmsource_stopfilter.c
   jnlext_write.c
@@ -433,6 +443,7 @@ set(GTM_MUPIP_SRC_C
   mu_signal_process.c
   mu_term_setup.c
   mu_trig_trgfile.c
+  mu_truncate.c
   mubgetfil.c
   mubinccpy.c
   mucblkini.c

@@ -251,6 +251,7 @@ set(GTM_MUMPS_PORT_SRC_C
 # find_line_call.o
   find_line_start.c
   find_rtn_hdr.c
+  find_mvstent.c
   five_2_ascii.c
   five_bit.c
   flt_mod.c
@@ -316,6 +317,7 @@ set(GTM_MUMPS_PORT_SRC_C
 # gtcm_find_reghead.o
 # gtcm_jnl_switched.o
   gtm_assert.c
+  gtm_assert2.c
 # gtm_bintim.o
   gtm_byteswap_64.c
 # gtm_c_stack_trace_semop.o
@@ -394,6 +396,7 @@ set(GTM_MUMPS_PORT_SRC_C
   gvcst_incr.c
   gvcst_init.c
 # gvcst_init_sysops.o  in  ??
+  gvcst_jrt_null.c
   gvcst_kill.c
   gvcst_kill_blk.c
   gvcst_kill_sort.c
@@ -452,7 +455,7 @@ set(GTM_MUMPS_PORT_SRC_C
 # inst_flush.o       in ??
   int_label.c
   intexpr.c
-  io_find_mvstent.c
+# io_find_mvstent.c     not in version 5.5
 # io_get_fgn_driver.o   in ??
   io_init.c
   io_init_ch.c
@@ -636,6 +639,7 @@ set(GTM_MUMPS_PORT_SRC_C
   jnl_write_pblk.c
   jnl_write_poolonly.c
   jnl_write_ztp_logical.c
+  jnl_write_trunc_rec.c
 # jnlpool_init.o     in sr_unix
   job_addr.c
 # jobchild_init.o
@@ -716,6 +720,7 @@ set(GTM_MUMPS_PORT_SRC_C
   m_zgoto.c
   m_zhalt.c
   m_zhelp.c
+  m_zinvcmd.c
   m_zlink.c
   m_zmessage.c
   m_zprint.c
@@ -1037,6 +1042,8 @@ set(GTM_MUMPS_PORT_SRC_C
   outofband_action.c
   outofband_clear.c
 # parse_file.o      in  sr_unix
+  parm_pool.c
+  parse_trctbl_groups.c
   parse_until_rparen_or_space.c
   pat_compress.c
   pat_unwind.c
@@ -1055,7 +1062,7 @@ set(GTM_MUMPS_PORT_SRC_C
   promodemo.c
   push_lvval.c
   push_mval.c
-  push_parm.c
+# push_parm.c     not in version V55000
   push_stck.c
   push_tval.c
   put_cdlt.c
@@ -1364,7 +1371,7 @@ set(GTM_MUPIP_PORT_SRC_C
 # gtmsource_stopfilter.o      in  sr_unix
   gv_select.c
   jnl2ext.c
-  jnl_setver.c
+# jnl_setver.c        not in version 5.5
 # jnlext_write.o      in  sr_unix
   jnlpool_hasnt_overflowed.c
 # mu_all_version_standalone.o
@@ -1648,6 +1655,10 @@ add_library(mupipport ${LIBRARY_TYPE}
 
 add_library(mumpsport ${LIBRARY_TYPE}
   ${GTM_MUMPS_PORT_SRC_C}
+  )
+
+target_link_libraries(mumpsport
+  rt
   )
 
 add_library(lkeport ${LIBRARY_TYPE}

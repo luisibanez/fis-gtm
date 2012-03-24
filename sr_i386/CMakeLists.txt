@@ -69,7 +69,7 @@ set(SRC_S
   op_forloop.s
   op_gettruth.s
   op_iretmvad.s
-  op_isformal.s
+# op_isformal.s    not in version 5.5
   op_linefetch.s
   op_linestart.s
   op_mprofcall.s
