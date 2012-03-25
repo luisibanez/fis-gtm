@@ -58,6 +58,35 @@ set(GTM_MUMPS2_SRC_C
   err_init.c
   error_return.c
   extract_signal_info.c
+  wcs_write_in_progress_wait.c
+  gtm_utf8.c
+  generic_signal_handler.c
+  set_num_additional_processors.c
+  gtmsecshr_sock_cleanup.c
+  op_fnextract.c
+  wcs_wtstart.c
+  gtm_event_log.c
+  iopi_iocontrol.c
+  list_file.c
+  secshr_client.c
+  repl_sem.c
+  random.c
+  stop_image.c
+  stop_image_ch.c
+  iorm_close.c
+  iott_edit.c
+  gtm_icu.c
+  op_setpiece.c
+  is_file_identical.c
+  get_command_line.c
+  gt_timers.c
+  suspsigs_handler.c
+  gtm_exit_handler.c
+  jnl_file_open.c
+  file_head_write.c
+  util_exit_handler.c
+  get_page_size.c
+  std_dev_outbndset.c
   )
 
 if(ARCHITECTURE_IS_64_BITS)
@@ -78,16 +107,12 @@ if(ARCHITECTURE_IS_64_BITS)
     f_piece.c
     fgn_getinfo.c
     file_head_read.c
-    file_head_write.c
     file_input.c
     gds_rundown.c
     gdsfilext.c
     gdsfilext_nojnl.c
-    generic_signal_handler.c
     genpat.c
-    get_command_line.c
     get_full_path.c
-    get_page_size.c
     get_src_line.c
     getcaps.c
     geteditor.c
@@ -100,7 +125,6 @@ if(ARCHITECTURE_IS_64_BITS)
     goq_load.c
     grab_crit.c
     grab_lock.c
-    gt_timers.c
     gtm_bintim.c
     gtm_c_stack_trace_semop.c
     gtm_compile.c
@@ -110,8 +134,6 @@ if(ARCHITECTURE_IS_64_BITS)
     gtm_dump_core.c
     gtm_env_init_sp.c
     gtm_env_translate.c
-    gtm_event_log.c
-    gtm_exit_handler.c
     gtm_fd_trace.c
     gtm_file_remove.c
     gtm_file_stat.c
@@ -119,7 +141,6 @@ if(ARCHITECTURE_IS_64_BITS)
     gtm_ftok.c
     gtm_getmsg.c
     gtm_getpwuid.c
-    gtm_icu.c
     gtm_init_env.c
     gtm_isanlp.c
     gtm_permissions.c
@@ -133,7 +154,6 @@ if(ARCHITECTURE_IS_64_BITS)
     gtm_stdio.c
     gtm_text_alloc.c
     gtm_unique_file_util.c
-    gtm_utf8.c
     gtm_utf8_stx.c
     gtm_wake.c
     gtm_zlib.c
@@ -143,7 +163,6 @@ if(ARCHITECTURE_IS_64_BITS)
     gtmci_signals.c
     gtmcrypt_entry.c
 #   gtmsecshr.c      contains a main, make it executable
-    gtmsecshr_sock_cleanup.c
     gtmsecshr_sock_init.c
     gtmsecshr_wrapper.c
     gv_trigger.c
@@ -177,9 +196,7 @@ if(ARCHITECTURE_IS_64_BITS)
     iomt_sense.c
     iomt_tm.c
     iomt_wtlblk.c
-    iopi_iocontrol.c
     iopi_open.c
-    iorm_close.c
     iorm_flush.c
     iorm_get.c
     iorm_open.c
@@ -190,7 +207,6 @@ if(ARCHITECTURE_IS_64_BITS)
     iorm_write.c
     iorm_wteol.c
     iott_close.c
-    iott_edit.c
     iott_flush.c
     iott_open.c
     iott_rdone.c
@@ -206,18 +222,15 @@ if(ARCHITECTURE_IS_64_BITS)
     ious_write.c
     ious_wtone.c
     ipcrmid.c
-    is_file_identical.c
     is_proc_alive.c
     is_raw_dev.c
     jnl_file_extend.c
-    jnl_file_open.c
     jnl_fsync.c
     jnl_output_sp.c
     jnl_prc_vector.c
     jnlpool_init.c
     jobchild_init.c
     jobexam_signal_handler.c
-    list_file.c
     lke_cmd_disallow.c
     lref_parse.c
     m_ztrigger.c
@@ -236,7 +249,6 @@ if(ARCHITECTURE_IS_64_BITS)
     mupip_crypt.c
     mutex.c
 #   mutex_deadlock_check.c   in sr_port
-    mutex_sock_cleanup.c
     mutex_sock_init.c
     mutex_wake_proc.c
     mu_decrypt.c
@@ -250,7 +262,6 @@ if(ARCHITECTURE_IS_64_BITS)
     ojparams.c
     ojstartchild.c
     op_fgnlookup.c
-    op_fnextract.c
     op_fnfgncal.c
     op_fngetdvi.c
     op_fngetjpi.c
@@ -274,7 +285,6 @@ if(ARCHITECTURE_IS_64_BITS)
     op_job.c
     op_setextract.c
     op_setp1.c
-    op_setpiece.c
     op_zattach.c
     op_zedit.c
     op_zhelp_xfr.c
@@ -285,7 +295,6 @@ if(ARCHITECTURE_IS_64_BITS)
     parse_file.c
     pipeint_stats.c
     probe.c
-    random.c
     rc_cpt_ops.c
     recover_truncate.c
     reg_cmcheck.c
@@ -293,16 +302,12 @@ if(ARCHITECTURE_IS_64_BITS)
     rel_quant.c
     rel_lock.c
     remove_rms.c
-    repl_instance.c
-    repl_sem.c
     resetterm.c
     rts_error.c
     same_device_check.c
-    secshr_client.c
 #    semstat2.c      contains a main, make it an executable
     send_msg.c
     set_jnl_file_close.c
-    set_num_additional_processors.c
     set_zstatus.c
     setterm.c
     sgtm_putmsg.c
@@ -314,12 +319,8 @@ if(ARCHITECTURE_IS_64_BITS)
     ss_release.c
     ss_shdw_mgr.c
     ss_write_block.c
-    std_dev_outbndset.c
-    stop_image.c
-    stop_image_ch.c
     str_match.c
     suspend.c
-    suspsigs_handler.c
     t_recycled2free.c
     term_setup.c
     tp_grab_crit.c
@@ -340,7 +341,6 @@ if(ARCHITECTURE_IS_64_BITS)
     trigger_update.c
     trigger_user_name.c
     urx_remove.c
-    util_exit_handler.c
     util_in_open.c
     util_input.c
     util_output.c
@@ -350,8 +350,6 @@ if(ARCHITECTURE_IS_64_BITS)
     wcs_clean_dbsync_timer.c
     wcs_flu.c
     wcs_get_space.c
-    wcs_write_in_progress_wait.c
-    wcs_wtstart.c
     zcall_package.c
     zl_cmd_qlf.c
     zlmov_lnames.c
@@ -370,7 +368,9 @@ if(ARCHITECTURE_IS_32_BITS)
     ${GTM_MUMPS2_SRC_C}
     daemon_ch.c
     daemon_crit.c
+    repl_instance.c
 #   sr_unix_nsb/comp_lits.c
+    mutex_sock_cleanup.c
     )
 endif()
 

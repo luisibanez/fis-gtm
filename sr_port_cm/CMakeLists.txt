@@ -21,7 +21,7 @@ include_directories(
   ${fis-gtm_SOURCE_DIR}/sr_port
   )
 
-add_library(gtmportcm ${LIBRARY_TYPE}
+set(GTM_PORT_CM_SRC_C
   gtcm_action_pending.c
   gtcm_add_region.c
   gtcm_bind_name.c
@@ -85,6 +85,10 @@ add_library(gtmportcm ${LIBRARY_TYPE}
   gtcmtr_terminate_free.c
   gtcmtr_zprevious.c
   gtcmtr_zwithdraw.c
+  )
+
+add_library(gtmportcm ${LIBRARY_TYPE}
+  ${GTM_PORT_CM_SRC_C}
   )
 
 set(GTM_GNPCLIENT_PORT_CM_SRC_C

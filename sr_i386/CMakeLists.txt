@@ -23,13 +23,19 @@ include_directories(
 
 set(SRC_C
   auto_zlink.c
-  emit_code.c
   find_line_call.c
+  )
+
+
+if(ARCHITECTURE_IS_64_BITS)
+  set(SRC_C ${SRC_C}
+  emit_code.c
   incr_link.c
   make_cimode.c
   make_dmode.c
   obj_file.c
   )
+endif()
 
 
 set(SRC_S

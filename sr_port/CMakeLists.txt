@@ -65,7 +65,6 @@ set(GTM_MUMPS_PORT_SRC_C
   bt_put.c
   bt_refresh.c
   buddy_list.c
-  bx_boolop.c
   bx_relop.c
   bx_tail.c
   cache_cleanup.c
@@ -641,7 +640,6 @@ set(GTM_MUMPS_PORT_SRC_C
   jnl_write_ztp_logical.c
   jnl_write_trunc_rec.c
 # jnlpool_init.o     in sr_unix
-  job_addr.c
 # jobchild_init.o
   jobexam_process.c
 # jobexam_signal_handler.o
@@ -956,7 +954,6 @@ set(GTM_MUMPS_PORT_SRC_C
   op_killalias.c
   op_killaliasall.c
   op_killall.c
-  op_labaddr.c
   op_lkinit.c
   op_lkname.c
   op_lock.c
@@ -1021,7 +1018,6 @@ set(GTM_MUMPS_PORT_SRC_C
   op_zdeallocate.c
 # op_zedit.o      in  sr_unix
   op_zg1.c
-  op_zgoto.c
   op_zhalt.c
 # op_zhelp_xfr.o      in  sr_unix
 # op_zlink.o      in  sr_unix
@@ -1241,7 +1237,6 @@ set(GTM_MUMPS_PORT_SRC_C
   urx_putlab.c
   urx_putrtn.c
 # urx_remove.o      in  sr_unix
-  urx_resolve.c
   util_base_ch.c
   util_ch.c
 # util_exit_handler.o   in  sr_unix
@@ -1284,7 +1279,6 @@ set(GTM_MUMPS_PORT_SRC_C
 # zl_cmd_qlf.o      in  sr_unix
   zlcompile.c
 # zlmov_lnames.o      in  sr_unix
-  zlput_rname.c
   zr_find.c
   zr_get_free.c
   zr_init.c
@@ -1386,7 +1380,6 @@ set(GTM_MUPIP_PORT_SRC_C
 # mu_file_size.o
   mu_freeze_ch.c
 # mu_getlst.o      in  sr_unix
-  mu_gv_stack_init.c
 # mu_gvis.o      in  sr_unix
   mu_int_blk.c
   mu_int_err.c
@@ -1615,9 +1608,16 @@ endif()
 if(ARCHITECTURE_IS_64_BITS)
   set(GTM_MUMPS_PORT_SRC_C
     ${GTM_MUMPS_PORT_SRC_C}
+    bx_boolop.c
     emit_code.c
+    job_addr.c
+    op_labaddr.c
+    op_zgoto.c
     code_gen.c
+    urx_resolve.c
     shrink_trips.c
+    zlput_rname.c
+    mu_gv_stack_init.c
     )
 endif()
 

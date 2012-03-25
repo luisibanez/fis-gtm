@@ -158,6 +158,32 @@ if(ARCHITECTURE_IS_64_BITS)
 endif()
 
 
+#
+# List of architecture dependent libraries
+#
+if(ARCHITECTURE_IS_32_BITS)
+  set(ARCHITECTURE_DEPENDENT_LIBRARIES
+    ${ARCHITECTURE_DEPENDENT_LIBRARIES}
+    fisgtmi386
+    )
+endif()
+
+if(ARCHITECTURE_IS_64_BITS)
+  set(ARCHITECTURE_DEPENDENT_LIBRARIES
+    ${ARCHITECTURE_DEPENDENT_LIBRARIES}
+    fisgtmx64
+    gnpclientportcm
+    gnpclientport
+    cmisockettcpportcm
+    cmisockettcp
+    gtmportcm
+    gtmunixcm
+    ftokunix
+    frameport
+    )
+endif()
+
+
 
 add_executable(mumps
   sr_unix/gtm_main.c
@@ -173,15 +199,7 @@ target_link_libraries(mumps
   mupipunix
   gtmlinux2
   fisgtmproobj
-  fisgtmx64
-  gnpclientportcm
-  gnpclientport
-  cmisockettcpportcm
-  cmisockettcp
-  gtmportcm
-  gtmunixcm
-  ftokunix
-  frameport
+  ${ARCHITECTURE_DEPENDENT_LIBRARIES}
   ${CURSES_LIBRARIES}
   elf
   dl
@@ -206,16 +224,10 @@ target_link_libraries(dse
   dseport
   dseunix
   gtmlinux2
-  fisgtmproobj
-  fisgtmx64
-  gnpclientportcm
-  gnpclientport
-  cmisockettcpportcm
-  cmisockettcp
   gtmportcm
-  gtmunixcm
-  ftokunix
-  frameport
+  cmisockettcpportcm
+  fisgtmproobj
+  ${ARCHITECTURE_DEPENDENT_LIBRARIES}
   ${CURSES_LIBRARIES}
   elf
   dl
@@ -235,22 +247,13 @@ target_link_libraries(mupip
   lkeport
   lkeunix
   fisgtmproobj
-  fisgtmx64
+  ${ARCHITECTURE_DEPENDENT_LIBRARIES}
   mumpsport
   mumpsunix
   mumpsport
   mumpsunix
   gtmlinux2
   fisgtmproobj
-  fisgtmx64
-  gnpclientportcm
-  gnpclientport
-  cmisockettcpportcm
-  cmisockettcp
-  gtmportcm
-  gtmunixcm
-  ftokunix
-  frameport
   ${CURSES_LIBRARIES}
   elf
   dl
@@ -272,17 +275,9 @@ target_link_libraries(lke
   mumpsunix
   mupipport
   mupipunix
-  fisgtmx64
+  ${ARCHITECTURE_DEPENDENT_LIBRARIES}
   fisgtmproobj
-  gnpclientportcm
-  gnpclientport
-  cmisockettcpportcm
-  cmisockettcp
-  gtmunixcm
-  gtmportcm
   gtmlinux2
-  frameport
-  ftokunix
   ${CURSES_LIBRARIES}
   elf
   dl
@@ -298,22 +293,13 @@ add_executable(ftok
 target_link_libraries(ftok
   lkeport
   fisgtmproobj
-  fisgtmx64
+  ${ARCHITECTURE_DEPENDENT_LIBRARIES}
   mumpsport
   mumpsunix
   mupipport
   mupipunix
   lkeunix
-  cmisockettcpportcm
-  cmisockettcp
-  gnpclientportcm
-  gnpclientport
-  gtmportcm
-  gtmunixcm
   gtmlinux2
-  fisgtmx64
-  ftokunix
-  frameport
   ${CURSES_LIBRARIES}
   elf
   pthread
@@ -351,20 +337,12 @@ target_link_libraries(gtmsecshr
   mumpsport
   mumpsunix
   fisgtmproobj
-  fisgtmx64
+  ${ARCHITECTURE_DEPENDENT_LIBRARIES}
   lkeport
   lkeunix
-  gtmportcm
-  gtmunixcm
   gtmlinux2
-  gnpclientportcm
-  gnpclientport
-  cmisockettcpportcm
-  cmisockettcp
   mupipport
   mupipunix
-  ftokunix
-  frameport
   ${CURSES_LIBRARIES}
   pthread
   elf
@@ -381,20 +359,12 @@ target_link_libraries(gtcm_pkdisp
   mumpsport
   mumpsunix
   fisgtmproobj
-  fisgtmx64
+  ${ARCHITECTURE_DEPENDENT_LIBRARIES}
   lkeport
   lkeunix
-  gtmportcm
-  gtmunixcm
   gtmlinux2
-  gnpclientportcm
-  gnpclientport
-  cmisockettcpportcm
-  cmisockettcp
   mupipport
   mupipunix
-  ftokunix
-  frameport
   ${CURSES_LIBRARIES}
   pthread
   elf
@@ -413,19 +383,11 @@ target_link_libraries(gtcm_play
   mupipport
   mupipunix
   stubunix
-  gtmunixcm
   gtmlinux2
-  gtmportcm
-  gnpclientportcm
-  gnpclientport
-  cmisockettcp
-  cmisockettcpportcm
   lkeport
   lkeunix
   fisgtmproobj
-  fisgtmx64
-  ftokunix
-  frameport
+  ${ARCHITECTURE_DEPENDENT_LIBRARIES}
   ${CURSES_LIBRARIES}
   pthread
   elf
@@ -443,20 +405,12 @@ target_link_libraries(gtcm_shmclean
   mumpsunix
   mupipport
   mupipunix
-  gtmportcm
-  gtmunixcm
   gtmlinux2
-  gnpclientportcm
-  gnpclientport
   stubunix
-  cmisockettcpportcm
-  cmisockettcp
   lkeport
   lkeunix
   fisgtmproobj
-  fisgtmx64
-  ftokunix
-  frameport
+  ${ARCHITECTURE_DEPENDENT_LIBRARIES}
   ${CURSES_LIBRARIES}
   pthread
   elf
