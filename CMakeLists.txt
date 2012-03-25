@@ -51,10 +51,6 @@ configure_file(
   )
 endmacro()
 
-install_gtm_preconfigured("" "setupenv.sh")
-
-install_gtm_preconfigured("sr_linux" "gtm_threadgbl_deftypes.h")
-
 install_gtm_preconfigured("pro" "gtm_limits.h")
 install_gtm_preconfigured("pro" "gtm_stdio.h")
 install_gtm_preconfigured("pro" "gtm_stdlib.h")
