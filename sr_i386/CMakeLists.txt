@@ -124,7 +124,7 @@ set(SRC_S
   op_sto.s
   op_zhelp.s
   pseudo_ret.s
-  zl_lab_err.s
+# zl_lab_err.s   not in version 5.5
   )
 
 
