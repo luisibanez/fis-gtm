@@ -292,7 +292,7 @@ set(GTM_MUMPS_PORT_SRC_C
 # get_page_size.o
   get_reference.c
   get_ret_targ.c
-  get_root.c
+# get_root.c       not in version 5.5
   get_spec.c
 # get_src_line.o
   get_symb_line.c
@@ -454,7 +454,7 @@ set(GTM_MUMPS_PORT_SRC_C
   insert_region.c
 # inst_flush.o       in ??
   int_label.c
-  intexpr.c
+# intexpr.c             not in version 5.5
 # io_find_mvstent.c     not in version 5.5
 # io_get_fgn_driver.o   in ??
   io_init.c
@@ -799,7 +799,7 @@ set(GTM_MUMPS_PORT_SRC_C
   nil_iocontrol.c
   nref.c
   numcmp.c
-  numexpr.c
+# numexpr.c      not in version 5.5
 # obj_code.o     in sr_unix
 # obj_file.o     in sr_unix
 # obj_filesp.o     in sr_unix
@@ -1160,7 +1160,7 @@ set(GTM_MUMPS_PORT_SRC_C
   str2gvkey_gvfunc.c
   str2gvkey_nogvfunc.c
 # str_match.o      in  sr_unix
-  strexpr.c
+# strexpr.c        not in version 5.5
   strpiecediff.c
   stx_error.c
   sub2stbl.c
