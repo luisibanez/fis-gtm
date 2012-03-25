@@ -136,6 +136,33 @@ set(GTM_MUMPS2_SRC_C
   term_setup.c
   mmrhash.c
   outc.c
+  op_zmess.c
+  op_fngetdvi.c
+  op_fnzlkid.c
+  op_fngetlki.c
+  op_zlink.c
+  op_fnfgncal.c
+  op_fngetsyi.c
+  op_fnp1.c
+  op_fnpiece.c
+  op_fnpopulation.c
+  op_fnzcall.c
+  op_fnzconvert.c
+  op_fnzfile.c
+  op_fnzparse.c
+  op_fnzpid.c
+  op_fnzpriv.c
+  op_fnzsearch.c
+  op_fnzsetprv.c
+  op_fnztrnlnm.c
+  op_fgnlookup.c
+  op_horolog.c
+  op_job.c
+  op_setextract.c
+  op_setp1.c
+  op_zattach.c
+  op_zhelp_xfr.c
+  op_ztrigger.c
   )
 
 if(ARCHITECTURE_IS_64_BITS)
@@ -278,33 +305,6 @@ if(ARCHITECTURE_IS_64_BITS)
     ojgetch_env.c
     ojparams.c
     ojstartchild.c
-    op_fgnlookup.c
-    op_fnfgncal.c
-    op_fngetdvi.c
-    op_fngetlki.c
-    op_fngetsyi.c
-    op_fnp1.c
-    op_fnpiece.c
-    op_fnpopulation.c
-    op_fnzcall.c
-    op_fnzconvert.c
-    op_fnzfile.c
-    op_fnzlkid.c
-    op_fnzparse.c
-    op_fnzpid.c
-    op_fnzpriv.c
-    op_fnzsearch.c
-    op_fnzsetprv.c
-    op_fnztrnlnm.c
-    op_horolog.c
-    op_job.c
-    op_setextract.c
-    op_setp1.c
-    op_zattach.c
-    op_zhelp_xfr.c
-    op_zlink.c
-    op_zmess.c
-    op_ztrigger.c
     pipeint_stats.c
     probe.c
     rc_cpt_ops.c
