@@ -2,6 +2,7 @@ if(ARCHITECTURE_IS_32_BITS)
   include_directories(
     ${fis-gtm_SOURCE_DIR}/sr_i386
     ${fis-gtm_SOURCE_DIR}/sr_unix_nsb
+    ${fis-gtm_SOURCE_DIR}/sr_unix
     )
 endif()
 
@@ -9,12 +10,12 @@ endif()
 if(ARCHITECTURE_IS_64_BITS)
   include_directories(
     ${fis-gtm_SOURCE_DIR}/sr_x86_64
+    ${fis-gtm_SOURCE_DIR}/sr_unix
     )
 endif()
 
 
 include_directories(
-  ${fis-gtm_SOURCE_DIR}/sr_unix
   ${fis-gtm_SOURCE_DIR}/sr_linux
   ${fis-gtm_SOURCE_DIR}/pro
   ${fis-gtm_SOURCE_DIR}/pro/obj
@@ -715,7 +716,6 @@ set(GTM_MUMPS_PORT_SRC_C
   m_zcontinue.c
   m_zdeallocate.c
   m_zedit.c
-  m_zgoto.c
   m_zhalt.c
   m_zhelp.c
   m_zinvcmd.c
@@ -1305,6 +1305,7 @@ set(GTM_MUMPS_PORT_SRC_C
   ztrap_save_ctxt.c
   zwr2format.c
   zyerror_init.c
+  op_labaddr.c
   )
 
 #
@@ -1611,13 +1612,13 @@ if(ARCHITECTURE_IS_64_BITS)
     bx_boolop.c
     emit_code.c
     job_addr.c
-    op_labaddr.c
     op_zgoto.c
     code_gen.c
     urx_resolve.c
     shrink_trips.c
     zlput_rname.c
     mu_gv_stack_init.c
+    m_zgoto.c
     )
 endif()
 
