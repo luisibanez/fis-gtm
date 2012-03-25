@@ -286,27 +286,6 @@ target_link_libraries(lke
   )
 
 
-add_executable(ftok
-  sr_unix/ftok.c
-  )
-
-target_link_libraries(ftok
-  lkeport
-  fisgtmproobj
-  ${ARCHITECTURE_DEPENDENT_LIBRARIES}
-  mumpsport
-  mumpsunix
-  mupipport
-  mupipunix
-  lkeunix
-  gtmlinux2
-  ${CURSES_LIBRARIES}
-  elf
-  pthread
-  dl
-  m
-  )
-
 
 add_executable(gtm
   sr_unix/gtm.c
