@@ -5,6 +5,7 @@ include_directories(
   ${fis-gtm_SOURCE_DIR}/sr_unix
   ${fis-gtm_SOURCE_DIR}/sr_linux
   ${fis-gtm_SOURCE_DIR}/sr_x86_regs
+  ${fis-gtm_SOURCE_DIR}/sr_x86_64
   ${fis-gtm_BINARY_DIR}/pro/obj
   )
 
@@ -73,7 +74,6 @@ set(GTM_MUMPS2_SRC_C
   stop_image.c
   stop_image_ch.c
   iorm_close.c
-  iott_edit.c
   gtm_icu.c
   op_setpiece.c
   is_file_identical.c
@@ -98,7 +98,6 @@ set(GTM_MUMPS2_SRC_C
   op_fngetjpi.c
   op_fnrandom.c
   m_ztrigger.c
-  iott_readfl.c
   op_zedit.c
   iorm_read.c
   zro_search.c
@@ -174,7 +173,104 @@ set(GTM_MUMPS2_SRC_C
   io_is_sn.c
   io_is_tt.c
   gtm_getmsg.c
+  util_output_cm.c
+  jobexam_signal_handler.c
+  exttab_parse.c
+  zshow_zcalls.c
+  jnl_output_sp.c
+  gv_trigger.c
+  trigger_fill_xecute_buffer.c
+  gtm_fork_n_core.c
+  gtm_trigger.c
+  rc_cpt_ops.c
+  jnlpool_init.c
+  trigger_trgfile.c
+  trigger_gbl_fill_xecute_buffer.c
+  trigger_cmd.c
+  trigger_compare.c
+  trigger_delete.c
+  trigger_incr_cycle.c
+  trigger_parse.c
+  trigger_read_name_entry.c
+  trigger_scan_string.c
+  trigger_select.c
+  trigger_tpwrap_ch.c
+  trigger_update.c
+  trigger_user_name.c
+  wcs_get_space.c
+  ss_shdw_mgr.c
+  gtm_env_init_sp.c
+  jnl_file_extend.c
+  file_input.c
+  set_jnl_file_close.c
+  gtm_dump_core.c
+  gtm_env_translate.c
+  gtm_dbjnl_dupfd_check.c
+  rel_crit.c
+  rel_quant.c
+  rel_lock.c
+  gvusr.c
+  gtm_rename.c
+  gtm_zlib.c
+  gdsfilext_nojnl.c
+  f_char.c
+  f_piece.c
+  grab_crit.c
+  grab_lock.c
+  gtm_bintim.c
+  gtm_compile.c
+  gtm_dump.c
+  gtm_file_remove.c
+  gtm_file_stat.c
+  gtm_init_env.c
+  gtm_pipe.c
+  gtm_semutils.c
+  gtm_startup.c
+  gtm_text_alloc.c
+  gtm_unique_file_util.c
+  gtm_utf8_stx.c
+  gtm_wake.c
+  iob_close.c
+  iob_flush.c
+  iob_open_rd.c
+  iob_open_wt.c
+  iob_read.c
+  iob_write.c
+  iomt_ch.c
+  iomt_closesp.c
+  iomt_info.c
+  iomt_open.c
+  iomt_opensp.c
+  iomt_qio.c
+  iomt_rdlblk.c
+  iomt_reopen.c
+  iomt_sense.c
+  iomt_tm.c
+  iomt_wtlblk.c
+  iott_edit.c
+  iott_use.c
+  iott_readfl.c
+  iott_close.c
+  iott_flush.c
+  iott_open.c
+  iott_rdone.c
+  iott_read.c
+  iott_write.c
+  iorm_flush.c
+  iorm_open.c
+  iorm_rdone.c
+  iorm_write.c
+  iorm_wteol.c
+  ss_lock_facility.c
+  ss_release.c
+  ss_write_block.c
+  urx_remove.c
+  remove_rms.c
+  gtm_tparm.c
+  same_device_check.c
+  set_zstatus.c
   )
+
 
 if(ARCHITECTURE_IS_64_BITS)
   set(GTM_MUMPS2_SRC_C
@@ -184,18 +280,11 @@ if(ARCHITECTURE_IS_64_BITS)
     comp_lits.c
     clear_cache_array.c
     gtm_unlink_all.c
-    gtm_trigger.c
-    gtm_tparm.c
     incr_link.c
-    exttab_parse.c
     exttime.c
-    f_char.c
-    f_piece.c
     file_head_read.c
-    file_input.c
     gds_rundown.c
     gdsfilext.c
-    gdsfilext_nojnl.c
     genpat.c
     get_src_line.c
     getmaxfds.c
@@ -203,49 +292,18 @@ if(ARCHITECTURE_IS_64_BITS)
     getzmode.c
     golevel.c
     goq_load.c
-    grab_crit.c
-    grab_lock.c
-    gtm_bintim.c
-    gtm_compile.c
-    gtm_dbjnl_dupfd_check.c
-    gtm_dump.c
-    gtm_dump_core.c
-    gtm_env_init_sp.c
-    gtm_env_translate.c
-    gtm_file_remove.c
-    gtm_file_stat.c
-    gtm_fork_n_core.c
-    gtm_init_env.c
-    gtm_pipe.c
-    gtm_rename.c
-    gtm_semutils.c
-    gtm_startup.c
-    gtm_text_alloc.c
-    gtm_unique_file_util.c
-    gtm_utf8_stx.c
-    gtm_wake.c
-    gtm_zlib.c
     gtmci.c
     gtmci_ch.c
     gtmci_signals.c
     gtmcrypt_entry.c
 #   gtmsecshr.c      contains a main, make it executable
     gtmsecshr_wrapper.c
-    gv_trigger.c
-
     gvcst_init_sysops.c
-    gvusr.c
     heartbeat_timer.c
     init_gtm.c
     io_get_fgn_driver.c
     io_open_try.c
     io_type.c
-    iob_close.c
-    iob_flush.c
-    iob_open_rd.c
-    iob_open_wt.c
-    iob_read.c
-    iob_write.c
     ioff_open.c
     iomt_ch.c
     iomt_closesp.c
@@ -259,18 +317,6 @@ if(ARCHITECTURE_IS_64_BITS)
     iomt_tm.c
     iomt_wtlblk.c
     iopi_open.c
-    iorm_flush.c
-    iorm_open.c
-    iorm_rdone.c
-    iorm_write.c
-    iorm_wteol.c
-    iott_close.c
-    iott_flush.c
-    iott_open.c
-    iott_rdone.c
-    iott_read.c
-    iott_use.c
-    iott_write.c
     ious_iocontrol.c
     ious_open.c
     ious_rdone.c
@@ -280,13 +326,9 @@ if(ARCHITECTURE_IS_64_BITS)
     ious_wtone.c
     is_proc_alive.c
     is_raw_dev.c
-    jnl_file_extend.c
     jnl_fsync.c
-    jnl_output_sp.c
     jnl_prc_vector.c
-    jnlpool_init.c
     jobchild_init.c
-    jobexam_signal_handler.c
     lref_parse.c
     make_cimode.c
     make_dmode.c
@@ -311,55 +353,25 @@ if(ARCHITECTURE_IS_64_BITS)
     ojstartchild.c
     pipeint_stats.c
     probe.c
-    rc_cpt_ops.c
     recover_truncate.c
     reg_cmcheck.c
-    rel_crit.c
-    rel_quant.c
-    rel_lock.c
-    remove_rms.c
     resetterm.c
-    same_device_check.c
 #    semstat2.c      contains a main, make it an executable
     send_msg.c
-    set_jnl_file_close.c
-    set_zstatus.c
     sleep.c
-    ss_lock_facility.c
-    ss_release.c
-    ss_shdw_mgr.c
-    ss_write_block.c
     str_match.c
     t_recycled2free.c
     tp_grab_crit.c
     trans_log_name.c
-    trigger_cmd.c
-    trigger_compare.c
-    trigger_delete.c
-    trigger_fill_xecute_buffer.c
-    trigger_gbl_fill_xecute_buffer.c
-    trigger_incr_cycle.c
-    trigger_parse.c
-    trigger_read_name_entry.c
-    trigger_scan_string.c
-    trigger_select.c
-    trigger_tpwrap_ch.c
-    trigger_trgfile.c
-    trigger_update.c
-    trigger_user_name.c
-    urx_remove.c
     util_in_open.c
     util_input.c
-    util_output_cm.c
     wcs_flu.c
-    wcs_get_space.c
     zl_cmd_qlf.c
     zlmov_lnames.c
     zro_gettok.c
     zro_load.c
     zro_shlibs.c
     zshow_devices.c
-    zshow_zcalls.c
     )
 endif()
 

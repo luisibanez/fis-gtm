@@ -26,6 +26,7 @@ include_directories(
 set(SRC_C
   auto_zlink.c
   find_line_call.c
+  obj_file.c
   )
 
 
@@ -35,7 +36,6 @@ if(ARCHITECTURE_IS_64_BITS)
   incr_link.c
   make_cimode.c
   make_dmode.c
-  obj_file.c
   )
 endif()
 

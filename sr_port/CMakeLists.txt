@@ -1308,6 +1308,7 @@ set(GTM_MUMPS_PORT_SRC_C
   zwr2format.c
   zyerror_init.c
   op_labaddr.c
+  mu_gv_stack_init.c
   )
 
 #
@@ -1619,7 +1620,6 @@ if(ARCHITECTURE_IS_64_BITS)
     urx_resolve.c
     shrink_trips.c
     zlput_rname.c
-    mu_gv_stack_init.c
     m_zgoto.c
     )
 endif()
