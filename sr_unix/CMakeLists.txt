@@ -269,6 +269,44 @@ set(GTM_MUMPS2_SRC_C
   gtm_tparm.c
   same_device_check.c
   set_zstatus.c
+  is_proc_alive.c
+  is_raw_dev.c
+  getstorage.c
+  pipeint_stats.c
+  zshow_devices.c
+  recover_truncate.c
+  get_src_line.c
+  trans_log_name.c
+  jobchild_init.c
+  mubexpfilnam.c
+  ojchildioset.c
+  zl_cmd_qlf.c
+  heartbeat_timer.c
+  getmaxfds.c
+  io_open_try.c
+  ojchildparms.c
+  gtmcrypt_entry.c
+  clear_cache_array.c
+  ious_iocontrol.c
+  send_msg.c
+  file_head_read.c
+  reg_cmcheck.c
+  ious_write.c
+  ojstartchild.c
+  gdsfilext.c
+  jnl_prc_vector.c
+  ojchildioclean.c
+  mubfilcpy.c
+  t_recycled2free.c
+  make_dmode.c
+  ious_open.c
+  ious_rdone.c
+  ious_read.c
+  ious_readfl.c
+  ious_wtone.c
+  util_input.c
+  zro_load.c
+  str_match.c
   )
 
 
@@ -278,31 +316,22 @@ if(ARCHITECTURE_IS_64_BITS)
     auto_zlink.c
     callg.c
     comp_lits.c
-    clear_cache_array.c
     gtm_unlink_all.c
     incr_link.c
     exttime.c
-    file_head_read.c
     gds_rundown.c
-    gdsfilext.c
     genpat.c
-    get_src_line.c
-    getmaxfds.c
-    getstorage.c
     getzmode.c
     golevel.c
     goq_load.c
     gtmci.c
     gtmci_ch.c
     gtmci_signals.c
-    gtmcrypt_entry.c
 #   gtmsecshr.c      contains a main, make it executable
     gtmsecshr_wrapper.c
     gvcst_init_sysops.c
-    heartbeat_timer.c
     init_gtm.c
     io_get_fgn_driver.c
-    io_open_try.c
     io_type.c
     ioff_open.c
     iomt_ch.c
@@ -317,26 +346,12 @@ if(ARCHITECTURE_IS_64_BITS)
     iomt_tm.c
     iomt_wtlblk.c
     iopi_open.c
-    ious_iocontrol.c
-    ious_open.c
-    ious_rdone.c
-    ious_read.c
-    ious_readfl.c
-    ious_write.c
-    ious_wtone.c
-    is_proc_alive.c
-    is_raw_dev.c
     jnl_fsync.c
-    jnl_prc_vector.c
-    jobchild_init.c
     lref_parse.c
     make_cimode.c
-    make_dmode.c
     make_mode.c     # apparently used in 64 bits...
     map_sym.c
     mem_access.c
-    mubexpfilnam.c
-    mubfilcpy.c
     mup_bak_sys.c
 #   mupip.c         it has a main -> executable
     mupip_cmd.c
@@ -344,34 +359,19 @@ if(ARCHITECTURE_IS_64_BITS)
     mu_decrypt.c
     obj_code.c
     obj_file.c
-    ojchildioclean.c
-    ojchildioset.c
-    ojchildparms.c
     ojchkfs.c
     ojgetch_env.c
     ojparams.c
-    ojstartchild.c
-    pipeint_stats.c
     probe.c
-    recover_truncate.c
-    reg_cmcheck.c
     resetterm.c
 #    semstat2.c      contains a main, make it an executable
-    send_msg.c
     sleep.c
-    str_match.c
-    t_recycled2free.c
     tp_grab_crit.c
-    trans_log_name.c
     util_in_open.c
-    util_input.c
     wcs_flu.c
-    zl_cmd_qlf.c
     zlmov_lnames.c
     zro_gettok.c
-    zro_load.c
     zro_shlibs.c
-    zshow_devices.c
     )
 endif()
 
