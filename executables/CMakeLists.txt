@@ -1,7 +1,23 @@
 
-include_directories(
-  ${fis-gtm_SOURCE_DIR}/sr_unix
-  )
+if(ARCHITECTURE_IS_32_BITS)
+  include_directories(
+    ${fis-gtm_SOURCE_DIR}/sr_i386
+    ${fis-gtm_SOURCE_DIR}/sr_unix_nsb
+    ${fis-gtm_BINARY_DIR}/pro/obj
+    ${fis-gtm_SOURCE_DIR}/sr_unix
+    ${fis-gtm_SOURCE_DIR}/sr_port
+    )
+endif()
+
+
+if(ARCHITECTURE_IS_64_BITS)
+  include_directories(
+    ${fis-gtm_SOURCE_DIR}/sr_x86_64
+    ${fis-gtm_BINARY_DIR}/pro/obj
+    ${fis-gtm_SOURCE_DIR}/sr_unix
+    ${fis-gtm_SOURCE_DIR}/sr_port
+    )
+endif()
 
 
 #
@@ -11,6 +27,11 @@ if(ARCHITECTURE_IS_32_BITS)
   set(ARCHITECTURE_DEPENDENT_LIBRARIES
     ${ARCHITECTURE_DEPENDENT_LIBRARIES}
     fisgtmi386
+    stubunix
+    gtmunixcm 
+    cmisockettcp
+    frameport
+    gtm_unix_nsb
     )
 endif()
 

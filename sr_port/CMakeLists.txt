@@ -3,6 +3,7 @@ if(ARCHITECTURE_IS_32_BITS)
     ${fis-gtm_SOURCE_DIR}/sr_i386
     ${fis-gtm_SOURCE_DIR}/sr_unix_nsb
     ${fis-gtm_SOURCE_DIR}/sr_unix
+    ${fis-gtm_BINARY_DIR}/pro/obj
     )
 endif()
 
@@ -11,6 +12,7 @@ if(ARCHITECTURE_IS_64_BITS)
   include_directories(
     ${fis-gtm_SOURCE_DIR}/sr_x86_64
     ${fis-gtm_SOURCE_DIR}/sr_unix
+    ${fis-gtm_BINARY_DIR}/pro/obj
     )
 endif()
 

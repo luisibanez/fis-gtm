@@ -2,10 +2,10 @@
 include_directories(
   ${fis-gtm_SOURCE_DIR}/sr_port_cm
   ${fis-gtm_SOURCE_DIR}/sr_port
-  ${fis-gtm_SOURCE_DIR}/pro/obj
   ${fis-gtm_SOURCE_DIR}/sr_unix
   ${fis-gtm_SOURCE_DIR}/sr_linux
   ${fis-gtm_SOURCE_DIR}/sr_x86_regs
+  ${fis-gtm_BINARY_DIR}/pro/obj
   )
 
 set(GTM_MUMPS2_SRC_C
@@ -163,6 +163,17 @@ set(GTM_MUMPS2_SRC_C
   op_zattach.c
   op_zhelp_xfr.c
   op_ztrigger.c
+  source_file.c
+  getzprocess.c
+  trigger_source_read_andor_verify.c
+  ss_context_mgr.c
+  mumps_clitab.c
+  sgtm_putmsg.c
+  io_init_name.c
+  io_is_rm.c
+  io_is_sn.c
+  io_is_tt.c
+  gtm_getmsg.c
   )
 
 if(ARCHITECTURE_IS_64_BITS)
@@ -190,7 +201,6 @@ if(ARCHITECTURE_IS_64_BITS)
     getmaxfds.c
     getstorage.c
     getzmode.c
-    getzprocess.c
     golevel.c
     goq_load.c
     grab_crit.c
@@ -205,7 +215,6 @@ if(ARCHITECTURE_IS_64_BITS)
     gtm_file_remove.c
     gtm_file_stat.c
     gtm_fork_n_core.c
-    gtm_getmsg.c
     gtm_init_env.c
     gtm_pipe.c
     gtm_rename.c
@@ -229,10 +238,6 @@ if(ARCHITECTURE_IS_64_BITS)
     heartbeat_timer.c
     init_gtm.c
     io_get_fgn_driver.c
-    io_init_name.c
-    io_is_rm.c
-    io_is_sn.c
-    io_is_tt.c
     io_open_try.c
     io_type.c
     iob_close.c
@@ -290,7 +295,6 @@ if(ARCHITECTURE_IS_64_BITS)
     mem_access.c
     mubexpfilnam.c
     mubfilcpy.c
-    mumps_clitab.c
     mup_bak_sys.c
 #   mupip.c         it has a main -> executable
     mupip_cmd.c
@@ -320,10 +324,7 @@ if(ARCHITECTURE_IS_64_BITS)
     send_msg.c
     set_jnl_file_close.c
     set_zstatus.c
-    sgtm_putmsg.c
     sleep.c
-    source_file.c
-    ss_context_mgr.c
     ss_lock_facility.c
     ss_release.c
     ss_shdw_mgr.c
@@ -342,7 +343,6 @@ if(ARCHITECTURE_IS_64_BITS)
     trigger_read_name_entry.c
     trigger_scan_string.c
     trigger_select.c
-    trigger_source_read_andor_verify.c
     trigger_tpwrap_ch.c
     trigger_trgfile.c
     trigger_update.c

@@ -90,16 +90,6 @@ install_gtm_preconfigured("pro/plugin/gtmcrypt" "main_pragma.h")
 install_gtm_preconfigured("pro/plugin/gtmcrypt" "maskpass.c")
 
 
-#
-#  And add these directories to the header search path
-#
-include_directories(
-  ${fis-gtm_BINARY_DIR}/pro
-  ${fis-gtm_BINARY_DIR}/pro/obj
-  ${fis-gtm_BINARY_DIR}/pro/utf8
-  ${fis-gtm_SOURCE_DIR}/sr_port
-  )
-
 
 #
 # Configure to build assembly files
@@ -150,6 +140,7 @@ add_subdirectory(pro)
 #
 if(ARCHITECTURE_IS_32_BITS)
   add_subdirectory(sr_i386)
+  add_subdirectory(sr_unix_nsb)
 endif()
 
 if(ARCHITECTURE_IS_64_BITS)
