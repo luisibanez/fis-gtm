@@ -18,6 +18,7 @@ include_directories(
   ${fis-gtm_SOURCE_DIR}/sr_port
   ${fis-gtm_SOURCE_DIR}/sr_unix
   ${fis-gtm_SOURCE_DIR}/sr_linux
+  ${fis-gtm_BINARY_DIR}/pro/obj
   )
 
 set(SRC_C
