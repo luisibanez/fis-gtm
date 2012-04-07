@@ -307,6 +307,24 @@ set(GTM_MUMPS2_SRC_C
   util_input.c
   zro_load.c
   str_match.c
+  ojparams.c
+  lref_parse.c
+  io_get_fgn_driver.c
+  mup_bak_sys.c
+  iopi_open.c
+  zro_gettok.c
+  goq_load.c
+  genpat.c
+  ojchkfs.c
+  getzmode.c
+  sleep.c
+  zro_shlibs.c
+  fix_pages.c
+  make_mode.c
+  mem_access.c
+  make_cimode.c
+  map_sym.c
+  wcs_flu.c
   )
 
 
@@ -316,14 +334,11 @@ if(ARCHITECTURE_IS_64_BITS)
     auto_zlink.c
     callg.c
     comp_lits.c
-    gtm_unlink_all.c
     incr_link.c
+    gtm_unlink_all.c
     exttime.c
     gds_rundown.c
-    genpat.c
-    getzmode.c
     golevel.c
-    goq_load.c
     gtmci.c
     gtmci_ch.c
     gtmci_signals.c
@@ -331,7 +346,6 @@ if(ARCHITECTURE_IS_64_BITS)
     gtmsecshr_wrapper.c
     gvcst_init_sysops.c
     init_gtm.c
-    io_get_fgn_driver.c
     io_type.c
     ioff_open.c
     iomt_ch.c
@@ -345,33 +359,20 @@ if(ARCHITECTURE_IS_64_BITS)
     iomt_sense.c
     iomt_tm.c
     iomt_wtlblk.c
-    iopi_open.c
     jnl_fsync.c
-    lref_parse.c
-    make_cimode.c
-    make_mode.c     # apparently used in 64 bits...
-    map_sym.c
-    mem_access.c
-    mup_bak_sys.c
 #   mupip.c         it has a main -> executable
     mupip_cmd.c
     mupip_crypt.c
     mu_decrypt.c
     obj_code.c
     obj_file.c
-    ojchkfs.c
     ojgetch_env.c
-    ojparams.c
     probe.c
     resetterm.c
 #    semstat2.c      contains a main, make it an executable
-    sleep.c
     tp_grab_crit.c
     util_in_open.c
-    wcs_flu.c
     zlmov_lnames.c
-    zro_gettok.c
-    zro_shlibs.c
     )
 endif()
 
