@@ -32,6 +32,8 @@ if(ARCHITECTURE_IS_32_BITS)
     cmisockettcp
     frameport
     gtm_unix_nsb
+    gtmportcm
+    cmisockettcpportcm
     )
 endif()
 
@@ -91,10 +93,8 @@ target_link_libraries(dse
   dseport
   dseunix
   gtmlinux2
-  gtmportcm
   gnpclientportcm 
   gnpclientport
-  cmisockettcpportcm
   fisgtmproobj
   ${ARCHITECTURE_DEPENDENT_LIBRARIES}
   ${CURSES_LIBRARIES}

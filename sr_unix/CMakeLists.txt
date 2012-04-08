@@ -331,6 +331,7 @@ set(GTM_MUMPS2_SRC_C
   golevel.c
   exttime.c
   jnl_fsync.c
+  tp_grab_crit.c
   resetterm.c
   )
 
@@ -370,7 +371,6 @@ if(ARCHITECTURE_IS_64_BITS)
     ojgetch_env.c
     probe.c
 #    semstat2.c      contains a main, make it an executable
-    tp_grab_crit.c
     util_in_open.c
     zlmov_lnames.c
     )
