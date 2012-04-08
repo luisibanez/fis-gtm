@@ -325,6 +325,13 @@ set(GTM_MUMPS2_SRC_C
   make_cimode.c
   map_sym.c
   wcs_flu.c
+  gds_rundown.c
+  ioff_open.c
+  gvcst_init_sysops.c
+  golevel.c
+  exttime.c
+  jnl_fsync.c
+  resetterm.c
   )
 
 
@@ -336,18 +343,13 @@ if(ARCHITECTURE_IS_64_BITS)
     comp_lits.c
     incr_link.c
     gtm_unlink_all.c
-    exttime.c
-    gds_rundown.c
-    golevel.c
     gtmci.c
     gtmci_ch.c
     gtmci_signals.c
 #   gtmsecshr.c      contains a main, make it executable
     gtmsecshr_wrapper.c
-    gvcst_init_sysops.c
     init_gtm.c
     io_type.c
-    ioff_open.c
     iomt_ch.c
     iomt_closesp.c
     iomt_info.c
@@ -359,7 +361,6 @@ if(ARCHITECTURE_IS_64_BITS)
     iomt_sense.c
     iomt_tm.c
     iomt_wtlblk.c
-    jnl_fsync.c
 #   mupip.c         it has a main -> executable
     mupip_cmd.c
     mupip_crypt.c
@@ -368,7 +369,6 @@ if(ARCHITECTURE_IS_64_BITS)
     obj_file.c
     ojgetch_env.c
     probe.c
-    resetterm.c
 #    semstat2.c      contains a main, make it an executable
     tp_grab_crit.c
     util_in_open.c

@@ -92,6 +92,8 @@ target_link_libraries(dse
   dseunix
   gtmlinux2
   gtmportcm
+  gnpclientportcm 
+  gnpclientport
   cmisockettcpportcm
   fisgtmproobj
   ${ARCHITECTURE_DEPENDENT_LIBRARIES}

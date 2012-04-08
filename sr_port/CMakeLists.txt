@@ -1077,7 +1077,6 @@ set(GTM_MUMPS_PORT_SRC_C
   put_tjmp.c
   put_tnxt.c
   put_tref.c
-  put_tsiz.c
 # random.o      in  sr_unix
 # rc_cpt_ops.o      in  sr_unix
   real_len.c
@@ -1310,6 +1309,10 @@ set(GTM_MUMPS_PORT_SRC_C
   op_labaddr.c
   mu_gv_stack_init.c
   m_zgoto.c
+  op_zgoto.c
+  put_tsiz.c
+  urx_resolve.c
+  job_addr.c
   )
 
 #
@@ -1615,10 +1618,7 @@ if(ARCHITECTURE_IS_64_BITS)
     ${GTM_MUMPS_PORT_SRC_C}
     bx_boolop.c
     emit_code.c
-    job_addr.c
-    op_zgoto.c
     code_gen.c
-    urx_resolve.c
     shrink_trips.c
     zlput_rname.c
     )
