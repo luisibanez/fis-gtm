@@ -115,14 +115,13 @@ target_link_libraries(mupip
   mupipunix
   lkeport
   lkeunix
-  fisgtmproobj
-  ${ARCHITECTURE_DEPENDENT_LIBRARIES}
   mumpsport
   mumpsunix
   mumpsport
   mumpsunix
   gtmlinux2
   fisgtmproobj
+  ${ARCHITECTURE_DEPENDENT_LIBRARIES}
   ${CURSES_LIBRARIES}
   elf
   dl
