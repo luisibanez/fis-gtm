@@ -1,6 +1,5 @@
 cmake_minimum_required(VERSION 2.8.7)
 project(GTM C ASM)
-set(CMAKE_INSTALL_PREFIX "${GTM_BINARY_DIR}/stage")
 
 set(CMAKE_INCLUDE_FLAG_ASM "-Wa,-I") # gcc -I does not make it to "as"
 set(CMAKE_C_FLAGS
