@@ -220,14 +220,20 @@ add_library(libgtmcrypt SHARED
   sr_unix/gtmcrypt_pk_ref.c
   sr_unix/gtmcrypt_dbk_ref.c
   )
-set_property(TARGET libgtmcrypt PROPERTY OUTPUT_NAME gtmcrypt)
-set_property(TARGET libgtmcrypt PROPERTY COMPILE_DEFINITIONS USE_GCRYPT)
+set_target_properties(libgtmcrypt PROPERTIES
+  OUTPUT_NAME gtmcrypt
+  COMPILE_DEFINITIONS USE_GCRYPT
+  LIBRARY_OUTPUT_DIRECTORY ${GTM_BINARY_DIR}/plugin
+  )
 target_link_libraries(libgtmcrypt gpg-error gpgme gcrypt)
 install(TARGETS libgtmcrypt DESTINATION plugin)
 
 add_executable(maskpass sr_unix/maskpass.c)
 target_link_libraries(maskpass gpg-error gpgme gcrypt)
-set_property(TARGET maskpass PROPERTY COMPILE_DEFINITIONS USE_GCRYPT)
+set_target_properties(maskpass PROPERTIES
+  COMPILE_DEFINITIONS USE_GCRYPT
+  RUNTIME_OUTPUT_DIRECTORY ${GTM_BINARY_DIR}/plugin/gtmcrypt
+  )
 install(TARGETS maskpass DESTINATION plugin/gtmcrypt)
 
 install(TARGETS
