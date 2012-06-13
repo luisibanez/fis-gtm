@@ -41,7 +41,6 @@ function(load_source_list srcs_var listfile)
   endforeach()
   set(${srcs_var} "${srcs}" PARENT_SCOPE)
 endfunction()
-message("lke_srcs=[${lke_srcs}]")
 
 load_source_list(gtcm_srcs sr_unix_cm/libgtcm.list)
 load_source_list(cmisockettcp_srcs sr_unix_gnp/libcmisockettcp.list)
@@ -52,6 +51,20 @@ load_source_list(dse_srcs sr_unix/libdse.list)
 load_source_list(lke_srcs sr_unix/liblke.list)
 load_source_list(mupip_srcs sr_unix/libmupip.list)
 load_source_list(stub_srcs sr_unix/libstub.list)
+
+load_source_list(mumps_srcs sr_x86_64/libmumps.list)
+# TODO: Load libmumps leftovers automatically
+# libmumps has everything not in source lists:
+#   *.c *.si *.s
+# but excluding names hidden by earlier arch_path entries.
+#set(all_srcs "")
+#foreach(d ${arch_path})
+#  file(GLOB all_srcs RELATIVE ${GTM_SOURCE_DIR}
+#    ${GTM_SOURCE_DIR}/${d}/*.c
+#    ${GTM_SOURCE_DIR}/${d}/*.si
+#    ${GTM_SOURCE_DIR}/${d}/*.s
+#    )
+#endforeach()
 
 foreach(lib
   gtcm
