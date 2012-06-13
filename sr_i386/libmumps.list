@@ -6,7 +6,6 @@ adjust_frames
 advancewindow
 alias_funcs
 alloc_reg
-anticipatory_freeze
 append_time_stamp
 asc2i
 asc_hex2i
@@ -116,8 +115,6 @@ db_csh_get
 db_csh_getn
 db_csh_ini
 db_csh_ref
-dbcertify
-dbcertify_cmd
 dbfilop
 dbinit_ch
 dbopen_ch
@@ -147,13 +144,10 @@ dollarh
 dollarx
 dpgbldir
 dpgbldir_sysops
-dse
-dse_cmd
 dsk_read
 dsk_write
 dsk_write_nocache
 dskspace_msg_timer
-dtgbldir
 dump_lockhist
 dumptable
 eb_muldiv
@@ -254,7 +248,6 @@ format_key_lv_val
 format_key_mvals
 format_lvname
 format_targ_key
-ftok
 ftok_sems
 g_msf
 gbldefs
@@ -291,7 +284,6 @@ get_src_line
 get_symb_line
 getcaps
 geteditor
-geteuid
 getjobname
 getjobnum
 getmaxfds
@@ -311,13 +303,7 @@ grab_crit
 grab_lock
 gt_timers
 gtcm_find_reghead
-gtcm_gnp_server
 gtcm_jnl_switched
-gtcm_main
-gtcm_pkdisp
-gtcm_play
-gtcm_shmclean
-gtm
 gtm_assert
 gtm_assert2
 gtm_bintim
@@ -348,12 +334,10 @@ gtm_icu
 gtm_imagetype_init
 gtm_init_env
 gtm_isanlp
-gtm_main
 gtm_malloc
 gtm_malloc_dbg
 gtm_maxstr
 gtm_memcmp
-gtm_memcpy_validate_and_execute
 gtm_newintrinsic
 gtm_permissions
 gtm_pipe
@@ -382,15 +366,9 @@ gtmci
 gtmci_ch
 gtmci_isv
 gtmci_signals
-gtmcrypt_dbk_ref
 gtmcrypt_entry
-gtmcrypt_pk_ref
-gtmcrypt_ref
-gtmsecshr
 gtmsecshr_sock_cleanup
 gtmsecshr_sock_init
-gtmsecshr_wrapper
-gtmsource_freeze
 gtmsource_jnl_release_timer
 gtmsource_losttncomplete
 gtmsource_needrestart
@@ -640,6 +618,7 @@ jnl_flush
 jnl_format
 jnl_fsync
 jnl_get_checksum
+jnl_get_checksum_entire
 jnl_output_sp
 jnl_prc_vector
 jnl_put_jrt_pfin
@@ -679,8 +658,6 @@ linetail
 linkage
 list_file
 lk_check_own
-lke
-lke_cmd
 lke_cmd_disallow
 lke_ctrlc_handler
 lkglvn
@@ -801,14 +778,9 @@ mtables
 mu_decrypt
 mu_gv_cur_reg_init
 mu_int_wait_rdonly
-mu_replpool_release_sem
-mu_replpool_remove_sem
-mu_swap_root
 mum_tstart
 mumps_clitab
 mupfndfil
-mupip
-mupip_cmd
 mupip_crypt
 mupip_load_ch
 mutex
@@ -845,7 +817,7 @@ ojchkfs
 ojgetch_env
 ojparams
 ojstartchild
-omi_srvc_xct
+omi_sx_play
 one_job_param
 op_add
 op_bindparm
@@ -1228,7 +1200,6 @@ sec_shr_blk_build
 sec_shr_map_build
 secshr_client
 secshr_db_clnup
-semstat2
 semwt2long_handler
 send_msg
 set_jnl_file_close
@@ -1374,7 +1345,6 @@ view_jnlfile
 view_routines
 viewkeys
 wait_for_block_flush
-wait_for_disk_space
 wake
 wake_alarm
 walktree
