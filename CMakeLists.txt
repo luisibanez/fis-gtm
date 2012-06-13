@@ -252,6 +252,31 @@ foreach(mpt ${mpt_files})
   install(FILES "${GTM_SOURCE_DIR}/sr_port/${mpt}" DESTINATION . RENAME ${mpt_out})
 endforeach()
 
+set(hdrs)
+foreach(h
+  gtm_stdio.h
+  gtmxc_types.h
+  gtm_stdlib.h
+  gtm_string.h
+  gtm_strings.h
+  gtm_limits.h
+  main_pragma.h
+  )
+  set(found 0)
+  foreach(d ${arch_path})
+    set(hdr "${GTM_SOURCE_DIR}/${d}/${h}")
+    if(EXISTS "${hdr}")
+      list(APPEND hdrs "${hdr}")
+      set(found 1)
+     break()
+    endif()
+  endforeach()
+  if(NOT found)
+    message(FATAL_ERROR "Cannot find header ${h}")
+  endif()
+endforeach()
+install(FILES ${hdrs} DESTINATION .)
+
 # Would install to:
 # /usr/lib/fis-gtm/V5.5-000_x86
 # /usr/lib/fis-gtm/V5.5-000_x86_64
