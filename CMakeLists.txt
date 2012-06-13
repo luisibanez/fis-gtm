@@ -365,7 +365,7 @@ foreach(f
   list(APPEND files ${src})
 endforeach()
 install(FILES ${files} DESTINATION .)
-install(FILES ${files} DESTINATION ${GTM_SOURCE_DIR})
+install(FILES ${files} DESTINATION ${GTM_BINARY_DIR})
 
 configure_file(sr_unix/gpgagent.tab.in plugin/gpgagent.tab @ONLY)
 install(FILES ${GTM_BINARY_DIR}/plugin/gpgagent.tab DESTINATION plugin)
