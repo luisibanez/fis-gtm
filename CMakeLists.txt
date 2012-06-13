@@ -240,6 +240,7 @@ install(TARGETS
   mumps
   dse
   lke
+  geteuid
   gtcm_server
   gtcm_gnp_server
   gtcm_pkdisp
@@ -294,7 +295,6 @@ foreach(m ${m_files_port})
 endforeach()
 
 file(GLOB m_files_unix RELATIVE ${GTM_SOURCE_DIR}/sr_unix ${GTM_SOURCE_DIR}/sr_unix/*.m)
-message(m_files_unix ${m_files_unix})
 foreach(m ${m_files_unix})
   string(TOUPPER "${m}" m_upper)
   string(REGEX REPLACE "M$" "m" m_out "${GTM_BINARY_DIR}/${m_upper}")
