@@ -43,11 +43,16 @@ set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS_DEBUG DEBUG)
 
 # $gt_ld_options_all_exe $gt_ld_syslibs
 
-set(arch_path
-  sr_linux
-  sr_x86_64 # sr_i386
-  sr_x86_regs
-  # sr_unix_nsb  # for 32-bit
+set(arch_path)
+if("${CMAKE_SYSTEM_NAME}" MATCHES "Linux")
+  list(APPEND arch_path sr_linux)
+  if("${CMAKE_SIZEOF_VOID_P}" EQUAL 4)
+    list(APPEND arch_path sr_i386 sr_x86_regs sr_unix_nsb)
+  else()
+    list(APPEND arch_path sr_x86_64 sr_x86_regs)
+  endif()
+endif()
+list(APPEND arch_path
   sr_unix
   sr_port
   sr_unix_cm
@@ -116,12 +121,10 @@ load_source_list(mumps_srcs sr_x86_64/libmumps.list)
 
 list(APPEND mumps_srcs
  ${GTM_BOOTSTRAP_FILES}/pro/obj/ttt.c
- #${GTM_BOOTSTRAP_FILES}/pro/obj/xfer_desc.i
  ${GTM_BOOTSTRAP_FILES}/pro/obj/cmierrors_ctl.c
  ${GTM_BOOTSTRAP_FILES}/pro/obj/cmerrors_ctl.c
  ${GTM_BOOTSTRAP_FILES}/pro/obj/merrors_ctl.c
  ${GTM_BOOTSTRAP_FILES}/pro/obj/gdeerrors_ctl.c
- ${GTM_BOOTSTRAP_FILES}/pro/obj/omi_sx_play.c
 )
 
 foreach(lib
@@ -146,7 +149,6 @@ target_link_libraries(libmumps -lelf -lncurses -lm -ldl -lpthread -lrt)
 add_executable(mumps sr_unix/gtm.c)
 target_link_libraries(mumps libmumps)
 
-#omi_sx_play.c: omi_srvc_xct.c
 add_executable(dse sr_unix/dse.c sr_unix/dse_cmd.c)
 target_link_libraries(dse libdse libmumps libstub)
 list(APPEND with_export dse)
@@ -165,6 +167,32 @@ set_target_properties(gtmsecshr_real PROPERTIES
 add_executable(mupip sr_unix/mupip.c sr_unix/mupip_cmd.c)
 target_link_libraries(mupip libmupip libmumps libstub)
 list(APPEND with_export mupip)
+
+add_executable(lke sr_unix/lke.c sr_unix/lke_cmd.c)
+target_link_libraries(lke liblke libmumps libgnpclient libmumps libgnpclient libcmisockettcp)
+
+add_executable(gtcm_server sr_unix_cm/gtcm_main.c sr_unix_cm/omi_srvc_xct.c)
+target_link_libraries(gtcm_server libgtcm libmumps libstub)
+add_executable(gtcm_gnp_server sr_unix_gnp/gtcm_gnp_server.c)
+target_link_libraries(gtcm_gnp_server libgnpserver liblke libmumps libcmisockettcp libstub)
+
+#add_custom_command(
+#  OUTPUT sr_unix/omi_sx_play.c
+#  DEPENDS ${GTM_SOURCE_DIR}/sr_unix_cm/omi_srvc_xct.c
+#  COMMAND ${CMAKE_COMMAND} -E copy ${GTM_SOURCE_DIR}/sr_unix_cm/omi_srvc_xct.c
+#                                   ${GTM_BINARY_DIR}/sr_unix/omi_sx_play.c
+#  )
+#add_executable(gtcm_play sr_unix_cm/gtcm_play.c sr_unix/omi_sx_play.c)
+add_executable(gtcm_play sr_unix_cm/gtcm_play.c sr_unix_cm/omi_srvc_xct.c)
+target_link_libraries(gtcm_play libgtcm libmumps libstub)
+
+add_executable(gtcm_pkdisp sr_unix_cm/gtcm_pkdisp.c)
+target_link_libraries(gtcm_pkdisp libgtcm libmumps libstub)
+add_executable(gtcm_shmclean sr_unix_cm/gtcm_shmclean.c)
+target_link_libraries(gtcm_shmclean libgtcm libmumps libstub)
+add_executable(semstat2 sr_unix/semstat2.c)
+add_executable(ftok sr_unix/ftok.c)
+target_link_libraries(ftok libmumps libstub)
 
 set_property(TARGET ${with_export} PROPERTY LINK_FLAGS
   "-Wl,-u,gtm_filename_to_id -Wl,-u,gtm_zstatus -Wl,--version-script,\"${GTM_SOURCE_DIR}/gtmexe_symbols.export\"")
@@ -193,6 +221,14 @@ install(TARGETS maskpass DESTINATION plugin/gtmcrypt)
 install(TARGETS
   mumps
   dse
+  lke
+  gtcm_server
+  gtcm_gnp_server
+  gtcm_pkdisp
+  gtcm_play
+  gtcm_shmclean
+  semstat2
+  ftok
   gtmsecshr
   mupip
   libgtmshr
