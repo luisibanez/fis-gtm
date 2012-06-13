@@ -1,5 +1,46 @@
 cmake_minimum_required(VERSION 2.8.7)
-project(GTM C)
+project(GTM C ASM)
+set(CMAKE_INSTALL_PREFIX "${GTM_BINARY_DIR}/stage")
+
+set(CMAKE_INCLUDE_FLAG_ASM "-Wa,-I") # gcc -I does not make it to "as"
+set(CMAKE_C_FLAGS
+  "${CMAKE_C_FLAGS} -ansi -fsigned-char -Wmissing-prototypes -Wno-unused-result")
+set(CMAKE_C_FLAGS_RELEASE
+  "${CMAKE_C_FLAGS_RELEASE} -fno-defer-pop -fno-strict-aliasing -ffloat-store")
+add_definitions(
+  #-DNOLIBGTMSHR #gt_cc_option_DBTABLD=-DNOLIBGTMSHR
+  -D_GNU_SOURCE
+  -D_FILE_OFFSET_BITS=64
+  -D_XOPEN_SOURCE=600
+  -D_LARGEFILE64_SOURCE
+  )
+set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS_DEBUG DEBUG)
+
+#gt_cc_option_I= -I/usr/local/include -I/usr/include/libelf
+
+# -Wl,-M -rdynamic -Wl,-u
+
+#gt_ld_linker=cc
+#gt_ld_option_output=-o
+#gt_ld_options_common=-Wl,-M
+#gt_ld_options_bta=-Wl,-M
+#gt_ld_options_dbg=-Wl,-M
+#gt_ld_options_pro=-Wl,-M
+#gt_ld_options_gtmshr=-Wl,-u,gtm_filename_to_id -Wl,--version-script,gtmshr_symbols.export
+#gt_ld_ci_u_option=-Wl,-u,gtm_ci
+#gt_ld_extra_libs=
+#gt_ld_syslibs= -lelf -lncurses -lm -ldl -lc -lpthread -lrt
+#gt_ld_sysrtns=
+#gt_ld_aio_syslib=-lrt
+#gt_ld_m_shl_linker=ld
+#gt_ld_m_shl_options=-shared
+#gt_ld_shl_linker=cc
+#gt_ld_shl_suffix=.so
+#gt_ld_options_all_exe=-rdynamic -Wl,-u,gtm_filename_to_id -Wl,-u,gtm_zstatus -Wl,--version-script,gtmexe_symbols.export
+#gt_ld_shl_options=-shared
+#gt_ld_ci_options=-Wl,-u,gtm_ci -Wl,-u,gtm_filename_to_id -Wl,--version-script,gtmshr_symbols.export
+
+# $gt_ld_options_all_exe $gt_ld_syslibs
 
 set(arch_path
   sr_linux
@@ -28,10 +69,15 @@ function(load_source_list srcs_var listfile)
   foreach(name ${names})
     set(found 0)
     foreach(d ${arch_path})
-      set(src "${GTM_SOURCE_DIR}/${d}/${name}.c")
-      if(EXISTS "${src}")
-        list(APPEND srcs "${src}")
-        set(found 1)
+      foreach(ext .c .s .si)
+        set(src "${GTM_SOURCE_DIR}/${d}/${name}${ext}")
+        if(EXISTS "${src}")
+          list(APPEND srcs "${src}")
+          set(found 1)
+         break()
+        endif()
+      endforeach()
+      if(found)
         break()
       endif()
     endforeach()
@@ -52,6 +98,7 @@ load_source_list(lke_srcs sr_unix/liblke.list)
 load_source_list(mupip_srcs sr_unix/libmupip.list)
 load_source_list(stub_srcs sr_unix/libstub.list)
 
+#load_source_list(mumps_srcs sr_i386/libmumps.list)
 load_source_list(mumps_srcs sr_x86_64/libmumps.list)
 # TODO: Load libmumps leftovers automatically
 # libmumps has everything not in source lists:
@@ -66,6 +113,16 @@ load_source_list(mumps_srcs sr_x86_64/libmumps.list)
 #    )
 #endforeach()
 
+list(APPEND mumps_srcs
+ ${GTM_BOOTSTRAP_FILES}/pro/obj/ttt.c
+ #${GTM_BOOTSTRAP_FILES}/pro/obj/xfer_desc.i
+ ${GTM_BOOTSTRAP_FILES}/pro/obj/cmierrors_ctl.c
+ ${GTM_BOOTSTRAP_FILES}/pro/obj/cmerrors_ctl.c
+ ${GTM_BOOTSTRAP_FILES}/pro/obj/merrors_ctl.c
+ ${GTM_BOOTSTRAP_FILES}/pro/obj/gdeerrors_ctl.c
+ ${GTM_BOOTSTRAP_FILES}/pro/obj/omi_sx_play.c
+)
+
 foreach(lib
   gtcm
   cmisockettcp
@@ -76,10 +133,20 @@ foreach(lib
   lke
   mupip
   stub
+  mumps
   )
-  add_library(${lib} STATIC ${${lib}_srcs})
+  add_library(lib${lib} STATIC ${${lib}_srcs})
+  set_property(TARGET lib${lib} PROPERTY OUTPUT_NAME ${lib})
 endforeach()
 
-add_executable(dse_exe sr_unix/dse.c sr_unix/dse_cmd.c)
-set_property(TARGET dse_exe PROPERTY OUTPUT_NAME dse)
-target_link_libraries(dse_exe dse mumps stub)
+#omi_sx_play.c: omi_srvc_xct.c
+add_executable(dse sr_unix/dse.c sr_unix/dse_cmd.c)
+target_link_libraries(dse libdse libmumps libstub)
+target_link_libraries(dse -lelf -lncurses -lm -ldl -lpthread -lrt)#-lc -lpthread
+set_property(TARGET dse PROPERTY LINK_FLAGS
+  "-Wl,-u,gtm_filename_to_id -Wl,-u,gtm_zstatus -Wl,--version-script,\"${GTM_SOURCE_DIR}/gtmexe_symbols.export\"")
+install(TARGETS dse DESTINATION .)
+
+# Would install to:
+# /usr/lib/fis-gtm/V5.5-000_x86
+# /usr/lib/fis-gtm/V5.5-000_x86_64
