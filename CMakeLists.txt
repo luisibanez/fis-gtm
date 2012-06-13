@@ -139,14 +139,91 @@ foreach(lib
   set_property(TARGET lib${lib} PROPERTY OUTPUT_NAME ${lib})
 endforeach()
 
+# TODO: find_package or find_library for system libs?
+target_link_libraries(libmumps -lelf -lncurses -lm -ldl -lpthread -lrt)
+
+add_executable(mumps sr_unix/gtm.c)
+target_link_libraries(mumps libmumps)
+
 #omi_sx_play.c: omi_srvc_xct.c
 add_executable(dse sr_unix/dse.c sr_unix/dse_cmd.c)
 target_link_libraries(dse libdse libmumps libstub)
-target_link_libraries(dse -lelf -lncurses -lm -ldl -lpthread -lrt)#-lc -lpthread
-set_property(TARGET dse PROPERTY LINK_FLAGS
+list(APPEND with_export dse)
+
+add_executable(geteuid sr_unix/geteuid.c)
+
+add_executable(gtmsecshr sr_unix/gtmsecshr_wrapper.c)
+
+add_executable(gtmsecshr_real sr_unix/gtmsecshr.c)
+target_link_libraries(gtmsecshr_real libmumps)
+set_target_properties(gtmsecshr_real PROPERTIES
+  OUTPUT_NAME gtmsecshr
+  RUNTIME_OUTPUT_DIRECTORY ${GTM_BINARY_DIR}/gtmsecshrdir
+  )
+
+add_executable(mupip sr_unix/mupip.c sr_unix/mupip_cmd.c)
+target_link_libraries(mupip libmupip libmumps libstub)
+list(APPEND with_export mupip)
+
+set_property(TARGET ${with_export} PROPERTY LINK_FLAGS
   "-Wl,-u,gtm_filename_to_id -Wl,-u,gtm_zstatus -Wl,--version-script,\"${GTM_SOURCE_DIR}/gtmexe_symbols.export\"")
-install(TARGETS dse DESTINATION .)
+install(TARGETS
+  mumps
+  dse
+  gtmsecshr
+  mupip
+  DESTINATION .
+  )
+install(TARGETS gtmsecshr_real DESTINATION gtmsecshrdir)
 
 # Would install to:
 # /usr/lib/fis-gtm/V5.5-000_x86
 # /usr/lib/fis-gtm/V5.5-000_x86_64
+
+# gtmshr_obj=gtm_main.o
+# lke_obj=lke.o lke_cmd.o
+# dse_obj=dse.o dse_cmd.o
+# mupip_obj=mupip.o mupip_cmd.o
+# dbcertify_obj=dbcertify.o dbcertify_cmd.o
+# gtmsecshr_obj=gtmsecshr.o
+# gtmsecshr_wrapper_obj=gtmsecshr_wrapper.o
+# geteuid_obj=geteuid.o
+# semstat2_obj=semstat2.o
+# ftok_obj=ftok.o
+# gtcm_server_obj=gtcm_main.o omi_srvc_xct.o
+# gtcm_gnp_server_obj=gtcm_gnp_server.o
+# gtcm_play_obj=gtcm_play.o omi_sx_play.o
+# gtcm_pkdisp_obj=gtcm_pkdisp.o
+# gtcm_shmclean_obj=gtcm_shmclean.o
+# dtgbldir_obj=dtgbldir.o
+# dummy_gtmci_obj=dummy_gtmci.o
+# ../mumps: $(mumps_obj)
+#   $(gt-ld)
+# ../dse: $(dse_obj) libdse.a libmumps.a libstub.a
+#   $(gt-ld_with_export)
+# ../geteuid: $(geteuid_obj) libmumps.a
+#   $(gt-ld)
+# ../gtmsecshr_real: $(gtmsecshr_obj) libmumps.a
+#   $(gt-ld)
+# ../gtmsecshr_wrapper: $(gtmsecshr_wrapper_obj) libmumps.a
+#   $(gt-ld)
+# ../lke: $(lke_obj) liblke.a libmumps.a libgnpclient.a libmumps.a libgnpclient.a libcmisockettcp.a
+#   $(gt-ld)
+# ../mupip: $(mupip_obj) libmupip.a libmumps.a libstub.a $(gt_ld_aio_syslib)
+#   $(gt-ld_with_export)
+# ../dbcertify: $(dbcertify_obj) libdbcertify.a libmupip.a libmumps.a libstub.a $(gt_ld_aio_syslib)
+#   $(gt-ld)
+# ../gtcm_server: $(gtcm_server_obj) libgtcm.a libmumps.a libstub.a
+#   $(gt-ld)
+# ../gtcm_gnp_server: $(gtcm_gnp_server_obj) libgnpserver.a liblke.a libmumps.a libcmisockettcp.a libstub.a
+#   $(gt-ld)
+# ../gtcm_play: $(gtcm_play_obj) libgtcm.a libmumps.a libstub.a
+#   $(gt-ld)
+# ../gtcm_pkdisp: $(gtcm_pkdisp_obj) libgtcm.a libmumps.a libstub.a
+#   $(gt-ld)
+# ../gtcm_shmclean: $(gtcm_shmclean_obj) libgtcm.a libmumps.a libstub.a
+#   $(gt-ld)
+# ../semstat2: $(semstat2_obj)
+#   $(gt-ld)
+# ../ftok: $(ftok_obj) libmumps.a
+#   $(gt-ld)
