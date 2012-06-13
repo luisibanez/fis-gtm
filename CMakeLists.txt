@@ -4,7 +4,7 @@ project(GTM C ASM)
 set(CMAKE_INCLUDE_FLAG_ASM "-Wa,-I") # gcc -I does not make it to "as"
 set(CMAKE_C_FLAGS
   # TODO: Use CMake 2.8.9 POSITION_INDEPENDENT_CODE abstraction for -fPIC in static libs
-  "${CMAKE_C_FLAGS} -ansi -fPIC -fsigned-char -Wmissing-prototypes -Wno-unused-result")
+  "${CMAKE_C_FLAGS} -O2 -fno-defer-pop -fno-strict-aliasing -ffloat-store -ansi -D_GNU_SOURCE -D_FILE_OFFSET_BITS=64 -D_XOPEN_SOURCE=600 -fsigned-char -fPIC -Wmissing-prototypes -D_LARGEFILE64_SOURCE")
 set(CMAKE_C_FLAGS_RELEASE
   "${CMAKE_C_FLAGS_RELEASE} -fno-defer-pop -fno-strict-aliasing -ffloat-store")
 add_definitions(
@@ -365,7 +365,6 @@ foreach(f
   list(APPEND files ${src})
 endforeach()
 install(FILES ${files} DESTINATION .)
-install(FILES ${files} DESTINATION ${GTM_BINARY_DIR})
 
 configure_file(sr_unix/gpgagent.tab.in plugin/gpgagent.tab @ONLY)
 install(FILES ${GTM_BINARY_DIR}/plugin/gpgagent.tab DESTINATION plugin)
