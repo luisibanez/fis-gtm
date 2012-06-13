@@ -252,16 +252,28 @@ install(TARGETS gtmsecshr_real DESTINATION gtmsecshrdir)
 file(GLOB m_files RELATIVE ${GTM_SOURCE_DIR}/sr_port ${GTM_SOURCE_DIR}/sr_port/*.m)
 foreach(m ${m_files})
   string(TOUPPER "${m}" m_upper)
-  string(REGEX REPLACE "M$" "m" m_out "${m_upper}")
-  install(FILES "${GTM_SOURCE_DIR}/sr_port/${m}" DESTINATION . RENAME ${m_out})
+  string(REGEX REPLACE "M$" "m" m_out "${GTM_BINARY_DIR}/${m_upper}")
+  add_custom_command(
+    OUTPUT "${m_out}"
+    DEPENDS ${GTM_SOURCE_DIR}/sr_port/${m}
+    COMMAND ${CMAKE_COMMAND} -E copy ${GTM_SOURCE_DIR}/sr_port/${m} "${m_out}"
+    )
+  install(FILES "${m_out}" DESTINATION .)
+  list(APPEND files_to_place "${m_out}")
 endforeach()
 
 # <r>.mpt -> _<R>.m
 file(GLOB mpt_files RELATIVE ${GTM_SOURCE_DIR}/sr_port ${GTM_SOURCE_DIR}/sr_port/*.mpt)
-foreach(mpt ${mpt_files})
-  string(TOUPPER "_${mpt}" mpt_upper)
-  string(REGEX REPLACE "MPT$" "m" mpt_out "${mpt_upper}")
-  install(FILES "${GTM_SOURCE_DIR}/sr_port/${mpt}" DESTINATION . RENAME ${mpt_out})
+foreach(m ${mpt_files})
+  string(TOUPPER "_${m}" m_upper)
+  string(REGEX REPLACE "MPT$" "m" m_out "${GTM_BINARY_DIR}/${m_upper}")
+  add_custom_command(
+    OUTPUT "${m_out}"
+    DEPENDS ${GTM_SOURCE_DIR}/sr_port/${m}
+    COMMAND ${CMAKE_COMMAND} -E copy ${GTM_SOURCE_DIR}/sr_port/${m} "${m_out}"
+    )
+  install(FILES "${m_out}" DESTINATION .)
+  list(APPEND files_to_place "${m_out}")
 endforeach()
 
 set(files)
@@ -298,6 +310,8 @@ install(FILES ${files} DESTINATION .)
 
 configure_file(sr_unix/gpgagent.tab.in plugin/gpgagent.tab @ONLY)
 install(FILES ${GTM_BINARY_DIR}/plugin/gpgagent.tab DESTINATION plugin)
+
+add_custom_target(place_files ALL DEPENDS ${files_to_place})
 
 # Would install to:
 # /usr/lib/fis-gtm/V5.5-000_x86
