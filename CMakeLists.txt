@@ -79,3 +79,7 @@ foreach(lib
   )
   add_library(${lib} STATIC ${${lib}_srcs})
 endforeach()
+
+add_executable(dse_exe sr_unix/dse.c sr_unix/dse_cmd.c)
+set_property(TARGET dse_exe PROPERTY OUTPUT_NAME dse)
+target_link_libraries(dse_exe dse mumps stub)
