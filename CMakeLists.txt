@@ -236,6 +236,22 @@ install(TARGETS
   )
 install(TARGETS gtmsecshr_real DESTINATION gtmsecshrdir)
 
+# <r>.m -> <R>.m
+file(GLOB m_files RELATIVE ${GTM_SOURCE_DIR}/sr_port ${GTM_SOURCE_DIR}/sr_port/*.m)
+foreach(m ${m_files})
+  string(TOUPPER "${m}" m_upper)
+  string(REGEX REPLACE "M$" "m" m_out "${m_upper}")
+  install(FILES "${GTM_SOURCE_DIR}/sr_port/${m}" DESTINATION . RENAME ${m_out})
+endforeach()
+
+# <r>.mpt -> _<R>.m
+file(GLOB mpt_files RELATIVE ${GTM_SOURCE_DIR}/sr_port ${GTM_SOURCE_DIR}/sr_port/*.mpt)
+foreach(mpt ${mpt_files})
+  string(TOUPPER "_${mpt}" mpt_upper)
+  string(REGEX REPLACE "MPT$" "m" mpt_out "${mpt_upper}")
+  install(FILES "${GTM_SOURCE_DIR}/sr_port/${mpt}" DESTINATION . RENAME ${mpt_out})
+endforeach()
+
 # Would install to:
 # /usr/lib/fis-gtm/V5.5-000_x86
 # /usr/lib/fis-gtm/V5.5-000_x86_64
