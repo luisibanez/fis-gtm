@@ -297,7 +297,8 @@ foreach(f
 endforeach()
 install(FILES ${files} DESTINATION .)
 
-
+configure_file(sr_unix/gpgagent.tab.in plugin/gpgagent.tab @ONLY)
+install(FILES ${GTM_BINARY_DIR}/plugin/gpgagent.tab DESTINATION plugin)
 
 # Would install to:
 # /usr/lib/fis-gtm/V5.5-000_x86
