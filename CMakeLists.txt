@@ -175,6 +175,21 @@ target_link_libraries(libgtmshr libmumps libgnpclient libcmisockettcp)
 set_property(TARGET libgtmshr PROPERTY LINK_FLAGS
   "-Wl,-u,gtm_ci -Wl,-u,gtm_filename_to_id -Wl,--version-script,\"${GTM_SOURCE_DIR}/gtmshr_symbols.export\"")
 
+add_library(libgtmcrypt SHARED
+  sr_unix/gtmcrypt_ref.c
+  sr_unix/gtmcrypt_pk_ref.c
+  sr_unix/gtmcrypt_dbk_ref.c
+  )
+set_property(TARGET libgtmcrypt PROPERTY OUTPUT_NAME gtmcrypt)
+set_property(TARGET libgtmcrypt PROPERTY COMPILE_DEFINITIONS USE_GCRYPT)
+target_link_libraries(libgtmcrypt gpg-error gpgme gcrypt)
+install(TARGETS libgtmcrypt DESTINATION plugin)
+
+add_executable(maskpass sr_unix/maskpass.c)
+target_link_libraries(maskpass gpg-error gpgme gcrypt)
+set_property(TARGET maskpass PROPERTY COMPILE_DEFINITIONS USE_GCRYPT)
+install(TARGETS maskpass DESTINATION plugin/gtmcrypt)
+
 install(TARGETS
   mumps
   dse
@@ -188,51 +203,3 @@ install(TARGETS gtmsecshr_real DESTINATION gtmsecshrdir)
 # Would install to:
 # /usr/lib/fis-gtm/V5.5-000_x86
 # /usr/lib/fis-gtm/V5.5-000_x86_64
-
-# gtmshr_obj=gtm_main.o
-# lke_obj=lke.o lke_cmd.o
-# dse_obj=dse.o dse_cmd.o
-# mupip_obj=mupip.o mupip_cmd.o
-# dbcertify_obj=dbcertify.o dbcertify_cmd.o
-# gtmsecshr_obj=gtmsecshr.o
-# gtmsecshr_wrapper_obj=gtmsecshr_wrapper.o
-# geteuid_obj=geteuid.o
-# semstat2_obj=semstat2.o
-# ftok_obj=ftok.o
-# gtcm_server_obj=gtcm_main.o omi_srvc_xct.o
-# gtcm_gnp_server_obj=gtcm_gnp_server.o
-# gtcm_play_obj=gtcm_play.o omi_sx_play.o
-# gtcm_pkdisp_obj=gtcm_pkdisp.o
-# gtcm_shmclean_obj=gtcm_shmclean.o
-# dtgbldir_obj=dtgbldir.o
-# dummy_gtmci_obj=dummy_gtmci.o
-# ../mumps: $(mumps_obj)
-#   $(gt-ld)
-# ../dse: $(dse_obj) libdse.a libmumps.a libstub.a
-#   $(gt-ld_with_export)
-# ../geteuid: $(geteuid_obj) libmumps.a
-#   $(gt-ld)
-# ../gtmsecshr_real: $(gtmsecshr_obj) libmumps.a
-#   $(gt-ld)
-# ../gtmsecshr_wrapper: $(gtmsecshr_wrapper_obj) libmumps.a
-#   $(gt-ld)
-# ../lke: $(lke_obj) liblke.a libmumps.a libgnpclient.a libmumps.a libgnpclient.a libcmisockettcp.a
-#   $(gt-ld)
-# ../mupip: $(mupip_obj) libmupip.a libmumps.a libstub.a $(gt_ld_aio_syslib)
-#   $(gt-ld_with_export)
-# ../dbcertify: $(dbcertify_obj) libdbcertify.a libmupip.a libmumps.a libstub.a $(gt_ld_aio_syslib)
-#   $(gt-ld)
-# ../gtcm_server: $(gtcm_server_obj) libgtcm.a libmumps.a libstub.a
-#   $(gt-ld)
-# ../gtcm_gnp_server: $(gtcm_gnp_server_obj) libgnpserver.a liblke.a libmumps.a libcmisockettcp.a libstub.a
-#   $(gt-ld)
-# ../gtcm_play: $(gtcm_play_obj) libgtcm.a libmumps.a libstub.a
-#   $(gt-ld)
-# ../gtcm_pkdisp: $(gtcm_pkdisp_obj) libgtcm.a libmumps.a libstub.a
-#   $(gt-ld)
-# ../gtcm_shmclean: $(gtcm_shmclean_obj) libgtcm.a libmumps.a libstub.a
-#   $(gt-ld)
-# ../semstat2: $(semstat2_obj)
-#   $(gt-ld)
-# ../ftok: $(ftok_obj) libmumps.a
-#   $(gt-ld)
