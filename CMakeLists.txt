@@ -4,7 +4,8 @@ set(CMAKE_INSTALL_PREFIX "${GTM_BINARY_DIR}/stage")
 
 set(CMAKE_INCLUDE_FLAG_ASM "-Wa,-I") # gcc -I does not make it to "as"
 set(CMAKE_C_FLAGS
-  "${CMAKE_C_FLAGS} -ansi -fsigned-char -Wmissing-prototypes -Wno-unused-result")
+  # TODO: Use CMake 2.8.9 POSITION_INDEPENDENT_CODE abstraction for -fPIC in static libs
+  "${CMAKE_C_FLAGS} -ansi -fPIC -fsigned-char -Wmissing-prototypes -Wno-unused-result")
 set(CMAKE_C_FLAGS_RELEASE
   "${CMAKE_C_FLAGS_RELEASE} -fno-defer-pop -fno-strict-aliasing -ffloat-store")
 add_definitions(
@@ -167,11 +168,19 @@ list(APPEND with_export mupip)
 
 set_property(TARGET ${with_export} PROPERTY LINK_FLAGS
   "-Wl,-u,gtm_filename_to_id -Wl,-u,gtm_zstatus -Wl,--version-script,\"${GTM_SOURCE_DIR}/gtmexe_symbols.export\"")
+
+add_library(libgtmshr SHARED sr_unix/gtm_main.c)
+set_property(TARGET libgtmshr PROPERTY OUTPUT_NAME gtmshr)
+target_link_libraries(libgtmshr libmumps libgnpclient libcmisockettcp)
+set_property(TARGET libgtmshr PROPERTY LINK_FLAGS
+  "-Wl,-u,gtm_ci -Wl,-u,gtm_filename_to_id -Wl,--version-script,\"${GTM_SOURCE_DIR}/gtmshr_symbols.export\"")
+
 install(TARGETS
   mumps
   dse
   gtmsecshr
   mupip
+  libgtmshr
   DESTINATION .
   )
 install(TARGETS gtmsecshr_real DESTINATION gtmsecshrdir)
