@@ -265,8 +265,8 @@ foreach(mpt ${mpt_files})
   install(FILES "${GTM_SOURCE_DIR}/sr_port/${mpt}" DESTINATION . RENAME ${mpt_out})
 endforeach()
 
-set(hdrs)
-foreach(h
+set(files)
+foreach(f
   gtm_stdio.h
   gtmxc_types.h
   gtm_stdlib.h
@@ -274,11 +274,28 @@ foreach(h
   gtm_strings.h
   gtm_limits.h
   main_pragma.h
+  arch.gtc
+  gtcm_run.gtc
+  gtcm_slist.gtc
+  configure.gtc
+  gdedefaults.gtc
+  gtmbase.gtc
+  gtmcshrc.gtc
+  gtm.gtc
+  gtmprofile.gtc
+  gtmprofile_preV54000.gtc
+  gtmstart.gtc
+  gtmstop.gtc
+  dse.hlp
+  gde.hlp
+  lke.hlp
+  mumps.hlp
+  mupip.hlp
   )
-  find_source(hdr ${h})
-  list(APPEND hdrs ${hdr})
+  find_source(src ${f})
+  list(APPEND files ${src})
 endforeach()
-install(FILES ${hdrs} DESTINATION .)
+install(FILES ${files} DESTINATION .)
 
 
 
