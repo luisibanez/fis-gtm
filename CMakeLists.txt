@@ -417,6 +417,13 @@ install(FILES sr_unix/configure.gtc DESTINATION .
   RENAME configure
   )
 
+install(FILES sr_unix/gtminstall.sh DESTINATION .
+  PERMISSIONS OWNER_READ OWNER_EXECUTE OWNER_WRITE
+              GROUP_READ GROUP_EXECUTE
+              WORLD_READ WORLD_EXECUTE
+  RENAME gtminstall
+  )
+
 install(FILES sr_unix/lowerc_cp.sh DESTINATION .
   PERMISSIONS OWNER_READ OWNER_EXECUTE OWNER_WRITE
               GROUP_READ GROUP_EXECUTE
