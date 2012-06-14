@@ -377,7 +377,6 @@ foreach(f
   arch.gtc
   gtcm_run.gtc
   gtcm_slist.gtc
-  configure.gtc
   gdedefaults.gtc
   gtmbase.gtc
   gtmcshrc.gtc
@@ -402,6 +401,13 @@ configure_file(sr_unix/gpgagent.tab.in plugin/gpgagent.tab @ONLY)
 set(GTM_TOP "${CMAKE_INSTALL_PREFIX}")
 configure_file(sr_unix/gpgagent.tab.in CMakeFiles/plugin/gpgagent.tab @ONLY)
 install(FILES ${GTM_BINARY_DIR}/CMakeFiles/plugin/gpgagent.tab DESTINATION plugin)
+
+install(FILES sr_unix/configure.gtc DESTINATION .
+  PERMISSIONS OWNER_READ OWNER_EXECUTE OWNER_WRITE
+              GROUP_READ GROUP_EXECUTE
+              WORLD_READ WORLD_EXECUTE
+  RENAME configure
+  )
 
 add_custom_target(place_files ALL DEPENDS ${files_to_place})
 
