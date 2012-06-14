@@ -143,6 +143,15 @@ list(APPEND mumps_srcs
  ${GTM_BOOTSTRAP_FILES}/pro/obj/cmerrors_ctl.c
  ${GTM_BOOTSTRAP_FILES}/pro/obj/merrors_ctl.c
  ${GTM_BOOTSTRAP_FILES}/pro/obj/gdeerrors_ctl.c
+
+ # These files appeared in upstream tarball but are
+ # also among the bootstrap sources:
+ #  sr_unix/cmerrors_ctl.c
+ #  sr_unix/gdeerrors_ctl.c
+ #  sr_unix/merrors_ansi.h
+ #  sr_unix/merrors_ctl.c
+ #  sr_unix/ttt.c
+ #  sr_unix_gnp/cmierrors_ctl.c
 )
 
 foreach(lib
