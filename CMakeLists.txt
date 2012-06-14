@@ -56,21 +56,21 @@ if("${CMAKE_SYSTEM_NAME}" MATCHES "Linux")
   endif()
 endif()
 list(APPEND arch_path
-  sr_unix
-  sr_port
-  sr_unix_cm
   sr_unix_gnp
+  sr_unix_cm
+  sr_unix
   sr_port_cm
+  sr_port
   )
 
 set(GTM_BOOTSTRAP_FILES "${GTM_SOURCE_DIR}/fis-gtm-src-extras")
-include_directories(${GTM_BOOTSTRAP_FILES}/pro/obj)
 
 set(includes)
 foreach(d ${arch_path})
   list(APPEND includes ${GTM_SOURCE_DIR}/${d})
 endforeach()
 include_directories(${includes})
+include_directories(${GTM_BOOTSTRAP_FILES}/pro/obj)
 
 function(find_source src_var name)
   set(found "")
