@@ -3,6 +3,16 @@
 cmake_minimum_required(VERSION 2.8.5)
 project(GTM C ASM)
 
+# Max optimization level is -O2
+get_property(languages GLOBAL PROPERTY ENABLED_LANGUAGES)
+foreach(lang ${languages})
+  get_property(flags CACHE CMAKE_${lang}_FLAGS_RELEASE PROPERTY VALUE)
+  if("${flags}" MATCHES "-O[3-9]")
+    string(REGEX REPLACE "-O[3-9]" "-O2" flags "${flags}")
+    set_property(CACHE CMAKE_${lang}_FLAGS_RELEASE PROPERTY VALUE "${flags}")
+  endif()
+endforeach()
+
 if(NOT CMAKE_CONFIGURATION_TYPES AND NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Release CACHE STRING "Build type" FORCE)
 endif()
