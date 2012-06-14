@@ -73,6 +73,7 @@ foreach(d ${arch_path})
 endforeach()
 include_directories(${includes})
 include_directories(${GTM_BOOTSTRAP_FILES}/pro/obj)
+include_directories(${GTM_BINARY_DIR})
 
 function(find_source src_var name)
   set(found "")
@@ -154,6 +155,16 @@ list(APPEND mumps_srcs
  #  sr_unix_gnp/cmierrors_ctl.c
 )
 
+add_executable(gtm_threadgbl_deftypes sr_port/gtm_threadgbl_deftypes.c)
+
+add_custom_command(
+  OUTPUT gtm_threadgbl_deftypes.h
+  DEPENDS gtm_threadgbl_deftypes
+  COMMAND gtm_threadgbl_deftypes > gtm_threadgbl_deftypes.h.tmp
+  COMMAND ${CMAKE_COMMAND} -E rename gtm_threadgbl_deftypes.h.tmp gtm_threadgbl_deftypes.h
+  )
+add_custom_target(gen_gtm_threadgbl_deftypes DEPENDS gtm_threadgbl_deftypes.h)
+
 foreach(lib
   gtcm
   cmisockettcp
@@ -168,6 +179,7 @@ foreach(lib
   )
   add_library(lib${lib} STATIC ${${lib}_srcs})
   set_property(TARGET lib${lib} PROPERTY OUTPUT_NAME ${lib})
+  add_dependencies(lib${lib} gen_gtm_threadgbl_deftypes)
 endforeach()
 
 # TODO: find_package or find_library for system libs?
