@@ -1,10 +1,14 @@
-cmake_minimum_required(VERSION 2.8.7)
+cmake_minimum_required(VERSION 2.8.2)
 project(GTM C ASM)
+
+if(NOT CMAKE_CONFIGURATION_TYPES AND NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Release CACHE STRING "Build type" FORCE)
+endif()
 
 set(CMAKE_INCLUDE_FLAG_ASM "-Wa,-I") # gcc -I does not make it to "as"
 set(CMAKE_C_FLAGS
   # TODO: Use CMake 2.8.9 POSITION_INDEPENDENT_CODE abstraction for -fPIC in static libs
-  "${CMAKE_C_FLAGS} -ansi -fPIC -fsigned-char -Wmissing-prototypes -Wno-unused-result")
+  "${CMAKE_C_FLAGS} -ansi -fsigned-char -fPIC -Wmissing-prototypes")
 set(CMAKE_C_FLAGS_RELEASE
   "${CMAKE_C_FLAGS_RELEASE} -fno-defer-pop -fno-strict-aliasing -ffloat-store")
 add_definitions(
@@ -244,10 +248,38 @@ set_target_properties(maskpass PROPERTIES
   )
 install(TARGETS maskpass DESTINATION plugin/gtmcrypt)
 
+foreach(f
+    add_db_key.sh
+    build.sh
+    encrypt_sign_db_key.sh
+    gen_keypair.sh
+    gen_sym_hash.sh
+    gen_sym_key.sh
+    gtmcrypt_dbk_ref.c
+    gtmcrypt_pk_ref.c
+    gtmcrypt_ref.c
+    gtminstall.sh
+    import_and_sign_key.sh
+    install.sh
+    maskpass.c
+    pinentry-gtm.sh
+    )
+  set(f_in "${GTM_SOURCE_DIR}/sr_unix/${f}")
+  set(f_out "${GTM_BINARY_DIR}/plugin/gtmcrypt/${f}")
+  add_custom_command(
+    OUTPUT "${f_out}"
+    DEPENDS "${f_in}"
+    COMMAND ${CMAKE_COMMAND} -E copy "${f_in}" "${f_out}"
+    )
+  install(FILES "${f_out}" DESTINATION plugin/gtmcrypt)
+  list(APPEND files_to_place "${f_out}")
+endforeach()
+
 install(TARGETS
   mumps
   dse
   lke
+  geteuid
   gtcm_server
   gtcm_gnp_server
   gtcm_pkdisp
@@ -263,8 +295,33 @@ install(TARGETS
 install(TARGETS gtmsecshr_real DESTINATION gtmsecshrdir)
 
 # <r>.m -> <R>.m
-file(GLOB m_files RELATIVE ${GTM_SOURCE_DIR}/sr_port ${GTM_SOURCE_DIR}/sr_port/*.m)
-foreach(m ${m_files})
+#file(GLOB m_files_port RELATIVE ${GTM_SOURCE_DIR}/sr_port ${GTM_SOURCE_DIR}/sr_port/*.m)
+set(m_files_port
+  gdeadd.m
+  gdechang.m
+  gdedelet.m
+  gdeexit.m
+  gdehelp.m
+  gdeinit.m
+  gdelocks.m
+  gdelog.m
+  gde.m
+  gdemap.m
+  gdemsgin.m
+  gdeparse.m
+  gdequit.m
+  gderenam.m
+  gdescan.m
+  gdesetgd.m
+  gdeshow.m
+  gdespawn.m
+  gdetempl.m
+  gendash.m
+  genout.m
+  v5cbsu.m
+  )
+
+foreach(m ${m_files_port})
   string(TOUPPER "${m}" m_upper)
   string(REGEX REPLACE "M$" "m" m_out "${GTM_BINARY_DIR}/${m_upper}")
   add_custom_command(
@@ -276,15 +333,41 @@ foreach(m ${m_files})
   list(APPEND files_to_place "${m_out}")
 endforeach()
 
+file(GLOB m_files_unix RELATIVE ${GTM_SOURCE_DIR}/sr_unix ${GTM_SOURCE_DIR}/sr_unix/*.m)
+foreach(m ${m_files_unix})
+  string(TOUPPER "${m}" m_upper)
+  string(REGEX REPLACE "M$" "m" m_out "${GTM_BINARY_DIR}/${m_upper}")
+  add_custom_command(
+    OUTPUT "${m_out}"
+    DEPENDS ${GTM_SOURCE_DIR}/sr_unix/${m}
+    COMMAND ${CMAKE_COMMAND} -E copy ${GTM_SOURCE_DIR}/sr_unix/${m} "${m_out}"
+    )
+  install(FILES "${m_out}" DESTINATION .)
+  list(APPEND files_to_place "${m_out}")
+endforeach()
+
 # <r>.mpt -> _<R>.m
-file(GLOB mpt_files RELATIVE ${GTM_SOURCE_DIR}/sr_port ${GTM_SOURCE_DIR}/sr_port/*.mpt)
-foreach(m ${mpt_files})
+file(GLOB mpt_files_port RELATIVE ${GTM_SOURCE_DIR}/sr_port ${GTM_SOURCE_DIR}/sr_port/*.mpt)
+foreach(m ${mpt_files_port})
   string(TOUPPER "_${m}" m_upper)
   string(REGEX REPLACE "MPT$" "m" m_out "${GTM_BINARY_DIR}/${m_upper}")
   add_custom_command(
     OUTPUT "${m_out}"
     DEPENDS ${GTM_SOURCE_DIR}/sr_port/${m}
     COMMAND ${CMAKE_COMMAND} -E copy ${GTM_SOURCE_DIR}/sr_port/${m} "${m_out}"
+    )
+  install(FILES "${m_out}" DESTINATION .)
+  list(APPEND files_to_place "${m_out}")
+endforeach()
+
+file(GLOB mpt_files_unix RELATIVE ${GTM_SOURCE_DIR}/sr_unix ${GTM_SOURCE_DIR}/sr_unix/*.mpt)
+foreach(m ${mpt_files_unix})
+  string(TOUPPER "_${m}" m_upper)
+  string(REGEX REPLACE "MPT$" "m" m_out "${GTM_BINARY_DIR}/${m_upper}")
+  add_custom_command(
+    OUTPUT "${m_out}"
+    DEPENDS ${GTM_SOURCE_DIR}/sr_unix/${m}
+    COMMAND ${CMAKE_COMMAND} -E copy ${GTM_SOURCE_DIR}/sr_unix/${m} "${m_out}"
     )
   install(FILES "${m_out}" DESTINATION .)
   list(APPEND files_to_place "${m_out}")
@@ -322,8 +405,11 @@ foreach(f
 endforeach()
 install(FILES ${files} DESTINATION .)
 
+set(GTM_TOP "${GTM_BINARY_DIR}")
 configure_file(sr_unix/gpgagent.tab.in plugin/gpgagent.tab @ONLY)
-install(FILES ${GTM_BINARY_DIR}/plugin/gpgagent.tab DESTINATION plugin)
+set(GTM_TOP "${CMAKE_INSTALL_PREFIX}")
+configure_file(sr_unix/gpgagent.tab.in CMakeFiles/plugin/gpgagent.tab @ONLY)
+install(FILES ${GTM_BINARY_DIR}/CMakeFiles/plugin/gpgagent.tab DESTINATION plugin)
 
 add_custom_target(place_files ALL DEPENDS ${files_to_place})
 
