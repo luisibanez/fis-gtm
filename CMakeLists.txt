@@ -1,4 +1,6 @@
-cmake_minimum_required(VERSION 2.8.2)
+# CMake 2.8.4 introduced generator expressions in custom commands
+# CMake 2.8.5 introduced use of C compiler as the assembler
+cmake_minimum_required(VERSION 2.8.5)
 project(GTM C ASM)
 
 if(NOT CMAKE_CONFIGURATION_TYPES AND NOT CMAKE_BUILD_TYPE)
