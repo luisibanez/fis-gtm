@@ -458,6 +458,31 @@ install(FILES COPYING DESTINATION .)
 
 add_custom_target(place_files ALL DEPENDS ${files_to_place})
 
+add_custom_command(
+  OUTPUT msg.m
+  DEPENDS ${GTM_SOURCE_DIR}/sr_port/msg.m
+  COMMAND ${CMAKE_COMMAND} -E copy ${GTM_SOURCE_DIR}/sr_port/msg.m ${GTM_BINARY_DIR}/msg.m
+  )
+foreach(msg
+    sr_port/cmerrors.msg
+    sr_port/gdeerrors.msg
+    sr_port/merrors.msg
+    sr_unix_gnp/cmierrors.msg
+    )
+  get_filename_component(name ${msg} NAME_WE)
+  add_custom_command(
+    OUTPUT ${name}_ctl.c
+    DEPENDS msg.m ${GTM_SOURCE_DIR}/${msg}
+    COMMAND ${CMAKE_COMMAND}
+    -D gtm_dist=${GTM_BINARY_DIR}
+    -D mumps=$<TARGET_FILE:mumps>
+    -D input=${GTM_SOURCE_DIR}/${msg}
+    -P ${GTM_SOURCE_DIR}/sr_port/msg.cmake
+    )
+  list(APPEND gen_ctl_files ${name}_ctl.c)
+endforeach()
+add_custom_target(gen_ctl ALL DEPENDS ${gen_ctl_files})
+
 # Would install to:
 # /usr/lib/fis-gtm/V5.5-000_x86
 # /usr/lib/fis-gtm/V5.5-000_x86_64
