@@ -236,6 +236,33 @@ set_target_properties(maskpass PROPERTIES
   )
 install(TARGETS maskpass DESTINATION plugin/gtmcrypt)
 
+foreach(f
+    add_db_key.sh
+    build.sh
+    encrypt_sign_db_key.sh
+    gen_keypair.sh
+    gen_sym_hash.sh
+    gen_sym_key.sh
+    gtmcrypt_dbk_ref.c
+    gtmcrypt_pk_ref.c
+    gtmcrypt_ref.c
+    gtminstall.sh
+    import_and_sign_key.sh
+    install.sh
+    maskpass.c
+    pinentry-gtm.sh
+    )
+  set(f_in "${GTM_SOURCE_DIR}/sr_unix/${f}")
+  set(f_out "${GTM_BINARY_DIR}/plugin/gtmcrypt/${f}")
+  add_custom_command(
+    OUTPUT "${f_out}"
+    DEPENDS "${f_in}"
+    COMMAND ${CMAKE_COMMAND} -E copy "${f_in}" "${f_out}"
+    )
+  install(FILES "${f_out}" DESTINATION plugin/gtmcrypt)
+  list(APPEND files_to_place "${f_out}")
+endforeach()
+
 install(TARGETS
   mumps
   dse
@@ -370,27 +397,6 @@ configure_file(sr_unix/gpgagent.tab.in plugin/gpgagent.tab @ONLY)
 install(FILES ${GTM_BINARY_DIR}/plugin/gpgagent.tab DESTINATION plugin)
 
 add_custom_target(place_files ALL DEPENDS ${files_to_place})
-
-set(list_of_extra_files_to_copy
-  add_db_key.sh
-  build.sh
-  encrypt_sign_db_key.sh
-  gen_keypair.sh
-  gen_sym_hash.sh
-  gen_sym_key.sh
-  gtmcrypt_dbk_ref.c
-  gtmcrypt_pk_ref.c
-  gtmcrypt_ref.c
-  gtminstall.sh
-  import_and_sign_key.sh
-  install.sh
-  maskpass.c
-  pinentry-gtm.sh
-  )
-foreach(f ${list_of_extra_files_to_copy})
- file(COPY ${GTM_SOURCE_DIR}/sr_unix/${f} DESTINATION ${GTM_BINARY_DIR}/${f})
- install(FILES ${GTM_SOURCE_DIR}/sr_unix/${f} DESTINATION .)
-endforeach()
 
 # Would install to:
 # /usr/lib/fis-gtm/V5.5-000_x86
