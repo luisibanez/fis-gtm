@@ -297,6 +297,9 @@ install(TARGETS gtmsecshr_real DESTINATION gtmsecshrdir)
 # <r>.m -> <R>.m
 #file(GLOB m_files_port RELATIVE ${GTM_SOURCE_DIR}/sr_port ${GTM_SOURCE_DIR}/sr_port/*.m)
 set(m_files_port
+  chk2lev.m
+  chkop.m
+  gde.m
   gdeadd.m
   gdechang.m
   gdedelet.m
@@ -305,7 +308,6 @@ set(m_files_port
   gdeinit.m
   gdelocks.m
   gdelog.m
-  gde.m
   gdemap.m
   gdemsgin.m
   gdeparse.m
@@ -318,7 +320,11 @@ set(m_files_port
   gdetempl.m
   gendash.m
   genout.m
-  v5cbsu.m
+  loadop.m
+  loadvx.m
+  msg.m
+  tttgen.m
+  tttscan.m
   )
 
 foreach(m ${m_files_port})
@@ -375,17 +381,18 @@ endforeach()
 
 set(files)
 foreach(f
+  gtm_descript.h
+  gtm_limits.h
+  gtm_sizeof.h
   gtm_stdio.h
-  gtmxc_types.h
   gtm_stdlib.h
   gtm_string.h
   gtm_strings.h
-  gtm_limits.h
+  gtmxc_types.h
   main_pragma.h
   arch.gtc
   gtcm_run.gtc
   gtcm_slist.gtc
-  configure.gtc
   gdedefaults.gtc
   gtmbase.gtc
   gtmcshrc.gtc
@@ -410,6 +417,29 @@ configure_file(sr_unix/gpgagent.tab.in plugin/gpgagent.tab @ONLY)
 set(GTM_TOP "${CMAKE_INSTALL_PREFIX}")
 configure_file(sr_unix/gpgagent.tab.in CMakeFiles/plugin/gpgagent.tab @ONLY)
 install(FILES ${GTM_BINARY_DIR}/CMakeFiles/plugin/gpgagent.tab DESTINATION plugin)
+
+install(FILES sr_unix/configure.gtc DESTINATION .
+  PERMISSIONS OWNER_READ OWNER_EXECUTE OWNER_WRITE
+              GROUP_READ GROUP_EXECUTE
+              WORLD_READ WORLD_EXECUTE
+  RENAME configure
+  )
+
+install(FILES sr_unix/gtminstall.sh DESTINATION .
+  PERMISSIONS OWNER_READ OWNER_EXECUTE OWNER_WRITE
+              GROUP_READ GROUP_EXECUTE
+              WORLD_READ WORLD_EXECUTE
+  RENAME gtminstall
+  )
+
+install(FILES sr_unix/lowerc_cp.sh DESTINATION .
+  PERMISSIONS OWNER_READ OWNER_EXECUTE OWNER_WRITE
+              GROUP_READ GROUP_EXECUTE
+              WORLD_READ WORLD_EXECUTE
+  RENAME lowerc_cp
+  )
+
+install(FILES COPYING DESTINATION .)
 
 add_custom_target(place_files ALL DEPENDS ${files_to_place})
 
