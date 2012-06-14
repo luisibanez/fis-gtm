@@ -409,6 +409,15 @@ install(FILES sr_unix/configure.gtc DESTINATION .
   RENAME configure
   )
 
+install(FILES sr_unix/lowerc_cp.sh DESTINATION .
+  PERMISSIONS OWNER_READ OWNER_EXECUTE OWNER_WRITE
+              GROUP_READ GROUP_EXECUTE
+              WORLD_READ WORLD_EXECUTE
+  RENAME lowerc_cp
+  )
+
+install(FILES COPYING DESTINATION .)
+
 add_custom_target(place_files ALL DEPENDS ${files_to_place})
 
 # Would install to:
