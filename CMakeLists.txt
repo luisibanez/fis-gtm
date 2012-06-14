@@ -1,10 +1,14 @@
 cmake_minimum_required(VERSION 2.8.2)
 project(GTM C ASM)
 
+if(NOT CMAKE_CONFIGURATION_TYPES AND NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Release CACHE STRING "Build type" FORCE)
+endif()
+
 set(CMAKE_INCLUDE_FLAG_ASM "-Wa,-I") # gcc -I does not make it to "as"
 set(CMAKE_C_FLAGS
   # TODO: Use CMake 2.8.9 POSITION_INDEPENDENT_CODE abstraction for -fPIC in static libs
-  "${CMAKE_C_FLAGS} -O2 -fno-defer-pop -fno-strict-aliasing -ffloat-store -ansi -D_GNU_SOURCE -D_FILE_OFFSET_BITS=64 -D_XOPEN_SOURCE=600 -fsigned-char -fPIC -Wmissing-prototypes -D_LARGEFILE64_SOURCE")
+  "${CMAKE_C_FLAGS} -ansi -fsigned-char -fPIC -Wmissing-prototypes")
 set(CMAKE_C_FLAGS_RELEASE
   "${CMAKE_C_FLAGS_RELEASE} -fno-defer-pop -fno-strict-aliasing -ffloat-store")
 add_definitions(
