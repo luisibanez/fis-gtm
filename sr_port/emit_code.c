@@ -29,7 +29,7 @@
 #include "obj_file.h"
 #include "list_file.h"
 #include "min_max.h"
-#include "emit_code.h"
+#include <emit_code.h>
 #ifdef UNIX
 #include "xfer_enum.h"
 #endif

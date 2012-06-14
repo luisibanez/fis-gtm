@@ -20,7 +20,7 @@
 #include "gdscc.h"
 #include "filestruct.h"
 #include "jnl.h"
-#include "rtnhdr.h"
+#include <rtnhdr.h>
 #include "hashtab_int4.h"	/* needed for tp.h */
 #include "buddy_list.h"		/* needed for tp.h */
 #include "tp.h"

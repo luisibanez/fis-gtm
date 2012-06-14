@@ -35,7 +35,7 @@
 #include "repl_msg.h"
 #include "gtmsource.h"
 #include "interlock.h"
-#include "rtnhdr.h"
+#include <rtnhdr.h>
 #include "stack_frame.h"
 #ifdef GTM_TRIGGER
 #  include "gv_trigger.h"

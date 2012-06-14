@@ -35,7 +35,7 @@
 #include "str2gvkey.h"
 #include "gtmmsg.h"
 #include "gtm_utf8.h"
-#include "rtnhdr.h"
+#include <rtnhdr.h>
 #include "gv_trigger.h"
 
 GBLREF bool	mupip_error_occurred;

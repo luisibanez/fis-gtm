@@ -41,7 +41,7 @@
 #ifdef GTM_CRYPT
 #include "gtmcrypt.h"
 #endif
-#include "rtnhdr.h"
+#include <rtnhdr.h>
 #include "gv_trigger.h"
 #include "gvcst_protos.h"	/* for gvcst_root_search in GV_BIND_NAME_AND_ROOT_SEARCH macro */
 

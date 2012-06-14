@@ -19,7 +19,7 @@
 
 #include "error.h"
 #include "fnpc.h"
-#include "rtnhdr.h"
+#include <rtnhdr.h>
 #include "stack_frame.h"
 #include "stringpool.h"
 #include "stp_parms.h"

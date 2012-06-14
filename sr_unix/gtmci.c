@@ -17,7 +17,7 @@
 #include "gtm_string.h"
 #include "cli.h"
 #include "stringpool.h"
-#include "rtnhdr.h"
+#include <rtnhdr.h>
 #include "stack_frame.h"
 #include "mvalconv.h"
 #include "gtmxc_types.h"
