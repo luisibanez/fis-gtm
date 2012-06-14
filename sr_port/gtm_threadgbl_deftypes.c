@@ -213,4 +213,5 @@ int main()
 #	undef THREADGBLAR1DEF
 #	undef THREADGBLAR2DEF
 	printf("# define size_gtm_threadgbl_struct %d\n", (int)SIZEOF(gtm_threadgbl_def_t));
+	return 0;
 }
