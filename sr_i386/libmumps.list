@@ -78,6 +78,8 @@ cli_lex
 cli_parse
 cli_port
 cmd
+cmerrors_ctl
+cmierrors_ctl
 code_gen
 coerce
 collseq
@@ -252,6 +254,7 @@ ftok_sems
 g_msf
 gbldefs
 gbldefs_usr_share
+gdeerrors_ctl
 gds_blk_downgrade
 gds_blk_upgrade
 gds_file_size
@@ -738,7 +741,6 @@ make_gvsubsc
 make_mode
 maketriple
 map_sym
-maskpass
 matchc
 mcalloc
 mcfree
@@ -746,6 +748,7 @@ mdb_condition_handler
 mem_access
 memvcmp
 merge_desc_check
+merrors_ctl
 mint2mval
 mlabel2xtern
 mlk_bckout
@@ -817,7 +820,6 @@ ojchkfs
 ojgetch_env
 ojparams
 ojstartchild
-omi_sx_play
 one_job_param
 op_add
 op_bindparm
@@ -1311,6 +1313,7 @@ trigger_update
 trigger_user_name
 tripinit
 tt_write_error_set
+ttt
 underr
 undx
 unw_mv_ent

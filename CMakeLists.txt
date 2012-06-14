@@ -59,8 +59,6 @@ list(APPEND arch_path
   sr_port_cm
   )
 
-set(GTM_BOOTSTRAP_FILES "${GTM_SOURCE_DIR}/fis-gtm-src-extras")
-include_directories(${GTM_BOOTSTRAP_FILES}/pro/obj)
 
 set(includes)
 foreach(d ${arch_path})
@@ -116,8 +114,15 @@ load_source_list(lke_srcs sr_unix/liblke.list)
 load_source_list(mupip_srcs sr_unix/libmupip.list)
 load_source_list(stub_srcs sr_unix/libstub.list)
 
-#load_source_list(mumps_srcs sr_i386/libmumps.list)
-load_source_list(mumps_srcs sr_x86_64/libmumps.list)
+if("${CMAKE_SYSTEM_NAME}" MATCHES "Linux")
+  list(APPEND arch_path sr_linux)
+  if("${CMAKE_SIZEOF_VOID_P}" EQUAL 4)
+    load_source_list(mumps_srcs sr_i386/libmumps.list)
+  else()
+    load_source_list(mumps_srcs sr_x86_64/libmumps.list)
+  endif()
+endif()
+
 # TODO: Load libmumps leftovers automatically
 # libmumps has everything not in source lists:
 #   *.c *.si *.s
@@ -130,14 +135,6 @@ load_source_list(mumps_srcs sr_x86_64/libmumps.list)
 #    ${GTM_SOURCE_DIR}/${d}/*.s
 #    )
 #endforeach()
-
-list(APPEND mumps_srcs
- ${GTM_BOOTSTRAP_FILES}/pro/obj/ttt.c
- ${GTM_BOOTSTRAP_FILES}/pro/obj/cmierrors_ctl.c
- ${GTM_BOOTSTRAP_FILES}/pro/obj/cmerrors_ctl.c
- ${GTM_BOOTSTRAP_FILES}/pro/obj/merrors_ctl.c
- ${GTM_BOOTSTRAP_FILES}/pro/obj/gdeerrors_ctl.c
-)
 
 foreach(lib
   gtcm
@@ -154,6 +151,17 @@ foreach(lib
   add_library(lib${lib} STATIC ${${lib}_srcs})
   set_property(TARGET lib${lib} PROPERTY OUTPUT_NAME ${lib})
 endforeach()
+
+#add_executable(gtm_threadgbl_deftypes sr_port/gtm_threadgbl_deftypes.c)
+#add_custom_command(TARGET libmumps
+#                PRE_BUILD
+#		DEPENDS "${GTM_BINARY_DIR}/gtm_threadgbl_deftypes"
+#		COMMAND "touch xyz.txt"
+#		COMMAND "${GTM_BINARY_DIR}/gtm_threadgbl_deftypes" > "${GTM_SOURCE_DIR}/sr_unix/gtm_threadgbl_deftypes_pro.i" )
+#message("Generating custom target. ${GTM_BINARY_DIR}/gtm_threadgbl_deftypes")
+#add_custom_command(OUTPUT "${GTM_SOURCE_DIR}/sr_unix/gtm_threadgbl_deftypes_pro.i"
+#		DEPENDS "${GTM_BINARY_DIR}/gtm_threadgbl_deftypes"
+#		COMMAND "${GTM_BINARY_DIR}/gtm_threadgbl_deftypes" > "${GTM_SOURCE_DIR}/sr_unix/gtm_threadgbl_deftypes_pro.i" )
 
 # TODO: find_package or find_library for system libs?
 target_link_libraries(libmumps -lelf -lncurses -lm -ldl -lpthread -lrt)
