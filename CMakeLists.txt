@@ -393,8 +393,11 @@ foreach(f
 endforeach()
 install(FILES ${files} DESTINATION .)
 
+set(GTM_TOP "${GTM_BINARY_DIR}")
 configure_file(sr_unix/gpgagent.tab.in plugin/gpgagent.tab @ONLY)
-install(FILES ${GTM_BINARY_DIR}/plugin/gpgagent.tab DESTINATION plugin)
+set(GTM_TOP "${CMAKE_INSTALL_PREFIX}")
+configure_file(sr_unix/gpgagent.tab.in CMakeFiles/plugin/gpgagent.tab @ONLY)
+install(FILES ${GTM_BINARY_DIR}/CMakeFiles/plugin/gpgagent.tab DESTINATION plugin)
 
 add_custom_target(place_files ALL DEPENDS ${files_to_place})
 
