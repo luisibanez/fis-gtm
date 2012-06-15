@@ -1,3 +1,4 @@
+# CMake 2.8.4 introduced LINK_DEPENDS target property
 # CMake 2.8.4 introduced generator expressions in custom commands
 # CMake 2.8.5 introduced use of C compiler as the assembler
 cmake_minimum_required(VERSION 2.8.5)
@@ -251,16 +252,20 @@ add_executable(ftok ${ftok_SOURCES})
 target_link_libraries(ftok libmumps libstub)
 
 foreach(t ${with_export})
-  set_property(TARGET ${t} PROPERTY LINK_FLAGS
-    "-Wl,-u,gtm_filename_to_id -Wl,-u,gtm_zstatus -Wl,--version-script,\"${GTM_BINARY_DIR}/gtmexe_symbols.export\"")
+  set_target_properties(${t} PROPERTIES
+    LINK_FLAGS "-Wl,-u,gtm_filename_to_id -Wl,-u,gtm_zstatus -Wl,--version-script,\"${GTM_BINARY_DIR}/gtmexe_symbols.export\""
+    LINK_DEPENDS "${GTM_BINARY_DIR}/gtmexe_symbols.export"
+    )
   add_dependencies(${t} gen_export)
 endforeach()
 
 add_library(libgtmshr MODULE ${libgtmshr_SOURCES})
 set_property(TARGET libgtmshr PROPERTY OUTPUT_NAME gtmshr)
 target_link_libraries(libgtmshr libmumps libgnpclient libcmisockettcp)
-set_property(TARGET libgtmshr PROPERTY LINK_FLAGS
-  "-Wl,-u,gtm_ci -Wl,-u,gtm_filename_to_id -Wl,--version-script,\"${GTM_BINARY_DIR}/gtmshr_symbols.export\"")
+set_target_properties(libgtmshr PROPERTIES
+  LINK_FLAGS "-Wl,-u,gtm_ci -Wl,-u,gtm_filename_to_id -Wl,--version-script,\"${GTM_BINARY_DIR}/gtmshr_symbols.export\""
+  LINK_DEPENDS "${GTM_BINARY_DIR}/gtmshr_symbols.export"
+  )
 add_dependencies(libgtmshr gen_export)
 add_dependencies(mumps libgtmshr)
 
