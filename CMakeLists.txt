@@ -470,6 +470,7 @@ install(FILES sr_unix/lowerc_cp.sh DESTINATION ${GTM_INSTALL_DIR}
   )
 
 install(FILES COPYING DESTINATION ${GTM_INSTALL_DIR})
+install(FILES sr_port/README.txt DESTINATION ${GTM_INSTALL_DIR})
 
 add_custom_target(place_files ALL DEPENDS ${files_to_place})
 
