@@ -145,16 +145,7 @@ foreach(d ${arch_path})
 endforeach()
 # Remove unused sources.
 list(REMOVE_ITEM libmumps_SOURCES
-  sr_port/get_root.c
-  sr_port/intexpr.c
-  sr_port/io_find_mvstent.c
-  sr_port/jnl_setver.c
-  sr_port/numexpr.c
-  sr_port/push_parm.c
-  sr_port/strexpr.c
   sr_unix/dtgbldir.c
-  sr_unix/mu_file_size.c
-  sr_x86_64/op_isformal.s
   )
 
 #-----------------------------------------------------------------------------
