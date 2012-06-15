@@ -192,6 +192,7 @@ list(APPEND with_export dse)
 add_executable(geteuid sr_unix/geteuid.c)
 
 add_executable(gtmsecshr sr_unix/gtmsecshr_wrapper.c)
+add_dependencies(gtmsecshr gen_gtm_threadgbl_deftypes)
 
 add_executable(gtmsecshr_real sr_unix/gtmsecshr.c)
 target_link_libraries(gtmsecshr_real libmumps)
@@ -199,6 +200,7 @@ set_target_properties(gtmsecshr_real PROPERTIES
   OUTPUT_NAME gtmsecshr
   RUNTIME_OUTPUT_DIRECTORY ${GTM_BINARY_DIR}/gtmsecshrdir
   )
+add_dependencies(gtmsecshr_real gen_gtm_threadgbl_deftypes)
 
 add_executable(mupip sr_unix/mupip.c sr_unix/mupip_cmd.c)
 target_link_libraries(mupip libmupip libmumps libstub)
