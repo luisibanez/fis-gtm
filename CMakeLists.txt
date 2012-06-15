@@ -172,6 +172,18 @@ add_custom_command(
   )
 add_custom_target(gen_gtm_threadgbl_deftypes DEPENDS gtm_threadgbl_deftypes.h)
 
+foreach(exp exe shr)
+  set(out gtm${exp}_symbols.export)
+  set(in ${GTM_SOURCE_DIR}/sr_unix/gtm${exp}_symbols.exp)
+  add_custom_command(
+    OUTPUT ${out}
+    DEPENDS ${in}
+    COMMAND tcsh -f ${GTM_SOURCE_DIR}/sr_linux/genexport.csh ${in} ${out}
+    )
+endforeach()
+
+add_custom_target(gen_export DEPENDS gtmexe_symbols.export gtmshr_symbols.export)
+
 foreach(lib
   gtcm
   cmisockettcp
@@ -238,14 +250,18 @@ add_executable(semstat2 ${semstat2_SOURCES})
 add_executable(ftok ${ftok_SOURCES})
 target_link_libraries(ftok libmumps libstub)
 
-set_property(TARGET ${with_export} PROPERTY LINK_FLAGS
-  "-Wl,-u,gtm_filename_to_id -Wl,-u,gtm_zstatus -Wl,--version-script,\"${GTM_SOURCE_DIR}/gtmexe_symbols.export\"")
+foreach(t ${with_export})
+  set_property(TARGET ${t} PROPERTY LINK_FLAGS
+    "-Wl,-u,gtm_filename_to_id -Wl,-u,gtm_zstatus -Wl,--version-script,\"${GTM_BINARY_DIR}/gtmexe_symbols.export\"")
+  add_dependencies(${t} gen_export)
+endforeach()
 
 add_library(libgtmshr MODULE ${libgtmshr_SOURCES})
 set_property(TARGET libgtmshr PROPERTY OUTPUT_NAME gtmshr)
 target_link_libraries(libgtmshr libmumps libgnpclient libcmisockettcp)
 set_property(TARGET libgtmshr PROPERTY LINK_FLAGS
-  "-Wl,-u,gtm_ci -Wl,-u,gtm_filename_to_id -Wl,--version-script,\"${GTM_SOURCE_DIR}/gtmshr_symbols.export\"")
+  "-Wl,-u,gtm_ci -Wl,-u,gtm_filename_to_id -Wl,--version-script,\"${GTM_BINARY_DIR}/gtmshr_symbols.export\"")
+add_dependencies(libgtmshr gen_export)
 add_dependencies(mumps libgtmshr)
 
 add_library(libgtmcrypt MODULE ${libgtmcrypt_SOURCES})
