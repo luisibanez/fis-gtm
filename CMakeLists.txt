@@ -297,21 +297,35 @@ set_target_properties(maskpass PROPERTIES
   )
 install(TARGETS maskpass DESTINATION ${GTM_INSTALL_DIR}/plugin/gtmcrypt)
 
+# these files need to end up in ${GTM_INSTALL_DIR}/plugin/gtmcrypt/source.tar
+#foreach(encryptsource
+#    gtmcrypt_ref.c
+#    gtmcrypt_ref.h
+#    gtmcrypt_interface.h
+#    gtmxc_types.h
+#    maskpass.c
+#    gtmcrypt_dbk_ref.c
+#    gtmcrypt_dbk_ref.h
+#    gtmcrypt_pk_ref.c
+#    gtmcrypt_pk_ref.h
+#    gtmcrypt_sym_ref.h
+#    install.sh
+#    build.sh
+#    pinentry.m
+#    )
+#endforeach()
+
 foreach(f
     add_db_key.sh
-    build.sh
     encrypt_sign_db_key.sh
     gen_keypair.sh
     gen_sym_hash.sh
     gen_sym_key.sh
-    gtmcrypt_dbk_ref.c
-    gtmcrypt_pk_ref.c
-    gtmcrypt_ref.c
-    gtminstall.sh
+    gtmcrypt.tab
     import_and_sign_key.sh
-    install.sh
-    maskpass.c
+    maskpass
     pinentry-gtm.sh
+    pinentry.m
     )
   set(f_in "${GTM_SOURCE_DIR}/sr_unix/${f}")
   set(f_out "${GTM_BINARY_DIR}/plugin/gtmcrypt/${f}")
@@ -326,7 +340,6 @@ endforeach()
 
 install(TARGETS
   mumps
-  dbcertify
   dse
   lke
   geteuid
@@ -505,6 +518,7 @@ install(FILES sr_unix/lowerc_cp.sh DESTINATION ${GTM_INSTALL_DIR}
   )
 
 install(FILES COPYING DESTINATION ${GTM_INSTALL_DIR})
+install(FILES sr_port/README.txt DESTINATION ${GTM_INSTALL_DIR})
 
 add_custom_target(place_files ALL DEPENDS ${files_to_place})
 
