@@ -376,8 +376,12 @@ foreach(m ${m_files_port})
     DEPENDS ${GTM_SOURCE_DIR}/sr_port/${m}
     COMMAND ${CMAKE_COMMAND} -E copy ${GTM_SOURCE_DIR}/sr_port/${m} "${m_out}"
     )
-  install(FILES "${m_out}" DESTINATION ${GTM_INSTALL_DIR})
   list(APPEND files_to_place "${m_out}")
+  if("${m}" MATCHES "^gde")
+    list(APPEND gde_routines "${m_out}")
+  else()
+    install(FILES "${m_out}" DESTINATION ${GTM_INSTALL_DIR})
+  endif()
 endforeach()
 
 file(GLOB m_files_unix RELATIVE ${GTM_SOURCE_DIR}/sr_unix ${GTM_SOURCE_DIR}/sr_unix/*.m)
@@ -389,8 +393,12 @@ foreach(m ${m_files_unix})
     DEPENDS ${GTM_SOURCE_DIR}/sr_unix/${m}
     COMMAND ${CMAKE_COMMAND} -E copy ${GTM_SOURCE_DIR}/sr_unix/${m} "${m_out}"
     )
-  install(FILES "${m_out}" DESTINATION ${GTM_INSTALL_DIR})
   list(APPEND files_to_place "${m_out}")
+  if("${m}" MATCHES "^gde")
+    list(APPEND gde_routines "${m_out}")
+  else()
+    install(FILES "${m_out}" DESTINATION ${GTM_INSTALL_DIR})
+  endif()
 endforeach()
 
 # <r>.mpt -> _<R>.m
@@ -452,6 +460,22 @@ foreach(f
   list(APPEND files ${src})
 endforeach()
 install(FILES ${files} DESTINATION ${GTM_INSTALL_DIR})
+
+foreach(in ${gde_routines})
+  string(REPLACE ".m" ".o" out "${in}")
+  add_custom_command(
+    OUTPUT ${out}
+    DEPENDS ${in}
+    COMMAND ${CMAKE_COMMAND}
+     -D gtm_dist=${GTM_BINARY_DIR}
+     -D mumps=$<TARGET_FILE:mumps>
+     -D input=${in}
+     -P ${GTM_SOURCE_DIR}/sr_port/mumps.cmake
+    VERBATIM
+    )
+  list(APPEND files_to_place ${out})
+  install(FILES "${out}" DESTINATION ${GTM_INSTALL_DIR})
+endforeach()
 
 set(GTM_TOP "${GTM_BINARY_DIR}")
 configure_file(sr_unix/gpgagent.tab.in plugin/gpgagent.tab @ONLY)
