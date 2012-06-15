@@ -10,6 +10,10 @@
 #################################################################
 set(ENV{gtm_dist} "${gtm_dist}")
 set(ENV{gtmroutines} ".")
+if(output_file)
+  set(output_file OUTPUT_FILE ${output_file})
+endif()
 execute_process(
-  COMMAND ${mumps} ${input}
+  COMMAND ${mumps} ${args}
+  ${output_file}
   )
