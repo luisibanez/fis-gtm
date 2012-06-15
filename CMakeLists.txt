@@ -448,11 +448,33 @@ install(FILES COPYING DESTINATION .)
 
 add_custom_target(place_files ALL DEPENDS ${files_to_place})
 
+#-----------------------------------------------------------------------------
+# Generate files depending on gtm
+
+# Copy generation routines to a working directory.
+foreach(m chk2lev.m chkop.m gendash.m genout.m loadop.m loadvx.m msg.m tttgen.m tttscan.m)
+  add_custom_command(
+    OUTPUT gen/${m}
+    DEPENDS ${GTM_SOURCE_DIR}/sr_port/${m}
+    COMMAND ${CMAKE_COMMAND} -E copy ${GTM_SOURCE_DIR}/sr_port/${m} ${GTM_BINARY_DIR}/gen/${m}
+    )
+endforeach()
+
 add_custom_command(
-  OUTPUT msg.m
-  DEPENDS ${GTM_SOURCE_DIR}/sr_port/msg.m
-  COMMAND ${CMAKE_COMMAND} -E copy ${GTM_SOURCE_DIR}/sr_port/msg.m ${GTM_BINARY_DIR}/msg.m
+  OUTPUT gen/ttt.c
+  DEPENDS ${GTM_SOURCE_DIR}/sr_unix/ttt.txt
+    gen/chk2lev.m gen/chkop.m gen/gendash.m gen/genout.m gen/loadop.m
+    gen/loadvx.m gen/tttgen.m gen/tttscan.m
+  WORKING_DIRECTORY ${GTM_BINARY_DIR}/gen
+  COMMAND ${CMAKE_COMMAND}
+  -D gtm_dist=${GTM_BINARY_DIR}
+  -D mumps=$<TARGET_FILE:mumps>
+  -D sr_port=${GTM_SOURCE_DIR}/sr_port
+  -D input=${GTM_SOURCE_DIR}/sr_unix/ttt.txt
+  -P ${GTM_SOURCE_DIR}/sr_port/tttgen.cmake
   )
+list(APPEND gen_bootstrap_files gen/ttt.c)
+
 foreach(msg
     sr_port/cmerrors.msg
     sr_port/gdeerrors.msg
@@ -461,17 +483,19 @@ foreach(msg
     )
   get_filename_component(name ${msg} NAME_WE)
   add_custom_command(
-    OUTPUT ${name}_ctl.c
-    DEPENDS msg.m ${GTM_SOURCE_DIR}/${msg}
+    OUTPUT gen/${name}_ctl.c
+    DEPENDS gen/msg.m ${GTM_SOURCE_DIR}/${msg}
+    WORKING_DIRECTORY ${GTM_BINARY_DIR}/gen
     COMMAND ${CMAKE_COMMAND}
     -D gtm_dist=${GTM_BINARY_DIR}
     -D mumps=$<TARGET_FILE:mumps>
     -D input=${GTM_SOURCE_DIR}/${msg}
     -P ${GTM_SOURCE_DIR}/sr_port/msg.cmake
     )
-  list(APPEND gen_ctl_files ${name}_ctl.c)
+  list(APPEND gen_bootstrap_files gen/${name}_ctl.c)
 endforeach()
-add_custom_target(gen_ctl ALL DEPENDS ${gen_ctl_files})
+
+add_custom_target(gen_bootstrap ALL DEPENDS ${gen_bootstrap_files})
 
 # Would install to:
 # /usr/lib/fis-gtm/V5.5-000_x86
