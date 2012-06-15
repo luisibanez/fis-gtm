@@ -303,8 +303,6 @@ install(TARGETS gtmsecshr_real DESTINATION gtmsecshrdir)
 # <r>.m -> <R>.m
 #file(GLOB m_files_port RELATIVE ${GTM_SOURCE_DIR}/sr_port ${GTM_SOURCE_DIR}/sr_port/*.m)
 set(m_files_port
-  chk2lev.m
-  chkop.m
   gde.m
   gdeadd.m
   gdechang.m
@@ -324,13 +322,6 @@ set(m_files_port
   gdeshow.m
   gdespawn.m
   gdetempl.m
-  gendash.m
-  genout.m
-  loadop.m
-  loadvx.m
-  msg.m
-  tttgen.m
-  tttscan.m
   )
 
 foreach(m ${m_files_port})
@@ -465,7 +456,7 @@ add_custom_command(
   OUTPUT gen/ttt.c
   DEPENDS ${GTM_SOURCE_DIR}/sr_unix/ttt.txt
     gen/chk2lev.m gen/chkop.m gen/gendash.m gen/genout.m gen/loadop.m
-    gen/loadvx.m gen/tttgen.m gen/tttscan.m
+    gen/loadvx.m gen/tttgen.m gen/tttscan.m ${GTM_SOURCE_DIR}/sr_port/tttgen.cmake
   WORKING_DIRECTORY ${GTM_BINARY_DIR}/gen
   COMMAND ${CMAKE_COMMAND}
   -D gtm_dist=${GTM_BINARY_DIR}
@@ -474,7 +465,7 @@ add_custom_command(
   -D input=${GTM_SOURCE_DIR}/sr_unix/ttt.txt
   -P ${GTM_SOURCE_DIR}/sr_port/tttgen.cmake
   )
-list(APPEND gen_bootstrap_files gen/ttt.c sr_port/tttgen.cmake)
+list(APPEND gen_bootstrap_files gen/ttt.c)
 
 foreach(msg
     sr_port/cmerrors.msg
@@ -485,7 +476,7 @@ foreach(msg
   get_filename_component(name ${msg} NAME_WE)
   add_custom_command(
     OUTPUT gen/${name}_ctl.c
-    DEPENDS gen/msg.m ${GTM_SOURCE_DIR}/${msg} sr_port/msg.cmake
+    DEPENDS gen/msg.m ${GTM_SOURCE_DIR}/${msg} ${GTM_SOURCE_DIR}/sr_port/msg.cmake
     WORKING_DIRECTORY ${GTM_BINARY_DIR}/gen
     COMMAND ${CMAKE_COMMAND}
     -D gtm_dist=${GTM_BINARY_DIR}
