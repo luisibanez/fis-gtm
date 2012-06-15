@@ -56,16 +56,16 @@ add_definitions(
   )
 set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS_DEBUG DEBUG)
 
-set(arch_path)
+set(gt_src_list)
 if("${CMAKE_SYSTEM_NAME}" MATCHES "Linux")
-  list(APPEND arch_path sr_linux)
+  list(APPEND gt_src_list sr_linux)
   if("${CMAKE_SIZEOF_VOID_P}" EQUAL 4)
-    list(APPEND arch_path sr_i386 sr_x86_regs sr_unix_nsb)
+    list(APPEND gt_src_list sr_i386 sr_x86_regs sr_unix_nsb)
   else()
-    list(APPEND arch_path sr_x86_64 sr_x86_regs)
+    list(APPEND gt_src_list sr_x86_64 sr_x86_regs)
   endif()
 endif()
-list(APPEND arch_path
+list(APPEND gt_src_list
   sr_unix_gnp
   sr_unix_cm
   sr_unix
@@ -74,7 +74,7 @@ list(APPEND arch_path
   )
 
 set(includes)
-foreach(d ${arch_path})
+foreach(d ${gt_src_list})
   list(APPEND includes ${GTM_SOURCE_DIR}/${d})
 endforeach()
 include_directories(${includes})
@@ -82,7 +82,7 @@ include_directories(${GTM_BINARY_DIR})
 
 function(select_file src_var name)
   set(found "")
-  foreach(d ${arch_path})
+  foreach(d ${gt_src_list})
     set(src "${GTM_SOURCE_DIR}/${d}/${name}")
     if(EXISTS "${src}")
       set(found "${src}")
@@ -95,7 +95,7 @@ function(select_file src_var name)
   set("${src_var}" "${found}" PARENT_SCOPE)
 endfunction()
 
-foreach(d ${arch_path})
+foreach(d ${gt_src_list})
   file(GLOB sources_${d} RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}/${d}
     ${d}/*.c ${d}/*.s ${d}/*.si)
 endforeach()
@@ -103,7 +103,7 @@ endforeach()
 macro(set_source_list target)
   foreach(name ${ARGN})
     set(src "")
-    foreach(d ${arch_path})
+    foreach(d ${gt_src_list})
       if(";${sources_${d}};" MATCHES ";(${name}\\.(c|s|si));")
 	set(src ${d}/${CMAKE_MATCH_1})
 	set("source_used_${CMAKE_MATCH_1}" 1)
@@ -159,7 +159,7 @@ set_source_list(semstat2         semstat2)
 #-----------------------------------------------------------------------------
 # libmumps gets leftover sources, so compute the remaining list.
 set(libmumps_SOURCES "")
-foreach(d ${arch_path})
+foreach(d ${gt_src_list})
   foreach(s ${sources_${d}})
     if(NOT source_used_${s})
       list(APPEND libmumps_SOURCES ${d}/${s})
