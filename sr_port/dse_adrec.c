@@ -9,34 +9,34 @@
  *								*
  ****************************************************************/
 
-#include "mdef.h"
+#include <mdef.h>
 
-#include "gtm_string.h"
-#include "gdsroot.h"
-#include "gtm_facility.h"
-#include "fileinfo.h"
-#include "gdsbt.h"
-#include "gdsfhead.h"
-#include "gdsblk.h"
+#include <gtm_string.h>
+#include <gdsroot.h>
+#include <gtm_facility.h>
+#include <fileinfo.h>
+#include <gdsbt.h>
+#include <gdsfhead.h>
+#include <gdsblk.h>
 #include "min_max.h"		/* needed for gdsblkops.h */
-#include "gdsblkops.h"
-#include "gdscc.h"
-#include "cli.h"
-#include "copy.h"
-#include "filestruct.h"
-#include "jnl.h"
-#include "skan_offset.h"
-#include "skan_rnum.h"
-#include "dse.h"
+#include <gdsblkops.h>
+#include <gdscc.h>
+#include <cli.h>
+#include <copy.h>
+#include <filestruct.h>
+#include <jnl.h>
+#include <skan_offset.h>
+#include <skan_rnum.h>
+#include <dse.h>
 
 /* Include prototypes */
-#include "t_qread.h"
-#include "t_write.h"
-#include "t_end.h"
-#include "t_begin_crit.h"
-#include "gvcst_blk_build.h"
-#include "util.h"
-#include "t_abort.h"
+#include <t_qread.h>
+#include <t_write.h>
+#include <t_end.h>
+#include <t_begin_crit.h>
+#include <gvcst_blk_build.h>
+#include <util.h>
+#include <t_abort.h>
 
 GBLREF char		*update_array, *update_array_ptr;
 GBLREF uint4		update_array_size;

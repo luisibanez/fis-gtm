@@ -75,14 +75,11 @@ list(APPEND arch_path
   sr_port
   )
 
-set(GTM_BOOTSTRAP_FILES "${GTM_SOURCE_DIR}/fis-gtm-src-extras")
-
 set(includes)
 foreach(d ${arch_path})
   list(APPEND includes ${GTM_SOURCE_DIR}/${d})
 endforeach()
 include_directories(${includes})
-include_directories(${GTM_BOOTSTRAP_FILES}/pro/obj)
 include_directories(${GTM_BINARY_DIR})
 
 function(find_source src_var name)
@@ -133,8 +130,15 @@ load_source_list(lke_srcs sr_unix/liblke.list)
 load_source_list(mupip_srcs sr_unix/libmupip.list)
 load_source_list(stub_srcs sr_unix/libstub.list)
 
-#load_source_list(mumps_srcs sr_i386/libmumps.list)
-load_source_list(mumps_srcs sr_x86_64/libmumps.list)
+if("${CMAKE_SYSTEM_NAME}" MATCHES "Linux")
+  list(APPEND arch_path sr_linux)
+  if("${CMAKE_SIZEOF_VOID_P}" EQUAL 4)
+    load_source_list(mumps_srcs sr_i386/libmumps.list)
+  else()
+    load_source_list(mumps_srcs sr_x86_64/libmumps.list)
+  endif()
+endif()
+
 # TODO: Load libmumps leftovers automatically
 # libmumps has everything not in source lists:
 #   *.c *.si *.s
@@ -147,23 +151,6 @@ load_source_list(mumps_srcs sr_x86_64/libmumps.list)
 #    ${GTM_SOURCE_DIR}/${d}/*.s
 #    )
 #endforeach()
-
-list(APPEND mumps_srcs
- ${GTM_BOOTSTRAP_FILES}/pro/obj/ttt.c
- ${GTM_BOOTSTRAP_FILES}/pro/obj/cmierrors_ctl.c
- ${GTM_BOOTSTRAP_FILES}/pro/obj/cmerrors_ctl.c
- ${GTM_BOOTSTRAP_FILES}/pro/obj/merrors_ctl.c
- ${GTM_BOOTSTRAP_FILES}/pro/obj/gdeerrors_ctl.c
-
- # These files appeared in upstream tarball but are
- # also among the bootstrap sources:
- #  sr_unix/cmerrors_ctl.c
- #  sr_unix/gdeerrors_ctl.c
- #  sr_unix/merrors_ansi.h
- #  sr_unix/merrors_ctl.c
- #  sr_unix/ttt.c
- #  sr_unix_gnp/cmierrors_ctl.c
-)
 
 add_executable(gtm_threadgbl_deftypes sr_port/gtm_threadgbl_deftypes.c)
 

@@ -21,7 +21,7 @@
 
 #include "compiler.h"
 #include "error.h"
-#include "rtnhdr.h"
+#include <rtnhdr.h>
 #include "stack_frame.h"
 #include "lv_val.h"
 #include "mv_stent.h"
@@ -51,7 +51,7 @@
 #include "tp_frame.h"
 #include "gvname_info.h"
 #include "op_merge.h"
-#include "auto_zlink.h"
+#include <auto_zlink.h>
 #include "golevel.h"
 #include "flush_jmp.h"
 #include "dollar_zlevel.h"

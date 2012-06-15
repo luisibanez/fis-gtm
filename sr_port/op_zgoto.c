@@ -20,7 +20,7 @@
 #include "flush_jmp.h"
 #include "dollar_zlevel.h"
 #include "golevel.h"
-#include "auto_zlink.h"
+#include <auto_zlink.h>
 #include "error.h"
 #include "gtmimagename.h"
 #ifdef UNIX

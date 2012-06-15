@@ -79,6 +79,8 @@ cli_lex
 cli_parse
 cli_port
 cmd
+cmerrors_ctl
+cmierrors_ctl
 code_gen
 coerce
 collseq
@@ -254,6 +256,7 @@ ftok_sems
 g_msf
 gbldefs
 gbldefs_usr_share
+gdeerrors_ctl
 gds_blk_downgrade
 gds_blk_upgrade
 gds_file_size
@@ -747,6 +750,7 @@ mdb_condition_handler
 mem_access
 memvcmp
 merge_desc_check
+merrors_ctl
 mint2mval
 mlabel2xtern
 mlk_bckout
@@ -1311,6 +1315,7 @@ trigger_update
 trigger_user_name
 tripinit
 tt_write_error_set
+ttt
 underr
 undx
 unw_mv_ent

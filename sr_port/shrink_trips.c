@@ -19,7 +19,7 @@
 #include "cgp.h"
 #include "gtmdbglvl.h"
 #include "cdbg_dump.h"
-#include "emit_code.h"
+#include <emit_code.h>
 #include "rtnhdr.h"
 #include "obj_file.h"
 

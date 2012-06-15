@@ -18,7 +18,7 @@
 #include "rtnhdr.h"
 #include "obj_file.h"
 #include "list_file.h"
-#include "emit_code.h"
+#include <emit_code.h>
 #include "dumptable.h"
 
 LITREF	octabstruct	oc_tab[];	/* op-code table */

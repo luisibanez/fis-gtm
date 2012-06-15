@@ -18,7 +18,7 @@
 #include "hashtab.h"
 #include "hashtab_objcode.h"
 #include "hashtab_mname.h"
-#include "rtnhdr.h"
+#include <rtnhdr.h>
 #include "stack_frame.h"
 #include "mprof.h"
 #include "gtm_unlink_all.h"
