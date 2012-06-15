@@ -229,13 +229,14 @@ target_link_libraries(ftok libmumps libstub)
 set_property(TARGET ${with_export} PROPERTY LINK_FLAGS
   "-Wl,-u,gtm_filename_to_id -Wl,-u,gtm_zstatus -Wl,--version-script,\"${GTM_SOURCE_DIR}/gtmexe_symbols.export\"")
 
-add_library(libgtmshr SHARED ${libgtmshr_SOURCES})
+add_library(libgtmshr MODULE ${libgtmshr_SOURCES})
 set_property(TARGET libgtmshr PROPERTY OUTPUT_NAME gtmshr)
 target_link_libraries(libgtmshr libmumps libgnpclient libcmisockettcp)
 set_property(TARGET libgtmshr PROPERTY LINK_FLAGS
   "-Wl,-u,gtm_ci -Wl,-u,gtm_filename_to_id -Wl,--version-script,\"${GTM_SOURCE_DIR}/gtmshr_symbols.export\"")
+add_dependencies(mumps libgtmshr)
 
-add_library(libgtmcrypt SHARED ${libgtmcrypt_SOURCES})
+add_library(libgtmcrypt MODULE ${libgtmcrypt_SOURCES})
 set_target_properties(libgtmcrypt PROPERTIES
   OUTPUT_NAME gtmcrypt
   COMPILE_DEFINITIONS USE_GCRYPT
@@ -473,7 +474,7 @@ add_custom_command(
   -D input=${GTM_SOURCE_DIR}/sr_unix/ttt.txt
   -P ${GTM_SOURCE_DIR}/sr_port/tttgen.cmake
   )
-list(APPEND gen_bootstrap_files gen/ttt.c)
+list(APPEND gen_bootstrap_files gen/ttt.c sr_port/tttgen.cmake)
 
 foreach(msg
     sr_port/cmerrors.msg
@@ -484,7 +485,7 @@ foreach(msg
   get_filename_component(name ${msg} NAME_WE)
   add_custom_command(
     OUTPUT gen/${name}_ctl.c
-    DEPENDS gen/msg.m ${GTM_SOURCE_DIR}/${msg}
+    DEPENDS gen/msg.m ${GTM_SOURCE_DIR}/${msg} sr_port/msg.cmake
     WORKING_DIRECTORY ${GTM_BINARY_DIR}/gen
     COMMAND ${CMAKE_COMMAND}
     -D gtm_dist=${GTM_BINARY_DIR}
