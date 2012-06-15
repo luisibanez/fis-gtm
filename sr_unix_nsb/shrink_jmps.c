@@ -14,7 +14,7 @@
 #include "opcode.h"
 #include "mdq.h"
 #include "cgp.h"
-#include "emit_code.h"
+#include <emit_code.h>
 #include "rtnhdr.h"
 #include "obj_file.h"
 

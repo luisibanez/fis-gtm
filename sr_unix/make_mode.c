@@ -18,7 +18,7 @@
 #include <rtnhdr.h>
 #include "op.h"
 #include "compiler.h"
-#include "emit_code.h"
+#include <emit_code.h>
 #include "gtmci.h"
 #include "inst_flush.h"
 #include "obj_file.h"

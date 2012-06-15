@@ -24,7 +24,7 @@
 #include "vxt.h"
 #include "cgp.h"
 #include "compiler.h"
-#include "emit_code.h"
+#include <emit_code.h>
 GBLDEF struct emit_base_info emit_base_info;
 
 
