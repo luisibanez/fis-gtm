@@ -3,6 +3,18 @@
 cmake_minimum_required(VERSION 2.8.5)
 project(GTM C ASM)
 
+set(version V5.5-000)
+if("${CMAKE_SIZEOF_VOID_P}" EQUAL 4)
+  set(arch "x86")
+else()
+  set(arch "x86_64")
+endif()
+
+set(GTM_INSTALL_DIR lib/fis-gtm/${version}_${arch} CACHE STRING "Install directory (under CMAKE_PREFIX_PATH if relative)")
+if(NOT GTM_INSTALL_DIR)
+  set(GTM_INSTALL_DIR .)
+endif()
+
 # Max optimization level is -O2
 get_property(languages GLOBAL PROPERTY ENABLED_LANGUAGES)
 foreach(lang ${languages})
@@ -243,7 +255,7 @@ set_target_properties(libgtmcrypt PROPERTIES
   LIBRARY_OUTPUT_DIRECTORY ${GTM_BINARY_DIR}/plugin
   )
 target_link_libraries(libgtmcrypt gpg-error gpgme gcrypt)
-install(TARGETS libgtmcrypt DESTINATION plugin)
+install(TARGETS libgtmcrypt DESTINATION ${GTM_INSTALL_DIR}/plugin)
 
 add_executable(maskpass ${maskpass_SOURCES})
 target_link_libraries(maskpass gpg-error gpgme gcrypt)
@@ -251,7 +263,7 @@ set_target_properties(maskpass PROPERTIES
   COMPILE_DEFINITIONS USE_GCRYPT
   RUNTIME_OUTPUT_DIRECTORY ${GTM_BINARY_DIR}/plugin/gtmcrypt
   )
-install(TARGETS maskpass DESTINATION plugin/gtmcrypt)
+install(TARGETS maskpass DESTINATION ${GTM_INSTALL_DIR}/plugin/gtmcrypt)
 
 foreach(f
     add_db_key.sh
@@ -276,7 +288,7 @@ foreach(f
     DEPENDS "${f_in}"
     COMMAND ${CMAKE_COMMAND} -E copy "${f_in}" "${f_out}"
     )
-  install(FILES "${f_out}" DESTINATION plugin/gtmcrypt)
+  install(FILES "${f_out}" DESTINATION ${GTM_INSTALL_DIR}/plugin/gtmcrypt)
   list(APPEND files_to_place "${f_out}")
 endforeach()
 
@@ -296,9 +308,9 @@ install(TARGETS
   gtmsecshr
   mupip
   libgtmshr
-  DESTINATION .
+  DESTINATION ${GTM_INSTALL_DIR}
   )
-install(TARGETS gtmsecshr_real DESTINATION gtmsecshrdir)
+install(TARGETS gtmsecshr_real DESTINATION ${GTM_INSTALL_DIR}/gtmsecshrdir)
 
 # <r>.m -> <R>.m
 #file(GLOB m_files_port RELATIVE ${GTM_SOURCE_DIR}/sr_port ${GTM_SOURCE_DIR}/sr_port/*.m)
@@ -332,7 +344,7 @@ foreach(m ${m_files_port})
     DEPENDS ${GTM_SOURCE_DIR}/sr_port/${m}
     COMMAND ${CMAKE_COMMAND} -E copy ${GTM_SOURCE_DIR}/sr_port/${m} "${m_out}"
     )
-  install(FILES "${m_out}" DESTINATION .)
+  install(FILES "${m_out}" DESTINATION ${GTM_INSTALL_DIR})
   list(APPEND files_to_place "${m_out}")
 endforeach()
 
@@ -345,7 +357,7 @@ foreach(m ${m_files_unix})
     DEPENDS ${GTM_SOURCE_DIR}/sr_unix/${m}
     COMMAND ${CMAKE_COMMAND} -E copy ${GTM_SOURCE_DIR}/sr_unix/${m} "${m_out}"
     )
-  install(FILES "${m_out}" DESTINATION .)
+  install(FILES "${m_out}" DESTINATION ${GTM_INSTALL_DIR})
   list(APPEND files_to_place "${m_out}")
 endforeach()
 
@@ -359,7 +371,7 @@ foreach(m ${mpt_files_port})
     DEPENDS ${GTM_SOURCE_DIR}/sr_port/${m}
     COMMAND ${CMAKE_COMMAND} -E copy ${GTM_SOURCE_DIR}/sr_port/${m} "${m_out}"
     )
-  install(FILES "${m_out}" DESTINATION .)
+  install(FILES "${m_out}" DESTINATION ${GTM_INSTALL_DIR})
   list(APPEND files_to_place "${m_out}")
 endforeach()
 
@@ -372,7 +384,7 @@ foreach(m ${mpt_files_unix})
     DEPENDS ${GTM_SOURCE_DIR}/sr_unix/${m}
     COMMAND ${CMAKE_COMMAND} -E copy ${GTM_SOURCE_DIR}/sr_unix/${m} "${m_out}"
     )
-  install(FILES "${m_out}" DESTINATION .)
+  install(FILES "${m_out}" DESTINATION ${GTM_INSTALL_DIR})
   list(APPEND files_to_place "${m_out}")
 endforeach()
 
@@ -407,36 +419,36 @@ foreach(f
   select_file(src ${f})
   list(APPEND files ${src})
 endforeach()
-install(FILES ${files} DESTINATION .)
+install(FILES ${files} DESTINATION ${GTM_INSTALL_DIR})
 
 set(GTM_TOP "${GTM_BINARY_DIR}")
 configure_file(sr_unix/gpgagent.tab.in plugin/gpgagent.tab @ONLY)
-set(GTM_TOP "${CMAKE_INSTALL_PREFIX}")
+set(GTM_TOP "${CMAKE_INSTALL_PREFIX}/${GTM_INSTALL_DIR}")
 configure_file(sr_unix/gpgagent.tab.in CMakeFiles/plugin/gpgagent.tab @ONLY)
-install(FILES ${GTM_BINARY_DIR}/CMakeFiles/plugin/gpgagent.tab DESTINATION plugin)
+install(FILES ${GTM_BINARY_DIR}/CMakeFiles/plugin/gpgagent.tab DESTINATION ${GTM_INSTALL_DIR}/plugin)
 
-install(FILES sr_unix/configure.gtc DESTINATION .
+install(FILES sr_unix/configure.gtc DESTINATION ${GTM_INSTALL_DIR}
   PERMISSIONS OWNER_READ OWNER_EXECUTE OWNER_WRITE
               GROUP_READ GROUP_EXECUTE
               WORLD_READ WORLD_EXECUTE
   RENAME configure
   )
 
-install(FILES sr_unix/gtminstall.sh DESTINATION .
+install(FILES sr_unix/gtminstall.sh DESTINATION ${GTM_INSTALL_DIR}
   PERMISSIONS OWNER_READ OWNER_EXECUTE OWNER_WRITE
               GROUP_READ GROUP_EXECUTE
               WORLD_READ WORLD_EXECUTE
   RENAME gtminstall
   )
 
-install(FILES sr_unix/lowerc_cp.sh DESTINATION .
+install(FILES sr_unix/lowerc_cp.sh DESTINATION ${GTM_INSTALL_DIR}
   PERMISSIONS OWNER_READ OWNER_EXECUTE OWNER_WRITE
               GROUP_READ GROUP_EXECUTE
               WORLD_READ WORLD_EXECUTE
   RENAME lowerc_cp
   )
 
-install(FILES COPYING DESTINATION .)
+install(FILES COPYING DESTINATION ${GTM_INSTALL_DIR})
 
 add_custom_target(place_files ALL DEPENDS ${files_to_place})
 
@@ -488,7 +500,3 @@ foreach(msg
 endforeach()
 
 add_custom_target(gen_bootstrap ALL DEPENDS ${gen_bootstrap_files})
-
-# Would install to:
-# /usr/lib/fis-gtm/V5.5-000_x86
-# /usr/lib/fis-gtm/V5.5-000_x86_64
