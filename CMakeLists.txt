@@ -108,51 +108,97 @@ function(find_source src_var name)
     message(FATAL_ERROR "Cannot find \"${name}\" as ${ARGN}")
   endif()
   set("${src_var}" "${found}" PARENT_SCOPE)
- endfunction()
-
-function(load_source_list srcs_var listfile)
-  set(srcs "")
-  file(STRINGS "${listfile}" names)
-  foreach(name ${names})
-    find_source(src ${name} .c .s .si)
-    list(APPEND srcs ${src})
-  endforeach()
-  set(${srcs_var} "${srcs}" PARENT_SCOPE)
 endfunction()
 
-load_source_list(gtcm_srcs sr_unix_cm/libgtcm.list)
-load_source_list(cmisockettcp_srcs sr_unix_gnp/libcmisockettcp.list)
-load_source_list(gnpclient_srcs sr_unix_gnp/libgnpclient.list)
-load_source_list(gnpserver_srcs sr_unix_gnp/libgnpserver.list)
-load_source_list(dbcertify_srcs sr_unix/libdbcertify.list)
-load_source_list(dse_srcs sr_unix/libdse.list)
-load_source_list(lke_srcs sr_unix/liblke.list)
-load_source_list(mupip_srcs sr_unix/libmupip.list)
-load_source_list(stub_srcs sr_unix/libstub.list)
+foreach(d ${arch_path})
+  file(GLOB sources_${d} RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}/${d}
+    ${d}/*.c ${d}/*.s ${d}/*.si)
+endforeach()
 
-if("${CMAKE_SYSTEM_NAME}" MATCHES "Linux")
-  list(APPEND arch_path sr_linux)
-  if("${CMAKE_SIZEOF_VOID_P}" EQUAL 4)
-    load_source_list(mumps_srcs sr_i386/libmumps.list)
-  else()
-    load_source_list(mumps_srcs sr_x86_64/libmumps.list)
-  endif()
-endif()
+macro(set_source_list target)
+  foreach(name ${ARGN})
+    set(src "")
+    foreach(d ${arch_path})
+      if(";${sources_${d}};" MATCHES ";(${name}\\.(c|s|si));")
+	set(src ${d}/${CMAKE_MATCH_1})
+	set("source_used_${CMAKE_MATCH_1}" 1)
+	break()
+      endif()
+    endforeach()
+    if(src)
+      list(APPEND ${target}_SOURCES ${src})
+    else()
+      message(FATAL_ERROR "No source \"${name}\" available!")
+    endif()
+  endforeach()
+endmacro()
 
-# TODO: Load libmumps leftovers automatically
-# libmumps has everything not in source lists:
-#   *.c *.si *.s
-# but excluding names hidden by earlier arch_path entries.
-#set(all_srcs "")
-#foreach(d ${arch_path})
-#  file(GLOB all_srcs RELATIVE ${GTM_SOURCE_DIR}
-#    ${GTM_SOURCE_DIR}/${d}/*.c
-#    ${GTM_SOURCE_DIR}/${d}/*.si
-#    ${GTM_SOURCE_DIR}/${d}/*.s
-#    )
-#endforeach()
+macro(load_source_list target listfile)
+  file(STRINGS "${listfile}" names)
+  set_source_list(${target} ${names})
+endmacro()
 
-add_executable(gtm_threadgbl_deftypes sr_port/gtm_threadgbl_deftypes.c)
+#-----------------------------------------------------------------------------
+
+load_source_list(libcmisockettcp sr_unix_gnp/libcmisockettcp.list)
+load_source_list(libdbcertify    sr_unix/libdbcertify.list)
+load_source_list(libdse          sr_unix/libdse.list)
+load_source_list(libgnpclient    sr_unix_gnp/libgnpclient.list)
+load_source_list(libgnpserver    sr_unix_gnp/libgnpserver.list)
+load_source_list(libgtcm         sr_unix_cm/libgtcm.list)
+load_source_list(liblke          sr_unix/liblke.list)
+load_source_list(libmupip        sr_unix/libmupip.list)
+load_source_list(libstub         sr_unix/libstub.list)
+
+set_source_list(gtm_threadgbl_deftypes gtm_threadgbl_deftypes)
+
+set_source_list(dbcertify        dbcertify dbcertify_cmd)
+set_source_list(dse              dse dse_cmd)
+set_source_list(ftok             ftok)
+set_source_list(geteuid          geteuid)
+set_source_list(gtcm_gnp_server  gtcm_gnp_server)
+set_source_list(gtcm_pkdisp      gtcm_pkdisp)
+set_source_list(gtcm_play        gtcm_play omi_srvc_xct)
+set_source_list(gtcm_server      gtcm_main omi_srvc_xct)
+set_source_list(gtcm_shmclean    gtcm_shmclean)
+set_source_list(gtmsecshr        gtmsecshr_wrapper)
+set_source_list(gtmsecshr_real   gtmsecshr)
+set_source_list(libgtmcrypt      gtmcrypt_ref gtmcrypt_pk_ref gtmcrypt_dbk_ref)
+set_source_list(libgtmshr        gtm_main)
+set_source_list(lke              lke lke_cmd)
+set_source_list(maskpass         maskpass)
+set_source_list(mumps            gtm)
+set_source_list(mupip            mupip mupip_cmd)
+set_source_list(semstat2         semstat2)
+
+#-----------------------------------------------------------------------------
+# libmumps gets leftover sources, so compute the remaining list.
+set(libmumps_SOURCES "")
+foreach(d ${arch_path})
+  foreach(s ${sources_${d}})
+    if(NOT source_used_${s})
+      list(APPEND libmumps_SOURCES ${d}/${s})
+      set(source_used_${s} 1)
+    endif()
+  endforeach()
+endforeach()
+# Remove unused sources.
+list(REMOVE_ITEM libmumps_SOURCES
+  sr_port/get_root.c
+  sr_port/intexpr.c
+  sr_port/io_find_mvstent.c
+  sr_port/jnl_setver.c
+  sr_port/numexpr.c
+  sr_port/push_parm.c
+  sr_port/strexpr.c
+  sr_unix/dtgbldir.c
+  sr_unix/mu_file_size.c
+  sr_x86_64/op_isformal.s
+  )
+
+#-----------------------------------------------------------------------------
+
+add_executable(gtm_threadgbl_deftypes ${gtm_threadgbl_deftypes_SOURCES})
 
 add_custom_command(
   OUTPUT gtm_threadgbl_deftypes.h
@@ -174,7 +220,7 @@ foreach(lib
   stub
   mumps
   )
-  add_library(lib${lib} STATIC ${${lib}_srcs})
+  add_library(lib${lib} STATIC ${lib${lib}_SOURCES})
   set_property(TARGET lib${lib} PROPERTY OUTPUT_NAME ${lib})
   add_dependencies(lib${lib} gen_gtm_threadgbl_deftypes)
 endforeach()
@@ -182,19 +228,22 @@ endforeach()
 # TODO: find_package or find_library for system libs?
 target_link_libraries(libmumps -lelf -lncurses -lm -ldl -lpthread -lrt)
 
-add_executable(mumps sr_unix/gtm.c)
+add_executable(mumps ${mumps_SOURCES})
 target_link_libraries(mumps libmumps)
 
-add_executable(dse sr_unix/dse.c sr_unix/dse_cmd.c)
+add_executable(dse ${dse_SOURCES})
 target_link_libraries(dse libdse libmumps libstub)
 list(APPEND with_export dse)
 
-add_executable(geteuid sr_unix/geteuid.c)
+add_executable(dbcertify ${dbcertify_SOURCES})
+target_link_libraries(dbcertify libdbcertify libmupip libmumps libstub)
 
-add_executable(gtmsecshr sr_unix/gtmsecshr_wrapper.c)
+add_executable(geteuid ${geteuid_SOURCES})
+
+add_executable(gtmsecshr ${gtmsecshr_SOURCES})
 add_dependencies(gtmsecshr gen_gtm_threadgbl_deftypes)
 
-add_executable(gtmsecshr_real sr_unix/gtmsecshr.c)
+add_executable(gtmsecshr_real ${gtmsecshr_real_SOURCES})
 target_link_libraries(gtmsecshr_real libmumps)
 set_target_properties(gtmsecshr_real PROPERTIES
   OUTPUT_NAME gtmsecshr
@@ -202,50 +251,39 @@ set_target_properties(gtmsecshr_real PROPERTIES
   )
 add_dependencies(gtmsecshr_real gen_gtm_threadgbl_deftypes)
 
-add_executable(mupip sr_unix/mupip.c sr_unix/mupip_cmd.c)
+add_executable(mupip ${mupip_SOURCES})
 target_link_libraries(mupip libmupip libmumps libstub)
 list(APPEND with_export mupip)
 
-add_executable(lke sr_unix/lke.c sr_unix/lke_cmd.c)
+add_executable(lke ${lke_SOURCES})
 target_link_libraries(lke liblke libmumps libgnpclient libmumps libgnpclient libcmisockettcp)
 
-add_executable(gtcm_server sr_unix_cm/gtcm_main.c sr_unix_cm/omi_srvc_xct.c)
+add_executable(gtcm_server ${gtcm_server_SOURCES})
 target_link_libraries(gtcm_server libgtcm libmumps libstub)
-add_executable(gtcm_gnp_server sr_unix_gnp/gtcm_gnp_server.c)
+add_executable(gtcm_gnp_server ${gtcm_gnp_server_SOURCES})
 target_link_libraries(gtcm_gnp_server libgnpserver liblke libmumps libcmisockettcp libstub)
 
-#add_custom_command(
-#  OUTPUT sr_unix/omi_sx_play.c
-#  DEPENDS ${GTM_SOURCE_DIR}/sr_unix_cm/omi_srvc_xct.c
-#  COMMAND ${CMAKE_COMMAND} -E copy ${GTM_SOURCE_DIR}/sr_unix_cm/omi_srvc_xct.c
-#                                   ${GTM_BINARY_DIR}/sr_unix/omi_sx_play.c
-#  )
-#add_executable(gtcm_play sr_unix_cm/gtcm_play.c sr_unix/omi_sx_play.c)
-add_executable(gtcm_play sr_unix_cm/gtcm_play.c sr_unix_cm/omi_srvc_xct.c)
+add_executable(gtcm_play ${gtcm_play_SOURCES})
 target_link_libraries(gtcm_play libgtcm libmumps libstub)
 
-add_executable(gtcm_pkdisp sr_unix_cm/gtcm_pkdisp.c)
+add_executable(gtcm_pkdisp ${gtcm_pkdisp_SOURCES})
 target_link_libraries(gtcm_pkdisp libgtcm libmumps libstub)
-add_executable(gtcm_shmclean sr_unix_cm/gtcm_shmclean.c)
+add_executable(gtcm_shmclean ${gtcm_shmclean_SOURCES})
 target_link_libraries(gtcm_shmclean libgtcm libmumps libstub)
-add_executable(semstat2 sr_unix/semstat2.c)
-add_executable(ftok sr_unix/ftok.c)
+add_executable(semstat2 ${semstat2_SOURCES})
+add_executable(ftok ${ftok_SOURCES})
 target_link_libraries(ftok libmumps libstub)
 
 set_property(TARGET ${with_export} PROPERTY LINK_FLAGS
   "-Wl,-u,gtm_filename_to_id -Wl,-u,gtm_zstatus -Wl,--version-script,\"${GTM_SOURCE_DIR}/gtmexe_symbols.export\"")
 
-add_library(libgtmshr SHARED sr_unix/gtm_main.c)
+add_library(libgtmshr SHARED ${libgtmshr_SOURCES})
 set_property(TARGET libgtmshr PROPERTY OUTPUT_NAME gtmshr)
 target_link_libraries(libgtmshr libmumps libgnpclient libcmisockettcp)
 set_property(TARGET libgtmshr PROPERTY LINK_FLAGS
   "-Wl,-u,gtm_ci -Wl,-u,gtm_filename_to_id -Wl,--version-script,\"${GTM_SOURCE_DIR}/gtmshr_symbols.export\"")
 
-add_library(libgtmcrypt SHARED
-  sr_unix/gtmcrypt_ref.c
-  sr_unix/gtmcrypt_pk_ref.c
-  sr_unix/gtmcrypt_dbk_ref.c
-  )
+add_library(libgtmcrypt SHARED ${libgtmcrypt_SOURCES})
 set_target_properties(libgtmcrypt PROPERTIES
   OUTPUT_NAME gtmcrypt
   COMPILE_DEFINITIONS USE_GCRYPT
@@ -254,7 +292,7 @@ set_target_properties(libgtmcrypt PROPERTIES
 target_link_libraries(libgtmcrypt gpg-error gpgme gcrypt)
 install(TARGETS libgtmcrypt DESTINATION plugin)
 
-add_executable(maskpass sr_unix/maskpass.c)
+add_executable(maskpass ${maskpass_SOURCES})
 target_link_libraries(maskpass gpg-error gpgme gcrypt)
 set_target_properties(maskpass PROPERTIES
   COMPILE_DEFINITIONS USE_GCRYPT
@@ -291,6 +329,7 @@ endforeach()
 
 install(TARGETS
   mumps
+  dbcertify
   dse
   lke
   geteuid
