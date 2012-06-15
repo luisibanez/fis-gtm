@@ -273,8 +273,13 @@ foreach(f
     gen_sym_hash.sh
     gen_sym_key.sh
     gtmcrypt_dbk_ref.c
+    gtmcrypt_dbk_ref.h
+    gtmcrypt_interface.h
     gtmcrypt_pk_ref.c
+    gtmcrypt_pk_ref.h
     gtmcrypt_ref.c
+    gtmcrypt_ref.h
+    gtmcrypt_sym_ref.h
     gtminstall.sh
     import_and_sign_key.sh
     install.sh
