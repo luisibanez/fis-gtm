@@ -41,6 +41,12 @@ if(NOT CMAKE_CONFIGURATION_TYPES AND NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Release CACHE STRING "Build type" FORCE)
 endif()
 
+set(install_permissions_script
+  OWNER_READ OWNER_EXECUTE OWNER_WRITE
+  GROUP_READ GROUP_EXECUTE
+  WORLD_READ WORLD_EXECUTE
+  )
+
 set(CMAKE_INCLUDE_FLAG_ASM "-Wa,-I") # gcc -I does not make it to "as"
 set(CMAKE_C_FLAGS
   # TODO: Use CMake 2.8.9 POSITION_INDEPENDENT_CODE abstraction for -fPIC in static libs
@@ -346,7 +352,12 @@ foreach(f
     DEPENDS "${f_in}"
     COMMAND ${CMAKE_COMMAND} -E copy "${f_in}" "${f_out}"
     )
-  install(FILES "${f_out}" DESTINATION ${GTM_INSTALL_DIR}/plugin/gtmcrypt)
+  if("${f}" MATCHES "\\.sh$")
+    set(permissions PERMISSIONS ${install_permissions_script})
+  else()
+    set(permissions "")
+  endif()
+  install(FILES "${f_out}" DESTINATION ${GTM_INSTALL_DIR}/plugin/gtmcrypt ${permissions})
   list(APPEND files_to_place "${f_out}")
 endforeach()
 
@@ -468,9 +479,7 @@ foreach(f
   gtcm_run.gtc
   gtcm_slist.gtc
   gdedefaults.gtc
-  gtmbase.gtc
   gtmcshrc.gtc
-  gtm.gtc
   gtmprofile.gtc
   gtmprofile_preV54000.gtc
   gtmstart.gtc
@@ -485,6 +494,19 @@ foreach(f
   list(APPEND files ${src})
 endforeach()
 install(FILES ${files} DESTINATION ${GTM_INSTALL_DIR})
+
+set(scripts)
+foreach(f
+  gtm.gtc
+  gtmbase.gtc
+  )
+  select_file(src ${f})
+  list(APPEND scripts ${src})
+endforeach()
+install(FILES ${scripts}
+  DESTINATION ${GTM_INSTALL_DIR}
+  PERMISSIONS ${install_permissions_script}
+  )
 
 foreach(in ${gde_routines})
   string(REPLACE ".m" ".o" out "${in}")
@@ -509,23 +531,16 @@ configure_file(sr_unix/gpgagent.tab.in CMakeFiles/plugin/gpgagent.tab @ONLY)
 install(FILES ${GTM_BINARY_DIR}/CMakeFiles/plugin/gpgagent.tab DESTINATION ${GTM_INSTALL_DIR}/plugin)
 
 install(FILES sr_unix/configure.gtc DESTINATION ${GTM_INSTALL_DIR}
-  PERMISSIONS OWNER_READ OWNER_EXECUTE OWNER_WRITE
-              GROUP_READ GROUP_EXECUTE
-              WORLD_READ WORLD_EXECUTE
+  PERMISSIONS ${install_permissions_script}
   RENAME configure
   )
 
 install(FILES sr_unix/gtminstall.sh DESTINATION ${GTM_INSTALL_DIR}
-  PERMISSIONS OWNER_READ OWNER_EXECUTE OWNER_WRITE
-              GROUP_READ GROUP_EXECUTE
-              WORLD_READ WORLD_EXECUTE
+  PERMISSIONS ${install_permissions_script}
   RENAME gtminstall
   )
 
 install(FILES sr_unix/lowerc_cp.sh DESTINATION ${GTM_INSTALL_DIR}
-  PERMISSIONS OWNER_READ OWNER_EXECUTE OWNER_WRITE
-              GROUP_READ GROUP_EXECUTE
-              WORLD_READ WORLD_EXECUTE
   RENAME lowerc_cp
   )
 
