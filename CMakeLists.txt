@@ -32,32 +32,6 @@ add_definitions(
   )
 set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS_DEBUG DEBUG)
 
-#gt_cc_option_I= -I/usr/local/include -I/usr/include/libelf
-
-# -Wl,-M -rdynamic -Wl,-u
-
-#gt_ld_linker=cc
-#gt_ld_option_output=-o
-#gt_ld_options_common=-Wl,-M
-#gt_ld_options_bta=-Wl,-M
-#gt_ld_options_dbg=-Wl,-M
-#gt_ld_options_pro=-Wl,-M
-#gt_ld_options_gtmshr=-Wl,-u,gtm_filename_to_id -Wl,--version-script,gtmshr_symbols.export
-#gt_ld_ci_u_option=-Wl,-u,gtm_ci
-#gt_ld_extra_libs=
-#gt_ld_syslibs= -lelf -lncurses -lm -ldl -lc -lpthread -lrt
-#gt_ld_sysrtns=
-#gt_ld_aio_syslib=-lrt
-#gt_ld_m_shl_linker=ld
-#gt_ld_m_shl_options=-shared
-#gt_ld_shl_linker=cc
-#gt_ld_shl_suffix=.so
-#gt_ld_options_all_exe=-rdynamic -Wl,-u,gtm_filename_to_id -Wl,-u,gtm_zstatus -Wl,--version-script,gtmexe_symbols.export
-#gt_ld_shl_options=-shared
-#gt_ld_ci_options=-Wl,-u,gtm_ci -Wl,-u,gtm_filename_to_id -Wl,--version-script,gtmshr_symbols.export
-
-# $gt_ld_options_all_exe $gt_ld_syslibs
-
 set(arch_path)
 if("${CMAKE_SYSTEM_NAME}" MATCHES "Linux")
   list(APPEND arch_path sr_linux)
