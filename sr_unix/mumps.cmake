@@ -10,6 +10,8 @@
 #################################################################
 set(ENV{gtm_dist} "${gtm_dist}")
 set(ENV{gtmroutines} ".")
+set(ENV{gtm_chset} "${gtm_chset}")
+set(ENV{gtm_icu_version} "${gtm_icu_version}")
 if(output_file)
   set(output_file OUTPUT_FILE ${output_file})
 endif()
