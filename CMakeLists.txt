@@ -491,12 +491,12 @@ foreach(in ${gde_routines})
   string(REPLACE ".m" ".o" out "${in}")
   add_custom_command(
     OUTPUT ${out}
-    DEPENDS ${in} ${GTM_SOURCE_DIR}/sr_port/mumps.cmake
+    DEPENDS ${in} ${GTM_SOURCE_DIR}/sr_unix/mumps.cmake
     COMMAND ${CMAKE_COMMAND}
       -D gtm_dist=${GTM_BINARY_DIR}
       -D mumps=$<TARGET_FILE:mumps>
       -D "args=${in}"
-      -P ${GTM_SOURCE_DIR}/sr_port/mumps.cmake
+      -P ${GTM_SOURCE_DIR}/sr_unix/mumps.cmake
     VERBATIM
     )
   list(APPEND files_to_place ${out})
@@ -550,14 +550,14 @@ add_custom_command(
   DEPENDS ${GTM_SOURCE_DIR}/sr_unix/ttt.txt
     gen/chk2lev.m gen/chkop.m gen/gendash.m gen/genout.m gen/loadop.m
     gen/loadvx.m gen/tttgen.m gen/tttscan.m
-    ${GTM_SOURCE_DIR}/sr_port/mumps.cmake
+    ${GTM_SOURCE_DIR}/sr_unix/mumps.cmake
   WORKING_DIRECTORY ${GTM_BINARY_DIR}/gen
   COMMAND ${CMAKE_COMMAND}
     -D gtm_dist=${GTM_BINARY_DIR}
     -D mumps=$<TARGET_FILE:mumps>
     -D "args=${mumps_ttt_args}"
     -D output_file=ttt.log
-    -P ${GTM_SOURCE_DIR}/sr_port/mumps.cmake
+    -P ${GTM_SOURCE_DIR}/sr_unix/mumps.cmake
   VERBATIM
   )
 list(APPEND gen_bootstrap_files gen/ttt.c)
@@ -572,13 +572,13 @@ foreach(msg
   set(mumps_msg_args -run msg ${GTM_SOURCE_DIR}/${msg} unix)
   add_custom_command(
     OUTPUT gen/${name}_ctl.c
-    DEPENDS gen/msg.m ${GTM_SOURCE_DIR}/${msg} ${GTM_SOURCE_DIR}/sr_port/mumps.cmake
+    DEPENDS gen/msg.m ${GTM_SOURCE_DIR}/${msg} ${GTM_SOURCE_DIR}/sr_unix/mumps.cmake
     WORKING_DIRECTORY ${GTM_BINARY_DIR}/gen
     COMMAND ${CMAKE_COMMAND}
       -D gtm_dist=${GTM_BINARY_DIR}
       -D mumps=$<TARGET_FILE:mumps>
       -D "args=${mumps_msg_args}"
-      -P ${GTM_SOURCE_DIR}/sr_port/mumps.cmake
+      -P ${GTM_SOURCE_DIR}/sr_unix/mumps.cmake
     VERBATIM
     )
   list(APPEND gen_bootstrap_files gen/${name}_ctl.c)
