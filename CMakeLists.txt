@@ -381,8 +381,8 @@ install(TARGETS
 install(TARGETS gtmsecshr_real DESTINATION ${GTM_INSTALL_DIR}/gtmsecshrdir)
 
 # <r>.m -> <R>.m
-#file(GLOB m_files_port RELATIVE ${GTM_SOURCE_DIR}/sr_port ${GTM_SOURCE_DIR}/sr_port/*.m)
-set(m_files_port
+#file(GLOB m_files_sr_port RELATIVE ${GTM_SOURCE_DIR}/sr_port ${GTM_SOURCE_DIR}/sr_port/*.m)
+set(m_files_sr_port
   gde.m
   gdeadd.m
   gdechang.m
@@ -403,65 +403,45 @@ set(m_files_port
   gdespawn.m
   gdetempl.m
   )
+file(GLOB m_files_sr_unix RELATIVE ${GTM_SOURCE_DIR}/sr_unix ${GTM_SOURCE_DIR}/sr_unix/*.m)
+file(GLOB mpt_files_sr_port RELATIVE ${GTM_SOURCE_DIR}/sr_port ${GTM_SOURCE_DIR}/sr_port/*.mpt)
+file(GLOB mpt_files_sr_unix RELATIVE ${GTM_SOURCE_DIR}/sr_unix ${GTM_SOURCE_DIR}/sr_unix/*.mpt)
 
-foreach(m ${m_files_port})
-  string(TOUPPER "${m}" m_upper)
-  string(REGEX REPLACE "M$" "m" m_out "${GTM_BINARY_DIR}/${m_upper}")
-  add_custom_command(
-    OUTPUT "${m_out}"
-    DEPENDS ${GTM_SOURCE_DIR}/sr_port/${m}
-    COMMAND ${CMAKE_COMMAND} -E copy ${GTM_SOURCE_DIR}/sr_port/${m} "${m_out}"
-    )
-  list(APPEND files_to_place "${m_out}")
-  if("${m}" MATCHES "^gde")
-    list(APPEND gde_routines "${m_out}")
-  else()
+foreach(d sr_port sr_unix)
+  foreach(m ${m_files_${d}})
+    get_filename_component(m_name "${m}" NAME_WE)
+    string(TOUPPER "${m_name}" m_upper)
+    if("${m}" MATCHES "^gde")
+      set(m_out "${GTM_BINARY_DIR}${gtm_chset_dir_${gtm_chset}}/${m_upper}.m")
+      add_custom_command(
+        OUTPUT "${m_out}"
+        DEPENDS ${GTM_SOURCE_DIR}/${d}/${m}
+        COMMAND ${CMAKE_COMMAND} -E copy ${GTM_SOURCE_DIR}/${d}/${m} "${m_out}"
+        )
+      list(APPEND files_to_place "${m_out}")
+      list(APPEND gde_routines "${m_out}")
+    else()
+      set(m_out "${GTM_BINARY_DIR}/${m_upper}.m")
+      add_custom_command(
+        OUTPUT "${m_out}"
+        DEPENDS ${GTM_SOURCE_DIR}/${d}/${m}
+        COMMAND ${CMAKE_COMMAND} -E copy ${GTM_SOURCE_DIR}/${d}/${m} "${m_out}"
+        )
+      install(FILES "${m_out}" DESTINATION ${GTM_INSTALL_DIR})
+      list(APPEND files_to_place "${m_out}")
+    endif()
+  endforeach()
+  foreach(m ${mpt_files_${d}})
+    string(TOUPPER "_${m}" m_upper)
+    string(REGEX REPLACE "MPT$" "m" m_out "${GTM_BINARY_DIR}/${m_upper}")
+    add_custom_command(
+      OUTPUT "${m_out}"
+      DEPENDS ${GTM_SOURCE_DIR}/${d}/${m}
+      COMMAND ${CMAKE_COMMAND} -E copy ${GTM_SOURCE_DIR}/${d}/${m} "${m_out}"
+      )
     install(FILES "${m_out}" DESTINATION ${GTM_INSTALL_DIR})
-  endif()
-endforeach()
-
-file(GLOB m_files_unix RELATIVE ${GTM_SOURCE_DIR}/sr_unix ${GTM_SOURCE_DIR}/sr_unix/*.m)
-foreach(m ${m_files_unix})
-  string(TOUPPER "${m}" m_upper)
-  string(REGEX REPLACE "M$" "m" m_out "${GTM_BINARY_DIR}/${m_upper}")
-  add_custom_command(
-    OUTPUT "${m_out}"
-    DEPENDS ${GTM_SOURCE_DIR}/sr_unix/${m}
-    COMMAND ${CMAKE_COMMAND} -E copy ${GTM_SOURCE_DIR}/sr_unix/${m} "${m_out}"
-    )
-  list(APPEND files_to_place "${m_out}")
-  if("${m}" MATCHES "^gde")
-    list(APPEND gde_routines "${m_out}")
-  else()
-    install(FILES "${m_out}" DESTINATION ${GTM_INSTALL_DIR})
-  endif()
-endforeach()
-
-# <r>.mpt -> _<R>.m
-file(GLOB mpt_files_port RELATIVE ${GTM_SOURCE_DIR}/sr_port ${GTM_SOURCE_DIR}/sr_port/*.mpt)
-foreach(m ${mpt_files_port})
-  string(TOUPPER "_${m}" m_upper)
-  string(REGEX REPLACE "MPT$" "m" m_out "${GTM_BINARY_DIR}/${m_upper}")
-  add_custom_command(
-    OUTPUT "${m_out}"
-    DEPENDS ${GTM_SOURCE_DIR}/sr_port/${m}
-    COMMAND ${CMAKE_COMMAND} -E copy ${GTM_SOURCE_DIR}/sr_port/${m} "${m_out}"
-    )
-  install(FILES "${m_out}" DESTINATION ${GTM_INSTALL_DIR})
-  list(APPEND files_to_place "${m_out}")
-endforeach()
-
-file(GLOB mpt_files_unix RELATIVE ${GTM_SOURCE_DIR}/sr_unix ${GTM_SOURCE_DIR}/sr_unix/*.mpt)
-foreach(m ${mpt_files_unix})
-  string(TOUPPER "_${m}" m_upper)
-  string(REGEX REPLACE "MPT$" "m" m_out "${GTM_BINARY_DIR}/${m_upper}")
-  add_custom_command(
-    OUTPUT "${m_out}"
-    DEPENDS ${GTM_SOURCE_DIR}/sr_unix/${m}
-    COMMAND ${CMAKE_COMMAND} -E copy ${GTM_SOURCE_DIR}/sr_unix/${m} "${m_out}"
-    )
-  install(FILES "${m_out}" DESTINATION ${GTM_INSTALL_DIR})
-  list(APPEND files_to_place "${m_out}")
+    list(APPEND files_to_place "${m_out}")
+  endforeach()
 endforeach()
 
 set(files)
