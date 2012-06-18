@@ -517,7 +517,7 @@ foreach(gtm_chset "" "UTF-8")
     get_filename_component(out_dir "${out}" PATH)
     add_custom_command(
       OUTPUT ${out}
-      DEPENDS ${in} ${GTM_SOURCE_DIR}/sr_unix/mumps.cmake
+      DEPENDS ${in} ${GTM_SOURCE_DIR}/sr_unix/mumps.cmake mumps
       COMMAND ${CMAKE_COMMAND}
         -D gtm_dist=${GTM_BINARY_DIR}
         -D gtm_chset=${gtm_chset}
@@ -580,7 +580,7 @@ add_custom_command(
   DEPENDS ${GTM_SOURCE_DIR}/sr_unix/ttt.txt
     gen/chk2lev.m gen/chkop.m gen/gendash.m gen/genout.m gen/loadop.m
     gen/loadvx.m gen/tttgen.m gen/tttscan.m
-    ${GTM_SOURCE_DIR}/sr_unix/mumps.cmake
+    ${GTM_SOURCE_DIR}/sr_unix/mumps.cmake mumps
   WORKING_DIRECTORY ${GTM_BINARY_DIR}/gen
   COMMAND ${CMAKE_COMMAND}
     -D gtm_dist=${GTM_BINARY_DIR}
@@ -602,7 +602,8 @@ foreach(msg
   set(mumps_msg_args -run msg ${GTM_SOURCE_DIR}/${msg} unix)
   add_custom_command(
     OUTPUT gen/${name}_ctl.c
-    DEPENDS gen/msg.m ${GTM_SOURCE_DIR}/${msg} ${GTM_SOURCE_DIR}/sr_unix/mumps.cmake
+    DEPENDS gen/msg.m ${GTM_SOURCE_DIR}/${msg}
+            ${GTM_SOURCE_DIR}/sr_unix/mumps.cmake mumps
     WORKING_DIRECTORY ${GTM_BINARY_DIR}/gen
     COMMAND ${CMAKE_COMMAND}
       -D gtm_dist=${GTM_BINARY_DIR}
