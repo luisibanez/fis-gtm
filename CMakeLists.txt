@@ -341,7 +341,6 @@ foreach(f
     gen_sym_key.sh
     gtmcrypt.tab
     import_and_sign_key.sh
-    maskpass
     pinentry-gtm.sh
     pinentry.m
     )
