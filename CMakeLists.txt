@@ -492,6 +492,25 @@ install(FILES ${scripts}
   PERMISSIONS ${install_permissions_script}
   )
 
+find_program(ICUCONFIG NAMES icu-config)
+if(ICUCONFIG)
+  execute_process(
+    COMMAND ${ICUCONFIG} --version
+    OUTPUT_VARIABLE icu_version
+    RESULT_VARIABLE icu_failed
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+    )
+  if(icu_failed)
+    message(FATAL_ERROR "Command\n ${ICUCONFIG} --version\nfailed (${icu_failed}).")
+  elseif("x${icu_version}" MATCHES "^x([0-9]+\\.[0-9]+)")
+    set(gtm_icu_version "${CMAKE_MATCH_1}")
+  else()
+    message(FATAL_ERROR "Command\n ${ICUCONFIG} --version\nproduced unrecognized output:\n ${icu_version}")
+  endif()
+else()
+  message(FATAL_ERROR "Unable to find 'icu-config'.  Set ICUCONFIG in CMake cache.")
+endif()
+
 foreach(gtm_chset "" "UTF-8")
   foreach(in ${gtm_chset_routines_${gtm_chset}})
     string(REPLACE ".m" ".o" out "${in}")
@@ -502,7 +521,7 @@ foreach(gtm_chset "" "UTF-8")
       COMMAND ${CMAKE_COMMAND}
         -D gtm_dist=${GTM_BINARY_DIR}
         -D gtm_chset=${gtm_chset}
-        -D gtm_icu_version=4.8
+        -D gtm_icu_version=${gtm_icu_version}
         -D mumps=$<TARGET_FILE:mumps>
         -D "args=${in}"
         -P ${GTM_SOURCE_DIR}/sr_unix/mumps.cmake
