@@ -406,19 +406,24 @@ file(GLOB m_files_sr_unix RELATIVE ${GTM_SOURCE_DIR}/sr_unix ${GTM_SOURCE_DIR}/s
 file(GLOB mpt_files_sr_port RELATIVE ${GTM_SOURCE_DIR}/sr_port ${GTM_SOURCE_DIR}/sr_port/*.mpt)
 file(GLOB mpt_files_sr_unix RELATIVE ${GTM_SOURCE_DIR}/sr_unix ${GTM_SOURCE_DIR}/sr_unix/*.mpt)
 
+set(gtm_chset_dir_ "")
+set(gtm_chset_dir_UTF-8 "/utf8")
+
 foreach(d sr_port sr_unix)
   foreach(m ${m_files_${d}})
     get_filename_component(m_name "${m}" NAME_WE)
     string(TOUPPER "${m_name}" m_upper)
     if("${m}" MATCHES "^gde")
-      set(m_out "${GTM_BINARY_DIR}${gtm_chset_dir_${gtm_chset}}/${m_upper}.m")
-      add_custom_command(
-        OUTPUT "${m_out}"
-        DEPENDS ${GTM_SOURCE_DIR}/${d}/${m}
-        COMMAND ${CMAKE_COMMAND} -E copy ${GTM_SOURCE_DIR}/${d}/${m} "${m_out}"
-        )
-      list(APPEND files_to_place "${m_out}")
-      list(APPEND gde_routines "${m_out}")
+      foreach(gtm_chset "" "UTF-8")
+        set(m_out "${GTM_BINARY_DIR}${gtm_chset_dir_${gtm_chset}}/${m_upper}.m")
+        add_custom_command(
+          OUTPUT "${m_out}"
+          DEPENDS ${GTM_SOURCE_DIR}/${d}/${m}
+          COMMAND ${CMAKE_COMMAND} -E copy ${GTM_SOURCE_DIR}/${d}/${m} "${m_out}"
+          )
+        list(APPEND files_to_place "${m_out}")
+        list(APPEND gtm_chset_routines_${gtm_chset} "${m_out}")
+      endforeach()
     else()
       set(m_out "${GTM_BINARY_DIR}/${m_upper}.m")
       add_custom_command(
@@ -487,20 +492,26 @@ install(FILES ${scripts}
   PERMISSIONS ${install_permissions_script}
   )
 
-foreach(in ${gde_routines})
-  string(REPLACE ".m" ".o" out "${in}")
-  add_custom_command(
-    OUTPUT ${out}
-    DEPENDS ${in} ${GTM_SOURCE_DIR}/sr_unix/mumps.cmake
-    COMMAND ${CMAKE_COMMAND}
-      -D gtm_dist=${GTM_BINARY_DIR}
-      -D mumps=$<TARGET_FILE:mumps>
-      -D "args=${in}"
-      -P ${GTM_SOURCE_DIR}/sr_unix/mumps.cmake
-    VERBATIM
-    )
-  list(APPEND files_to_place ${out})
-  install(FILES "${out}" DESTINATION ${GTM_INSTALL_DIR})
+foreach(gtm_chset "" "UTF-8")
+  foreach(in ${gtm_chset_routines_${gtm_chset}})
+    string(REPLACE ".m" ".o" out "${in}")
+    get_filename_component(out_dir "${out}" PATH)
+    add_custom_command(
+      OUTPUT ${out}
+      DEPENDS ${in} ${GTM_SOURCE_DIR}/sr_unix/mumps.cmake
+      COMMAND ${CMAKE_COMMAND}
+        -D gtm_dist=${GTM_BINARY_DIR}
+        -D gtm_chset=${gtm_chset}
+        -D gtm_icu_version=4.8
+        -D mumps=$<TARGET_FILE:mumps>
+        -D "args=${in}"
+        -P ${GTM_SOURCE_DIR}/sr_unix/mumps.cmake
+      WORKING_DIRECTORY ${out_dir}
+      VERBATIM
+      )
+    list(APPEND files_to_place ${out})
+    install(FILES "${out}" DESTINATION ${GTM_INSTALL_DIR}${gtm_chset_dir_${gtm_chset}})
+  endforeach()
 endforeach()
 
 set(GTM_TOP "${GTM_BINARY_DIR}")
