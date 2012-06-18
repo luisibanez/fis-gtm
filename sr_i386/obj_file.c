@@ -30,6 +30,7 @@
 #include "gtmio.h"
 #include "mmemory.h"
 #include "obj_file.h"
+#include <obj_source.h>
 
 LITREF char gtm_release_name[];
 LITREF int4 gtm_release_name_len;
@@ -444,8 +445,11 @@ void emit_literals(void)
 		emit_immed(PADCHARS, padsize);
 		offset += padsize;
 	}
-	emit_immed(source_file_name, source_name_len);
-	offset += source_name_len;
+	{
+		struct obj_source s = get_obj_source();
+		emit_immed(s.name, s.len);
+		offset += s.len;
+	}
 	/* comp_lits aligns the start of routine_name on a NATIVE_WSIZE boundary.*/
 	padsize = PADLEN(offset, NATIVE_WSIZE);
 	if (padsize)

@@ -28,6 +28,7 @@
 #include "gtmio.h"
 #include "mmemory.h"
 #include "obj_file.h"
+#include <obj_source.h>
 
 GBLREF char		object_file_name[];
 GBLREF short		object_name_len;
@@ -38,8 +39,6 @@ GBLREF boolean_t	run_time;
 GBLREF int4		lits_text_size, lits_mval_size;
 GBLREF unsigned char	*runtime_base;
 GBLREF mliteral		literal_chain;
-GBLREF char		source_file_name[];
-GBLREF unsigned short	source_name_len;
 GBLREF mident		routine_name;
 GBLREF spdesc		stringpool;
 GBLREF int4		linkage_size;
@@ -381,8 +380,11 @@ void	emit_literals(void)
 		emit_immed(PADCHARS, padsize);
 		offset += padsize;
 	}
-	emit_immed(source_file_name, source_name_len);
-	offset += source_name_len;
+	{
+		struct obj_source s = get_obj_source();
+		emit_immed(s.name, s.len);
+		offset += s.len;
+	}
 	padsize = (uint4)(PADLEN(offset, NATIVE_WSIZE)); /* comp_lits aligns the start of routine_name on NATIVE_WSIZE boundary.*/
 	if (padsize)
 	{

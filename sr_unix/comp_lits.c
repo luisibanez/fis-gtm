@@ -14,10 +14,10 @@
 #include <rtnhdr.h>
 #include "mdq.h"
 #include "stringpool.h"
+#include <obj_source.h>
 
 GBLREF mliteral		literal_chain;
 GBLREF spdesc		stringpool;
-GBLREF unsigned short	source_name_len;
 GBLREF mident		routine_name;
 
 GBLDEF uint4		lits_text_size, lits_mval_size;
@@ -34,9 +34,12 @@ void comp_lits(rhdtyp *rhead)
 	 * following the literal text pool and is considered part of that text pool.*/
 	offset = (stringpool.free - stringpool.base);
 	offset += PADLEN(offset, NATIVE_WSIZE);
-	rhead->src_full_name.len = source_name_len;
-	rhead->src_full_name.addr = (char *)offset;
-	offset += source_name_len;
+	{
+		struct obj_source s = get_obj_source();
+		rhead->src_full_name.len = s.len;
+		rhead->src_full_name.addr = (char *)offset;
+		offset += s.len;
+	}
 	offset += PADLEN(offset, NATIVE_WSIZE);
 	rhead->routine_name.len = routine_name.len;
 	rhead->routine_name.addr = (char *)offset;
