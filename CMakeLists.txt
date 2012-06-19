@@ -520,6 +520,7 @@ foreach(gtm_chset "" "UTF-8")
       DEPENDS ${in} ${GTM_SOURCE_DIR}/sr_unix/mumps.cmake mumps
       COMMAND ${CMAKE_COMMAND}
         -D gtm_dist=${GTM_BINARY_DIR}
+        -D gtmroutines=.
         -D gtm_chset=${gtm_chset}
         -D gtm_icu_version=${gtm_icu_version}
         -D mumps=$<TARGET_FILE:mumps>
@@ -584,6 +585,7 @@ add_custom_command(
   WORKING_DIRECTORY ${GTM_BINARY_DIR}/gen
   COMMAND ${CMAKE_COMMAND}
     -D gtm_dist=${GTM_BINARY_DIR}
+    -D gtmroutines=.
     -D mumps=$<TARGET_FILE:mumps>
     -D "args=${mumps_ttt_args}"
     -D output_file=ttt.log
@@ -607,6 +609,7 @@ foreach(msg
     WORKING_DIRECTORY ${GTM_BINARY_DIR}/gen
     COMMAND ${CMAKE_COMMAND}
       -D gtm_dist=${GTM_BINARY_DIR}
+      -D gtmroutines=.
       -D mumps=$<TARGET_FILE:mumps>
       -D "args=${mumps_msg_args}"
       -P ${GTM_SOURCE_DIR}/sr_unix/mumps.cmake
