@@ -8,10 +8,16 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
-set(ENV{gtm_dist} "${gtm_dist}")
-set(ENV{gtmroutines} ".")
-set(ENV{gtm_chset} "${gtm_chset}")
-set(ENV{gtm_icu_version} "${gtm_icu_version}")
+foreach(v
+    gtm_dist
+    gtmroutines
+    gtm_chset
+    gtm_icu_version
+    )
+  if(DEFINED ${v})
+    set("ENV{${v}}" "${${v}}")
+  endif()
+endforeach()
 if(output_file)
   set(output_file OUTPUT_FILE ${output_file})
 endif()
