@@ -419,8 +419,10 @@ fi
 tmp=`head -1 configure | cut -f 1`
 if [ "#!/bin/sh" != "$tmp" ] ; then
     echo "#!/bin/sh" >configure.sh
+    cat configure >>configure.sh
+else
+    cp configure configure.sh
 fi
-cat configure >>configure.sh
 chmod +x configure.sh
 
 # Stop here if this is a dry run
