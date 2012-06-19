@@ -303,45 +303,28 @@ set_target_properties(maskpass PROPERTIES
   )
 install(TARGETS maskpass DESTINATION ${GTM_INSTALL_DIR}/plugin/gtmcrypt)
 
-# these files need to end up in ${GTM_INSTALL_DIR}/plugin/gtmcrypt/source.tar
-set(gtmcrypt_source_tar
-  gtmcrypt_ref.c
-  gtmcrypt_ref.h
-  gtmcrypt_interface.h
-  gtmxc_types.h
-  maskpass.c
-  gtmcrypt_dbk_ref.c
-  gtmcrypt_dbk_ref.h
-  gtmcrypt_pk_ref.c
-  gtmcrypt_pk_ref.h
-  gtmcrypt_sym_ref.h
-  install.sh
-  build.sh
-  pinentry.m
-  )
-foreach(f ${gtmcrypt_source_tar})
-  list(APPEND gtmcrypt_source_tar_depends ${GTM_SOURCE_DIR}/sr_unix/${f})
-endforeach()
-add_custom_command(
-  OUTPUT plugin/gtmcrypt/source.tar
-  DEPENDS ${gtmcrypt_source_tar_depends}
-  COMMAND tar cf ${GTM_BINARY_DIR}/plugin/gtmcrypt/source.tar ${gtmcrypt_source_tar}
-  WORKING_DIRECTORY ${GTM_SOURCE_DIR}/sr_unix
-  VERBATIM
-  )
-list(APPEND files_to_place plugin/gtmcrypt/source.tar)
-install(FILES ${GTM_BINARY_DIR}/plugin/gtmcrypt/source.tar
-  DESTINATION ${GTM_INSTALL_DIR}/plugin/gtmcrypt)
-
 foreach(f
     add_db_key.sh
+    build.sh
     encrypt_sign_db_key.sh
     gen_keypair.sh
     gen_sym_hash.sh
     gen_sym_key.sh
     gtmcrypt.tab
+    gtmcrypt_dbk_ref.c
+    gtmcrypt_dbk_ref.h
+    gtmcrypt_interface.h
+    gtmcrypt_pk_ref.c
+    gtmcrypt_pk_ref.h
+    gtmcrypt_ref.c
+    gtmcrypt_ref.h
+    gtmcrypt_sym_ref.h
+    gtmxc_types.h
     import_and_sign_key.sh
+    install.sh
+    maskpass.c
     pinentry-gtm.sh
+    pinentry.m
     pinentry.m
     )
   set(f_in "${GTM_SOURCE_DIR}/sr_unix/${f}")
