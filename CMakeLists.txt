@@ -517,6 +517,51 @@ foreach(gtm_chset "" "UTF-8")
   endforeach()
 endforeach()
 
+#-----------------------------------------------------------------------------
+set(gtm_hlp mumps.hlp)
+set(gde_hlp gde.hlp)
+foreach(help gtm gde)
+  set(CMAKE_CONFIGURABLE_FILE_CONTENT
+    "Change -segment DEFAULT -block=2048 -file=${help}help.dat
+Change -region DEFAULT -record=1020 -key=255
+exit")
+  configure_file(${CMAKE_ROOT}/Modules/CMakeConfigurableFile.in
+                 ${GTM_BINARY_DIR}/${help}help.in1)
+  set(CMAKE_CONFIGURABLE_FILE_CONTENT
+    "Do ^GTMHLPLD
+${GTM_SOURCE_DIR}/sr_port/${${help}_hlp}
+Halt")
+  configure_file(${CMAKE_ROOT}/Modules/CMakeConfigurableFile.in
+                 ${GTM_BINARY_DIR}/${help}help.in2)
+  set(env
+    -D gtm_dist=${GTM_BINARY_DIR}
+    -D gtmroutines=.
+    -D gtmgbldir=${GTM_BINARY_DIR}/${help}help
+    )
+  add_custom_command(
+    OUTPUT ${help}help.dat ${help}help.gld
+    DEPENDS ${GTM_SOURCE_DIR}/sr_unix/mumps.cmake mumps mupip
+            ${GTM_BINARY_DIR}/${help}help.in1
+            ${GTM_BINARY_DIR}/${help}help.in2
+    COMMAND ${CMAKE_COMMAND} -E remove ${help}help.dat ${help}help.gld
+    COMMAND ${CMAKE_COMMAND} ${env}
+      -D mumps=$<TARGET_FILE:mumps> -D "args=-run;GDE"
+      -D input_file=${GTM_BINARY_DIR}/${help}help.in1
+      -P ${GTM_SOURCE_DIR}/sr_unix/mumps.cmake
+    COMMAND ${CMAKE_COMMAND} ${env}
+      -D mumps=$<TARGET_FILE:mupip> -D "args=create"
+      -P ${GTM_SOURCE_DIR}/sr_unix/mumps.cmake
+    COMMAND ${CMAKE_COMMAND} ${env}
+      -D mumps=$<TARGET_FILE:mumps> -D "args=-direct"
+      -D input_file=${GTM_BINARY_DIR}/${help}help.in2
+      -P ${GTM_SOURCE_DIR}/sr_unix/mumps.cmake
+    VERBATIM
+    )
+  list(APPEND files_to_place ${help}help.dat)
+  install(FILES ${GTM_BINARY_DIR}/${help}help.dat DESTINATION ${GTM_INSTALL_DIR})
+endforeach()
+#-----------------------------------------------------------------------------
+
 set(GTM_TOP "${GTM_BINARY_DIR}")
 configure_file(sr_unix/gpgagent.tab.in plugin/gpgagent.tab @ONLY)
 set(GTM_TOP "${CMAKE_INSTALL_PREFIX}/${GTM_INSTALL_DIR}")
