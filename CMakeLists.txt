@@ -522,7 +522,7 @@ set(gtm_hlp mumps.hlp)
 set(gde_hlp gde.hlp)
 foreach(help gtm gde)
   set(CMAKE_CONFIGURABLE_FILE_CONTENT
-    "Change -segment DEFAULT -block=2048 -file=${help}help.dat
+    "Change -segment DEFAULT -block=2048 -file=\$gtm_dist/${help}help.dat
 Change -region DEFAULT -record=1020 -key=255
 exit")
   configure_file(${CMAKE_ROOT}/Modules/CMakeConfigurableFile.in
