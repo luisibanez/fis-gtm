@@ -769,7 +769,7 @@ Change -region DEFAULT	-record=1020	-key=255
 Exit
 GDE.in2
 
-other_object_files="CHK2LEV.o CHKOP.o GENDASH.o GENOUT.o GETNEAR.o GTMHELP.o GTMHLPLD.o LOAD.o LOADOP.o"
+other_object_files="CHK2LEV.o CHKOP.o GENDASH.o GENOUT.o GETNEAR.o GTMHLPLD.o LOAD.o LOADOP.o"
 other_object_files="$other_object_files LOADVX.o MSG.o TTTGEN.o TTTSCAN.o UNLOAD.o GTMDefinedTypesInit.o"
 csh_script_files=""
 if [ $arch = "zos" ]; then
