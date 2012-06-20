@@ -391,6 +391,10 @@ file(GLOB mpt_files_sr_unix RELATIVE ${GTM_SOURCE_DIR}/sr_unix ${GTM_SOURCE_DIR}
 
 set(gtm_chset_dir_ "")
 set(gtm_chset_dir_UTF-8 "/utf8")
+set(gtm_chset_locale_ "C")
+set(gtm_chset_locale_UTF-8 "en_US.utf8")
+set(gtm_chset_all_locale_ "C")
+set(gtm_chset_all_locale_UTF-8 "")
 
 foreach(d sr_port sr_unix)
   foreach(m ${m_files_${d}})
@@ -494,6 +498,12 @@ else()
   message(FATAL_ERROR "Unable to find 'icu-config'.  Set ICUCONFIG in CMake cache.")
 endif()
 
+if (gtm_icu_version GREATER 10)
+  message("libicu version ${gtm_icu_version} > 10")
+  string(REGEX REPLACE "([0-9])([0-9]).*" "\\1.\\2" gtm_icu_version "${gtm_icu_version}")
+  message("Fixing gtm_icu_version to ${gtm_icu_version}.\nThis had better be the default")
+endif()
+
 foreach(gtm_chset "" "UTF-8")
   foreach(in ${gtm_chset_routines_${gtm_chset}})
     string(REPLACE ".m" ".o" out "${in}")
@@ -506,6 +516,8 @@ foreach(gtm_chset "" "UTF-8")
         -D gtmroutines=.
         -D gtm_chset=${gtm_chset}
         -D gtm_icu_version=${gtm_icu_version}
+        -D LC_CTYPE=${gtm_chset_locale_${gtm_chset}}
+	-D LC_ALL=${gtm_chset_all_locale_${gtm_chset}}
         -D mumps=$<TARGET_FILE:mumps>
         -D "args=${in}"
         -P ${GTM_SOURCE_DIR}/sr_unix/mumps.cmake

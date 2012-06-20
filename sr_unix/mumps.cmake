@@ -13,6 +13,8 @@ foreach(v
     gtmroutines
     gtm_chset
     gtm_icu_version
+    LC_CTYPE
+    LC_ALL
     )
   if(DEFINED ${v})
     set("ENV{${v}}" "${${v}}")
