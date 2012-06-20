@@ -569,8 +569,9 @@ Halt")
       -P ${GTM_SOURCE_DIR}/sr_unix/mumps.cmake
     VERBATIM
     )
-  list(APPEND files_to_place ${help}help.dat)
+  list(APPEND files_to_place ${help}help.dat ${help}help.gld)
   install(FILES ${GTM_BINARY_DIR}/${help}help.dat DESTINATION ${GTM_INSTALL_DIR})
+  install(FILES ${GTM_BINARY_DIR}/${help}help.gld DESTINATION ${GTM_INSTALL_DIR})
 endforeach()
 #-----------------------------------------------------------------------------
 
