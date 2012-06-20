@@ -391,10 +391,6 @@ file(GLOB mpt_files_sr_unix RELATIVE ${GTM_SOURCE_DIR}/sr_unix ${GTM_SOURCE_DIR}
 
 set(gtm_chset_dir_ "")
 set(gtm_chset_dir_UTF-8 "/utf8")
-set(gtm_chset_locale_ "C")
-set(gtm_chset_locale_UTF-8 "en_US.utf8")
-set(gtm_chset_all_locale_ "C")
-set(gtm_chset_all_locale_UTF-8 "")
 
 foreach(d sr_port sr_unix)
   foreach(m ${m_files_${d}})
@@ -516,8 +512,6 @@ foreach(gtm_chset "" "UTF-8")
         -D gtmroutines=.
         -D gtm_chset=${gtm_chset}
         -D gtm_icu_version=${gtm_icu_version}
-        -D LC_CTYPE=${gtm_chset_locale_${gtm_chset}}
-	-D LC_ALL=${gtm_chset_all_locale_${gtm_chset}}
         -D mumps=$<TARGET_FILE:mumps>
         -D "args=${in}"
         -P ${GTM_SOURCE_DIR}/sr_unix/mumps.cmake
