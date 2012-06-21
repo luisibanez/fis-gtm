@@ -63,12 +63,14 @@ add_definitions(
 set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS_DEBUG DEBUG)
 
 set(gt_src_list)
+set(gen_xfer_desc 0)
 if("${CMAKE_SYSTEM_NAME}" MATCHES "Linux")
   list(APPEND gt_src_list sr_linux)
   if("${CMAKE_SIZEOF_VOID_P}" EQUAL 4)
     list(APPEND gt_src_list sr_i386 sr_x86_regs sr_unix_nsb)
   else()
     list(APPEND gt_src_list sr_x86_64 sr_x86_regs)
+    set(gen_xfer_desc 1)
   endif()
 endif()
 list(APPEND gt_src_list
@@ -106,6 +108,7 @@ foreach(d ${gt_src_list})
     ${d}/*.c ${d}/*.s ${d}/*.si)
 endforeach()
 
+set(sources_used "")
 macro(set_source_list target)
   foreach(name ${ARGN})
     set(src "")
@@ -113,6 +116,7 @@ macro(set_source_list target)
       if(";${sources_${d}};" MATCHES ";(${name}\\.(c|s|si));")
 	set(src ${d}/${CMAKE_MATCH_1})
 	set("source_used_${CMAKE_MATCH_1}" 1)
+	list(APPEND sources_used ${GTM_SOURCE_DIR}/${src})
 	break()
       endif()
     endforeach()
@@ -164,19 +168,38 @@ set_source_list(semstat2         semstat2)
 
 #-----------------------------------------------------------------------------
 # libmumps gets leftover sources, so compute the remaining list.
+set(source_used_dtgbldir.c 1) # exclude unused source
 set(libmumps_SOURCES "")
 foreach(d ${gt_src_list})
   foreach(s ${sources_${d}})
     if(NOT source_used_${s})
       list(APPEND libmumps_SOURCES ${d}/${s})
       set(source_used_${s} 1)
+      list(APPEND sources_used ${GTM_SOURCE_DIR}/${d}/${s})
     endif()
   endforeach()
 endforeach()
-# Remove unused sources.
-list(REMOVE_ITEM libmumps_SOURCES
-  sr_unix/dtgbldir.c
-  )
+
+if(gen_xfer_desc)
+  list(SORT sources_used)
+  set(CMAKE_CONFIGURABLE_FILE_CONTENT "")
+  foreach(src ${sources_used})
+    set(CMAKE_CONFIGURABLE_FILE_CONTENT "${CMAKE_CONFIGURABLE_FILE_CONTENT}${src}\n")
+  endforeach()
+  configure_file(${CMAKE_ROOT}/Modules/CMakeConfigurableFile.in ${GTM_BINARY_DIR}/sources.list)
+  add_custom_command(
+    OUTPUT xfer_desc.i
+    WORKING_DIRECTORY ${GTM_BINARY_DIR}
+    DEPENDS ${GTM_SOURCE_DIR}/sr_unix/gen_xfer_desc.cmake
+            ${GTM_BINARY_DIR}/sources.list
+    COMMAND ${CMAKE_COMMAND}
+      -D CMAKE_C_COMPILER=${CMAKE_C_COMPILER}
+      -D "includes=${includes}"
+      -P ${GTM_SOURCE_DIR}/sr_unix/gen_xfer_desc.cmake
+    VERBATIM
+    )
+  list(APPEND libmumps_SOURCES xfer_desc.i)
+endif()
 
 #-----------------------------------------------------------------------------
 
