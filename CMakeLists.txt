@@ -198,15 +198,15 @@ if(gen_xfer_desc)
       -P ${GTM_SOURCE_DIR}/sr_unix/gen_xfer_desc.cmake
     VERBATIM
     )
-  list(APPEND libmumps_SOURCES xfer_desc.i)
+  add_custom_target(gen_xfer_desc DEPENDS xfer_desc.i)
 endif()
-
-add_custom_target(gen_xfer_desc DEPENDS xfer_desc.i)
 
 #-----------------------------------------------------------------------------
 
 add_executable(gtm_threadgbl_deftypes ${gtm_threadgbl_deftypes_SOURCES})
-add_dependencies(gtm_threadgbl_deftypes gen_xfer_desc)
+if(gen_xfer_desc)
+  add_dependencies(gtm_threadgbl_deftypes gen_xfer_desc)
+endif()
 
 add_custom_command(
   OUTPUT gtm_threadgbl_deftypes.h
