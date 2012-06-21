@@ -239,9 +239,9 @@ if [ -d "utf8" ]; then
 		is64bit_gtm=`file mumps | grep "64-bit" | wc -l`
 	fi
 	if [ $is64bit_gtm -eq 1 ] ; then
-		library_path="/usr/local/lib64 /usr/local/lib /usr/lib64 /usr/lib /lib64 /lib /usr/local/ssl/lib"
+		library_path="/usr/local/lib64 /usr/local/lib /usr/lib64 /usr/lib /usr/lib/x86_64-linux-gnu /lib64 /lib /usr/local/ssl/lib"
 	else
-		library_path="/usr/local/lib32 /usr/local/lib /usr/lib32 /usr/lib /lib32 /lib"
+		library_path="/usr/local/lib32 /usr/local/lib /usr/lib32 /usr/lib /usr/lib/i386-linux-gnu /lib32 /lib"
 	fi
 	$echo "Should UTF-8 support be installed? (y or n) \c"
 	read resp
@@ -901,7 +901,7 @@ if [ "$resp" = "Y" -o "$resp" = "y" ] ; then
 	\rm -rf $binaries $pathmods $rscripts $nscripts $dirs configure \
 		*.gtc gtm* gde* GDE*.o _*.m _*.o mumps.dat mumps.gld geteuid $other_object_files $csh_script_files lowerc_cp\
 		esnecil *.hlp core *.h libgtmrpc.a *.m gdehelp.* COPYING README.txt
-	\rm -rf GETPASS.o plugin PINENTRY.o
+	\rm -rf GETPASS.o plugin PINENTRY.o GTMHELP.o
 	if [ -d utf8 ]; then
 		\rm -rf utf8
 	fi
