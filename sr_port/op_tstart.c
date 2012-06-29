@@ -315,7 +315,7 @@ void	op_tstart(int implicit_flag, ...) /* value of $T when TSTART */
 			} else
 				rts_error(VARLSTCNT(1) ERR_STACKCRIT);
 		}
-		memcpy(msp, old_sp, top - (unsigned char *)old_sp);
+		memmove(msp, old_sp, top - (unsigned char *)old_sp);	/* Shift stack w/possible overlapping ranges */
 		mv_st_ent = (mv_stent *)(top - shift_size);
 		mv_st_ent->mv_st_type = MVST_TPHOLD;
 		ADJUST_FRAME_POINTER(frame_pointer, shift_size);

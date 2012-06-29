@@ -9,8 +9,10 @@
  *								*
  ****************************************************************/
 
-
 #include "mdef.h"
+#define BYPASS_MEMCPY_OVERRIDE  /* Signals gtm_string.h to not override memcpy(). When this routine is linked into gtcm_pkdisp,
+				 * the assert in the routine called by memcpy macro causes the world to be pulled in. Avoid.
+				 */
 /* Note that since this routine is called prior to reading environment vars or pretty much any
  * other initialization, we cannot use gtm_malloc() yet so care is taken to use the real system
  * malloc.
