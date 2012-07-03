@@ -280,11 +280,14 @@ target_link_libraries(lke liblke libmumps libgnpclient libmumps libgnpclient lib
 
 add_executable(gtcm_server ${gtcm_server_SOURCES})
 target_link_libraries(gtcm_server libgtcm libmumps libstub)
+list(APPEND with_export gtcm_server)
 add_executable(gtcm_gnp_server ${gtcm_gnp_server_SOURCES})
 target_link_libraries(gtcm_gnp_server libgnpserver liblke libmumps libcmisockettcp libstub)
+list(APPEND with_export gtcm_gnp_server)
 
 add_executable(gtcm_play ${gtcm_play_SOURCES})
 target_link_libraries(gtcm_play libgtcm libmumps libstub)
+list(APPEND with_export gtcm_play)
 
 add_executable(gtcm_pkdisp ${gtcm_pkdisp_SOURCES})
 target_link_libraries(gtcm_pkdisp libgtcm libmumps libstub)
