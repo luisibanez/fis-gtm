@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- *	Copyright 2001, 2011 Fidelity Information Services, Inc	*
+ *	Copyright 2001, 2012 Fidelity Information Services, Inc	*
  *								*
  *	This source code contains the intellectual property	*
  *	of its copyright holder(s), and is made available	*
@@ -15,9 +15,7 @@
 #ifndef GTM_STRINGH
 #define GTM_STRINGH
 
-#ifndef __vax
-#  include <string.h>
-#endif
+#include <string.h>
 
 #define STRERROR	strerror
 
@@ -30,5 +28,16 @@
 /* Make sure that SIZEOF(SOURCE) > 0 or SOURCE != NULL before running. */
 #define	STRNCMP_LIT_FULL(SOURCE, LITERAL)	strncmp(SOURCE, LITERAL, SIZEOF(LITERAL))	/* BYPASSOK */
 #define	STRNCMP_STR(SOURCE, STRING, LEN) strncmp(SOURCE, STRING, LEN)
+
+/* We need to catch any memcpy() that is used when the source and target strings overlap in any fashion so we can change
+ * them to a memmove. So in debug builds, assert fail if this is the case.
+ */
+#if defined(DEBUG) && !defined(BYPASS_MEMCPY_OVERRIDE)
+#  include "gtm_memcpy_validate_and_execute.h"
+#  ifdef memcpy
+#    undef memcpy	/* Some platforms like AIX create memcpy as a #define which needs removing before re-define */
+#  endif
+#  define memcpy(TARGET, SRC, LEN) gtm_memcpy_validate_and_execute((void *)(TARGET), (const void *)(SRC), (LEN))
+#endif
 
 #endif

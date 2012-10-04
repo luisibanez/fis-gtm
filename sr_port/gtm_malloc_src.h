@@ -33,7 +33,12 @@
 */
 
 #include "mdef.h"
-
+/* If this is a pro build (meaning PRO_BUILD is defined), avoid the memcpy() override. That code is only
+ * appropriate for a pure debug build.
+ */
+#ifdef PRO_BUILD
+#  define BYPASS_MEMCPY_OVERRIDE	/* Instruct gtm_string.h not to override memcpy() */
+#endif
 /* We are the redefined versions so use real versions in this module */
 #undef malloc
 #undef free
@@ -45,11 +50,11 @@
 #include <stddef.h>
 #include <errno.h>
 #if !defined(VMS) && !defined(__MVS__)
-#include <malloc.h>
+#  include <malloc.h>
 #endif
 #include "gtm_stdio.h"
-#include "gtm_string.h"
 #include "gtm_stdlib.h"
+#include "gtm_string.h"
 
 #include "eintr_wrappers.h"
 #include "gtmdbglvl.h"
@@ -67,8 +72,8 @@
 #include "gtm_malloc.h"
 #include "have_crit.h"
 #ifdef UNIX
-#include "gtmio.h"
-#include "deferred_signal_handler.h"
+#  include "gtmio.h"
+#  include "deferred_signal_handler.h"
 #endif
 
 /* This routine is compiled twice, once as debug and once as pro and put into the same pro build. The alternative

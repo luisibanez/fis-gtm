@@ -52,6 +52,10 @@ GBLREF unsigned char 	patch_comp_count;
 GBLREF cw_set_element   cw_set[];
 GBLREF unsigned char	*non_tp_jfb_buff_ptr;
 
+error_def(ERR_DBRDONLY);
+error_def(ERR_DSEBLKRDFAIL);
+error_def(ERR_DSEFAIL);
+
 void dse_rmrec(void)
 {
 	block_id	blk;
@@ -63,10 +67,6 @@ void dse_rmrec(void)
 	unsigned char	cc, cc_base;
 	short int	size, i, rsize;
 	srch_blk_status	blkhist;
-
-	error_def(ERR_DBRDONLY);
-	error_def(ERR_DSEBLKRDFAIL);
-	error_def(ERR_DSEFAIL);
 
         if (gv_cur_region->read_only)
                 rts_error(VARLSTCNT(4) ERR_DBRDONLY, 2, DB_LEN_STR(gv_cur_region));
@@ -182,7 +182,7 @@ void dse_rmrec(void)
 		rsize = r_top - key_top + SIZEOF(rec_hdr) + patch_comp_count - i;
 		PUT_SHORT(&((rec_hdr_ptr_t)rp_base)->rsiz, rsize);
 		memcpy(rp_base + SIZEOF(rec_hdr), &patch_comp_key[i], patch_comp_count - i);
-		memcpy(rp_base + SIZEOF(rec_hdr) + patch_comp_count - i, key_top, b_top - key_top);
+		memmove(rp_base + SIZEOF(rec_hdr) + patch_comp_count - i, key_top, b_top - key_top);
 		((blk_hdr_ptr_t)lbp)->bsiz = (unsigned int)(rp_base + rsize - lbp + b_top - r_top);
 		BLK_INIT(bs_ptr, bs1);
 		BLK_SEG(bs_ptr, (uchar_ptr_t)lbp + SIZEOF(blk_hdr), ((blk_hdr_ptr_t)lbp)->bsiz - SIZEOF(blk_hdr));

@@ -22,6 +22,24 @@ else()
   set(arch "x86_64")
 endif()
 
+# Choose where to get bootstrap sources.
+set(GTM_DIST "" CACHE PATH "Existing GT.M Distribution")
+if(GTM_DIST)
+  # Bootstrap using already-installed mumps.
+  message(STATUS "Using existing gtm_dist=${GTM_DIST} to generate sources.")
+  set(gen_bootstrap 1)
+  set(gen_bootstrap_dist "${GTM_DIST}")
+  set(gen_bootstrap_mumps "${GTM_DIST}/mumps")
+  set(gen_bootstrap_depend "${gen_bootstrap_mumps}")
+else()
+  # Bootstrap using pre-generated bootstrap sources.
+  # We generate them again only for comparison.
+  set(gen_bootstrap 0)
+  set(gen_bootstrap_dist "${GTM_BINARY_DIR}")
+  set(gen_bootstrap_mumps "$<TARGET_FILE:mumps>")
+  set(gen_bootstrap_depend mumps)
+endif()
+
 set(GTM_INSTALL_DIR lib/fis-gtm/${version}_${arch} CACHE STRING "Install directory (under CMAKE_PREFIX_PATH if relative)")
 if(NOT GTM_INSTALL_DIR)
   set(GTM_INSTALL_DIR .)
@@ -63,12 +81,14 @@ add_definitions(
 set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS_DEBUG DEBUG)
 
 set(gt_src_list)
+set(gen_xfer_desc 0)
 if("${CMAKE_SYSTEM_NAME}" MATCHES "Linux")
   list(APPEND gt_src_list sr_linux)
   if("${CMAKE_SIZEOF_VOID_P}" EQUAL 4)
     list(APPEND gt_src_list sr_i386 sr_x86_regs sr_unix_nsb)
   else()
     list(APPEND gt_src_list sr_x86_64 sr_x86_regs)
+    set(gen_xfer_desc 1)
   endif()
 endif()
 list(APPEND gt_src_list
@@ -78,10 +98,22 @@ list(APPEND gt_src_list
   sr_port_cm
   sr_port
   )
+foreach(d ${gt_src_list})
+  set(source_dir_${d} ${GTM_SOURCE_DIR}/${d})
+  file(GLOB sources_${d} RELATIVE ${source_dir_${d}}
+    ${d}/*.c ${d}/*.s ${d}/*.si)
+endforeach()
+if(gen_bootstrap)
+  # Prefer generated sources over all other locations.
+  set(gt_src_list gen ${gt_src_list})
+  set(source_dir_gen ${GTM_BINARY_DIR}/gen)
+  # Hard-code list since we cannot glob files that do not exist.
+  set(sources_gen cmerrors_ctl.c cmierrors_ctl.c gdeerrors_ctl.c merrors_ctl.c ttt.c)
+endif()
 
 set(includes)
 foreach(d ${gt_src_list})
-  list(APPEND includes ${GTM_SOURCE_DIR}/${d})
+  list(APPEND includes ${source_dir_${d}})
 endforeach()
 include_directories(${includes})
 include_directories(${GTM_BINARY_DIR})
@@ -89,7 +121,7 @@ include_directories(${GTM_BINARY_DIR})
 function(select_file src_var name)
   set(found "")
   foreach(d ${gt_src_list})
-    set(src "${GTM_SOURCE_DIR}/${d}/${name}")
+    set(src "${source_dir_${d}}/${name}")
     if(EXISTS "${src}")
       set(found "${src}")
       break()
@@ -101,11 +133,7 @@ function(select_file src_var name)
   set("${src_var}" "${found}" PARENT_SCOPE)
 endfunction()
 
-foreach(d ${gt_src_list})
-  file(GLOB sources_${d} RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}/${d}
-    ${d}/*.c ${d}/*.s ${d}/*.si)
-endforeach()
-
+set(sources_used "")
 macro(set_source_list target)
   foreach(name ${ARGN})
     set(src "")
@@ -113,6 +141,7 @@ macro(set_source_list target)
       if(";${sources_${d}};" MATCHES ";(${name}\\.(c|s|si));")
 	set(src ${d}/${CMAKE_MATCH_1})
 	set("source_used_${CMAKE_MATCH_1}" 1)
+	list(APPEND sources_used ${source_dir_${d}}/${CMAKE_MATCH_1})
 	break()
       endif()
     endforeach()
@@ -164,23 +193,115 @@ set_source_list(semstat2         semstat2)
 
 #-----------------------------------------------------------------------------
 # libmumps gets leftover sources, so compute the remaining list.
+set(source_used_dtgbldir.c 1) # exclude unused source
 set(libmumps_SOURCES "")
 foreach(d ${gt_src_list})
   foreach(s ${sources_${d}})
     if(NOT source_used_${s})
       list(APPEND libmumps_SOURCES ${d}/${s})
       set(source_used_${s} 1)
+      list(APPEND sources_used ${source_dir_${d}}/${s})
     endif()
   endforeach()
 endforeach()
-# Remove unused sources.
-list(REMOVE_ITEM libmumps_SOURCES
-  sr_unix/dtgbldir.c
+
+#-----------------------------------------------------------------------------
+# Generate files depending on gtm
+
+# Copy generation routines to a working directory.
+foreach(m chk2lev.m chkop.m gendash.m genout.m loadop.m loadvx.m msg.m tttgen.m tttscan.m)
+  add_custom_command(
+    OUTPUT gen/${m}
+    DEPENDS ${GTM_SOURCE_DIR}/sr_port/${m}
+    COMMAND ${CMAKE_COMMAND} -E copy ${GTM_SOURCE_DIR}/sr_port/${m} ${GTM_BINARY_DIR}/gen/${m}
+    )
+endforeach()
+
+set(mumps_ttt_args -run tttgen
+  ${GTM_SOURCE_DIR}/sr_unix/ttt.txt
+  ${GTM_SOURCE_DIR}/sr_port/opcode_def.h
+  ${GTM_SOURCE_DIR}/sr_port/vxi.h
   )
+add_custom_command(
+  OUTPUT gen/ttt.c
+  DEPENDS ${GTM_SOURCE_DIR}/sr_unix/ttt.txt
+    gen/chk2lev.m gen/chkop.m gen/gendash.m gen/genout.m gen/loadop.m
+    gen/loadvx.m gen/tttgen.m gen/tttscan.m
+    ${GTM_SOURCE_DIR}/sr_unix/mumps.cmake ${gen_bootstrap_depend}
+  WORKING_DIRECTORY ${GTM_BINARY_DIR}/gen
+  COMMAND ${CMAKE_COMMAND}
+    -D gtm_dist=${gen_bootstrap_dist}
+    -D gtmroutines=.
+    -D mumps=${gen_bootstrap_mumps}
+    -D "args=${mumps_ttt_args}"
+    -D output_file=ttt.log
+    -P ${GTM_SOURCE_DIR}/sr_unix/mumps.cmake
+  VERBATIM
+  )
+list(APPEND gen_bootstrap_files gen/ttt.c)
+
+set(gen_merrors_extra gen/merrors_ansi.h)
+foreach(msg
+    sr_port/cmerrors.msg
+    sr_port/gdeerrors.msg
+    sr_port/merrors.msg
+    sr_unix_gnp/cmierrors.msg
+    )
+  get_filename_component(name ${msg} NAME_WE)
+  set(mumps_msg_args -run msg ${GTM_SOURCE_DIR}/${msg} unix)
+  set(outputs gen/${name}_ctl.c ${gen_${name}_extra})
+  add_custom_command(
+    OUTPUT ${outputs}
+    DEPENDS gen/msg.m ${GTM_SOURCE_DIR}/${msg}
+            ${GTM_SOURCE_DIR}/sr_unix/mumps.cmake ${gen_bootstrap_depend}
+    WORKING_DIRECTORY ${GTM_BINARY_DIR}/gen
+    COMMAND ${CMAKE_COMMAND}
+      -D gtm_dist=${gen_bootstrap_dist}
+      -D gtmroutines=.
+      -D mumps=${gen_bootstrap_mumps}
+      -D "args=${mumps_msg_args}"
+      -P ${GTM_SOURCE_DIR}/sr_unix/mumps.cmake
+    VERBATIM
+    )
+  list(APPEND gen_bootstrap_files ${outputs})
+endforeach()
+
+add_custom_target(gen_bootstrap ALL DEPENDS ${gen_bootstrap_files})
+
+#-----------------------------------------------------------------------------
+
+if(gen_xfer_desc)
+  list(SORT sources_used)
+  set(CMAKE_CONFIGURABLE_FILE_CONTENT "")
+  foreach(src ${sources_used})
+    set(CMAKE_CONFIGURABLE_FILE_CONTENT "${CMAKE_CONFIGURABLE_FILE_CONTENT}${src}\n")
+  endforeach()
+  configure_file(${CMAKE_ROOT}/Modules/CMakeConfigurableFile.in ${GTM_BINARY_DIR}/sources.list)
+  add_custom_command(
+    OUTPUT xfer_desc.i
+    WORKING_DIRECTORY ${GTM_BINARY_DIR}
+    DEPENDS ${GTM_SOURCE_DIR}/sr_unix/gen_xfer_desc.cmake
+            ${GTM_BINARY_DIR}/sources.list
+    COMMAND ${CMAKE_COMMAND}
+      -D CMAKE_C_COMPILER=${CMAKE_C_COMPILER}
+      -D "includes=${includes}"
+      -P ${GTM_SOURCE_DIR}/sr_unix/gen_xfer_desc.cmake
+    VERBATIM
+    )
+  add_custom_target(gen_xfer_desc DEPENDS xfer_desc.i)
+  if(gen_bootstrap)
+    add_dependencies(gen_xfer_desc gen_bootstrap)
+  endif()
+endif()
 
 #-----------------------------------------------------------------------------
 
 add_executable(gtm_threadgbl_deftypes ${gtm_threadgbl_deftypes_SOURCES})
+if(gen_xfer_desc)
+  add_dependencies(gtm_threadgbl_deftypes gen_xfer_desc)
+elseif(gen_bootstrap)
+  add_dependencies(gtm_threadgbl_deftypes gen_bootstrap)
+endif()
 
 add_custom_command(
   OUTPUT gtm_threadgbl_deftypes.h
@@ -254,11 +375,14 @@ target_link_libraries(lke liblke libmumps libgnpclient libmumps libgnpclient lib
 
 add_executable(gtcm_server ${gtcm_server_SOURCES})
 target_link_libraries(gtcm_server libgtcm libmumps libstub)
+list(APPEND with_export gtcm_server)
 add_executable(gtcm_gnp_server ${gtcm_gnp_server_SOURCES})
 target_link_libraries(gtcm_gnp_server libgnpserver liblke libmumps libcmisockettcp libstub)
+list(APPEND with_export gtcm_gnp_server)
 
 add_executable(gtcm_play ${gtcm_play_SOURCES})
 target_link_libraries(gtcm_play libgtcm libmumps libstub)
+list(APPEND with_export gtcm_play)
 
 add_executable(gtcm_pkdisp ${gtcm_pkdisp_SOURCES})
 target_link_libraries(gtcm_pkdisp libgtcm libmumps libstub)
@@ -494,6 +618,12 @@ else()
   message(FATAL_ERROR "Unable to find 'icu-config'.  Set ICUCONFIG in CMake cache.")
 endif()
 
+if (gtm_icu_version GREATER 10)
+  message("libicu version ${gtm_icu_version} > 10")
+  string(REGEX REPLACE "([0-9])([0-9]).*" "\\1.\\2" gtm_icu_version "${gtm_icu_version}")
+  message("Fixing gtm_icu_version to ${gtm_icu_version}.\nThis had better be the default")
+endif()
+
 foreach(gtm_chset "" "UTF-8")
   foreach(in ${gtm_chset_routines_${gtm_chset}})
     string(REPLACE ".m" ".o" out "${in}")
@@ -516,6 +646,51 @@ foreach(gtm_chset "" "UTF-8")
     install(FILES "${out}" DESTINATION ${GTM_INSTALL_DIR}${gtm_chset_dir_${gtm_chset}})
   endforeach()
 endforeach()
+
+#-----------------------------------------------------------------------------
+set(gtm_hlp mumps.hlp)
+set(gde_hlp gde.hlp)
+foreach(help gtm gde)
+  set(CMAKE_CONFIGURABLE_FILE_CONTENT
+    "Change -segment DEFAULT -block=2048 -file=\$gtm_dist/${help}help.dat
+Change -region DEFAULT -record=1020 -key=255
+exit")
+  configure_file(${CMAKE_ROOT}/Modules/CMakeConfigurableFile.in
+                 ${GTM_BINARY_DIR}/${help}help.in1)
+  set(CMAKE_CONFIGURABLE_FILE_CONTENT
+    "Do ^GTMHLPLD
+${GTM_SOURCE_DIR}/sr_port/${${help}_hlp}
+Halt")
+  configure_file(${CMAKE_ROOT}/Modules/CMakeConfigurableFile.in
+                 ${GTM_BINARY_DIR}/${help}help.in2)
+  set(env
+    -D gtm_dist=${GTM_BINARY_DIR}
+    -D gtmroutines=.
+    -D gtmgbldir=${GTM_BINARY_DIR}/${help}help
+    )
+  add_custom_command(
+    OUTPUT ${help}help.dat ${help}help.gld
+    DEPENDS ${GTM_SOURCE_DIR}/sr_unix/mumps.cmake mumps mupip
+            ${GTM_BINARY_DIR}/${help}help.in1
+            ${GTM_BINARY_DIR}/${help}help.in2
+    COMMAND ${CMAKE_COMMAND} -E remove ${help}help.dat ${help}help.gld
+    COMMAND ${CMAKE_COMMAND} ${env}
+      -D mumps=$<TARGET_FILE:mumps> -D "args=-run;GDE"
+      -D input_file=${GTM_BINARY_DIR}/${help}help.in1
+      -P ${GTM_SOURCE_DIR}/sr_unix/mumps.cmake
+    COMMAND ${CMAKE_COMMAND} ${env}
+      -D mumps=$<TARGET_FILE:mupip> -D "args=create"
+      -P ${GTM_SOURCE_DIR}/sr_unix/mumps.cmake
+    COMMAND ${CMAKE_COMMAND} ${env}
+      -D mumps=$<TARGET_FILE:mumps> -D "args=-direct"
+      -D input_file=${GTM_BINARY_DIR}/${help}help.in2
+      -P ${GTM_SOURCE_DIR}/sr_unix/mumps.cmake
+    VERBATIM
+    )
+  list(APPEND files_to_place ${help}help.dat)
+  install(FILES ${GTM_BINARY_DIR}/${help}help.dat DESTINATION ${GTM_INSTALL_DIR})
+endforeach()
+#-----------------------------------------------------------------------------
 
 set(GTM_TOP "${GTM_BINARY_DIR}")
 configure_file(sr_unix/gpgagent.tab.in plugin/gpgagent.tab @ONLY)
@@ -541,64 +716,3 @@ install(FILES COPYING DESTINATION ${GTM_INSTALL_DIR})
 install(FILES sr_port/README.txt DESTINATION ${GTM_INSTALL_DIR})
 
 add_custom_target(place_files ALL DEPENDS ${files_to_place})
-
-#-----------------------------------------------------------------------------
-# Generate files depending on gtm
-
-# Copy generation routines to a working directory.
-foreach(m chk2lev.m chkop.m gendash.m genout.m loadop.m loadvx.m msg.m tttgen.m tttscan.m)
-  add_custom_command(
-    OUTPUT gen/${m}
-    DEPENDS ${GTM_SOURCE_DIR}/sr_port/${m}
-    COMMAND ${CMAKE_COMMAND} -E copy ${GTM_SOURCE_DIR}/sr_port/${m} ${GTM_BINARY_DIR}/gen/${m}
-    )
-endforeach()
-
-set(mumps_ttt_args -run tttgen
-  ${GTM_SOURCE_DIR}/sr_unix/ttt.txt
-  ${GTM_SOURCE_DIR}/sr_port/opcode_def.h
-  ${GTM_SOURCE_DIR}/sr_port/vxi.h
-  )
-add_custom_command(
-  OUTPUT gen/ttt.c
-  DEPENDS ${GTM_SOURCE_DIR}/sr_unix/ttt.txt
-    gen/chk2lev.m gen/chkop.m gen/gendash.m gen/genout.m gen/loadop.m
-    gen/loadvx.m gen/tttgen.m gen/tttscan.m
-    ${GTM_SOURCE_DIR}/sr_unix/mumps.cmake mumps
-  WORKING_DIRECTORY ${GTM_BINARY_DIR}/gen
-  COMMAND ${CMAKE_COMMAND}
-    -D gtm_dist=${GTM_BINARY_DIR}
-    -D gtmroutines=.
-    -D mumps=$<TARGET_FILE:mumps>
-    -D "args=${mumps_ttt_args}"
-    -D output_file=ttt.log
-    -P ${GTM_SOURCE_DIR}/sr_unix/mumps.cmake
-  VERBATIM
-  )
-list(APPEND gen_bootstrap_files gen/ttt.c)
-
-foreach(msg
-    sr_port/cmerrors.msg
-    sr_port/gdeerrors.msg
-    sr_port/merrors.msg
-    sr_unix_gnp/cmierrors.msg
-    )
-  get_filename_component(name ${msg} NAME_WE)
-  set(mumps_msg_args -run msg ${GTM_SOURCE_DIR}/${msg} unix)
-  add_custom_command(
-    OUTPUT gen/${name}_ctl.c
-    DEPENDS gen/msg.m ${GTM_SOURCE_DIR}/${msg}
-            ${GTM_SOURCE_DIR}/sr_unix/mumps.cmake mumps
-    WORKING_DIRECTORY ${GTM_BINARY_DIR}/gen
-    COMMAND ${CMAKE_COMMAND}
-      -D gtm_dist=${GTM_BINARY_DIR}
-      -D gtmroutines=.
-      -D mumps=$<TARGET_FILE:mumps>
-      -D "args=${mumps_msg_args}"
-      -P ${GTM_SOURCE_DIR}/sr_unix/mumps.cmake
-    VERBATIM
-    )
-  list(APPEND gen_bootstrap_files gen/${name}_ctl.c)
-endforeach()
-
-add_custom_target(gen_bootstrap ALL DEPENDS ${gen_bootstrap_files})

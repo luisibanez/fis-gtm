@@ -239,9 +239,9 @@ if [ -d "utf8" ]; then
 		is64bit_gtm=`file mumps | grep "64-bit" | wc -l`
 	fi
 	if [ $is64bit_gtm -eq 1 ] ; then
-		library_path="/usr/local/lib64 /usr/local/lib /usr/lib64 /usr/lib /lib64 /lib /usr/local/ssl/lib"
+		library_path="/usr/local/lib64 /usr/local/lib /usr/lib64 /usr/lib /usr/lib/x86_64-linux-gnu /lib64 /lib /usr/local/ssl/lib"
 	else
-		library_path="/usr/local/lib32 /usr/local/lib /usr/lib32 /usr/lib /lib32 /lib"
+		library_path="/usr/local/lib32 /usr/local/lib /usr/lib32 /usr/lib /usr/lib/i386-linux-gnu /lib32 /lib"
 	fi
 	$echo "Should UTF-8 support be installed? (y or n) \c"
 	read resp
@@ -673,6 +673,7 @@ export gtm_chset
 
 # Now work on UTF-8 mode
 if [ "$doutf8" -ne 0 ]; then
+	(
 	# Ensure we ARE in UTF-8 mode
 	utflocale=`locale -a | grep -i en_us | grep -i utf | grep '8$'`
 	if [ $arch = "zos" ]; then
@@ -704,8 +705,7 @@ if [ "$doutf8" -ne 0 ]; then
 	fi
 	(gtm_dist=$gtmdist/utf8; export gtm_dist; cd $gtm_dist; ./mumps -noignore *.m; $echo $?>>$gtmdist/compstat; \
 	if [ $is64bit_gtm -eq 1 -o "linux" != $arch ] ; then $ldcmd $ldflags -o libgtmutil$ext *.o ; fi )
-	gtm_chset="M"
-	export gtm_chset
+	)
 fi
 
 # Change mode to executable for the normal binaries
@@ -754,7 +754,7 @@ export gtmgbldir
 
 cat <<GDE.in1 | $gtmdist/mumps -direct
 Do ^GDE
-Change -segment DEFAULT	-block=2048	-file=$gtmdist/gtmhelp.dat
+Change -segment DEFAULT	-block=2048	-file=\$gtm_dist/gtmhelp.dat
 Change -region DEFAULT	-record=1020	-key=255
 Exit
 GDE.in1
@@ -764,12 +764,12 @@ export gtmgbldir
 
 cat <<GDE.in2 | $gtmdist/mumps -direct
 Do ^GDE
-Change -segment DEFAULT	-block=2048	-file=$gtmdist/gdehelp.dat
+Change -segment DEFAULT	-block=2048	-file=\$gtm_dist/gdehelp.dat
 Change -region DEFAULT	-record=1020	-key=255
 Exit
 GDE.in2
 
-other_object_files="CHK2LEV.o CHKOP.o GENDASH.o GENOUT.o GETNEAR.o GTMHELP.o GTMHLPLD.o LOAD.o LOADOP.o"
+other_object_files="CHK2LEV.o CHKOP.o GENDASH.o GENOUT.o GETNEAR.o GTMHLPLD.o LOAD.o LOADOP.o"
 other_object_files="$other_object_files LOADVX.o MSG.o TTTGEN.o TTTSCAN.o UNLOAD.o GTMDefinedTypesInit.o"
 csh_script_files=""
 if [ $arch = "zos" ]; then
@@ -901,7 +901,7 @@ if [ "$resp" = "Y" -o "$resp" = "y" ] ; then
 	\rm -rf $binaries $pathmods $rscripts $nscripts $dirs configure \
 		*.gtc gtm* gde* GDE*.o _*.m _*.o mumps.dat mumps.gld geteuid $other_object_files $csh_script_files lowerc_cp\
 		esnecil *.hlp core *.h libgtmrpc.a *.m gdehelp.* COPYING README.txt
-	\rm -rf GETPASS.o plugin PINENTRY.o
+	\rm -rf GETPASS.o plugin PINENTRY.o GTMHELP.o
 	if [ -d utf8 ]; then
 		\rm -rf utf8
 	fi

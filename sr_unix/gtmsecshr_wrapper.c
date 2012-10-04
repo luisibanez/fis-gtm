@@ -10,7 +10,10 @@
  ****************************************************************/
 
 #include "mdef.h"
-/* We want system malloc, not gtm_malloc (which comes from mdef.h --> mdefsp.h).  Since gtmsecshr_wrapper runs as root,
+#define BYPASS_MEMCPY_OVERRIDE  /* Signals gtm_string.h to not override memcpy(). This causes linking problems when libmumps.a
+                                 * is not available.
+                                 */
+#/* We want system malloc, not gtm_malloc (which comes from mdef.h --> mdefsp.h).  Since gtmsecshr_wrapper runs as root,
  * using the system malloc will increase security over using gtm_malloc.  Additionally, by not using gtm_malloc, we
  * are reducing code bloat.
  */
@@ -26,7 +29,6 @@
 #include <malloc.h>
 #endif
 #include <errno.h>
-
 #define ROOTUID 0
 #define ROOTGID 0
 
