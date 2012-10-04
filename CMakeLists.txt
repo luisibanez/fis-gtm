@@ -215,6 +215,7 @@ add_custom_command(
   )
 list(APPEND gen_bootstrap_files gen/ttt.c)
 
+set(gen_merrors_extra gen/merrors_ansi.h)
 foreach(msg
     sr_port/cmerrors.msg
     sr_port/gdeerrors.msg
@@ -223,8 +224,9 @@ foreach(msg
     )
   get_filename_component(name ${msg} NAME_WE)
   set(mumps_msg_args -run msg ${GTM_SOURCE_DIR}/${msg} unix)
+  set(outputs gen/${name}_ctl.c ${gen_${name}_extra})
   add_custom_command(
-    OUTPUT gen/${name}_ctl.c
+    OUTPUT ${outputs}
     DEPENDS gen/msg.m ${GTM_SOURCE_DIR}/${msg}
             ${GTM_SOURCE_DIR}/sr_unix/mumps.cmake mumps
     WORKING_DIRECTORY ${GTM_BINARY_DIR}/gen
@@ -236,7 +238,7 @@ foreach(msg
       -P ${GTM_SOURCE_DIR}/sr_unix/mumps.cmake
     VERBATIM
     )
-  list(APPEND gen_bootstrap_files gen/${name}_ctl.c)
+  list(APPEND gen_bootstrap_files ${outputs})
 endforeach()
 
 add_custom_target(gen_bootstrap ALL DEPENDS ${gen_bootstrap_files})
