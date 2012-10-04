@@ -80,6 +80,14 @@ add_definitions(
   )
 set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS_DEBUG DEBUG)
 
+#-----------------------------------------------------------------------------
+
+# Source files are organized into subdirectories named by platform.
+# Store in 'gt_src_list' a list of directory names selected and
+# ordered based on the target platform.  A given source file name may
+# appear in multiple directories but only the instance found earliest
+# in the search path will be used.  Later instances of the same source
+# file name will be ignored.
 set(gt_src_list)
 set(gen_xfer_desc 0)
 if("${CMAKE_SYSTEM_NAME}" MATCHES "Linux")
@@ -98,6 +106,10 @@ list(APPEND gt_src_list
   sr_port_cm
   sr_port
   )
+
+# Collect the source file names belonging to each directory.  Store
+# the full path to a directory in 'source_dir_${d}' and the list of
+# source file names in the directory in 'sources_${d}'.
 foreach(d ${gt_src_list})
   set(source_dir_${d} ${GTM_SOURCE_DIR}/${d})
   file(GLOB sources_${d} RELATIVE ${source_dir_${d}}
@@ -111,13 +123,18 @@ if(gen_bootstrap)
   set(sources_gen cmerrors_ctl.c cmierrors_ctl.c gdeerrors_ctl.c merrors_ctl.c ttt.c)
 endif()
 
+# The C preprocessor include search path consists of every source
+# directory ordered by 'gt_src_list'.
 set(includes)
 foreach(d ${gt_src_list})
   list(APPEND includes ${source_dir_${d}})
 endforeach()
 include_directories(${includes})
+# We generate some uniquely-named headers in the top of the build tree.
 include_directories(${GTM_BINARY_DIR})
 
+# Function to select the first instance of a given source file name
+# found in the ordered 'gt_src_list' search path.
 function(select_file src_var name)
   set(found "")
   foreach(d ${gt_src_list})
@@ -133,6 +150,9 @@ function(select_file src_var name)
   set("${src_var}" "${found}" PARENT_SCOPE)
 endfunction()
 
+# Macro to search directories ordered by 'gt_src_list' for a given
+# list of source file names, assign them to a target, and exclude the
+# source file names from inclusion in libmumps.
 set(sources_used "")
 macro(set_source_list target)
   foreach(name ${ARGN})
@@ -153,6 +173,8 @@ macro(set_source_list target)
   endforeach()
 endmacro()
 
+# Macro like set_source_list but that loads the list of source file
+# names from a file.
 macro(load_source_list target listfile)
   file(STRINGS "${listfile}" names)
   set_source_list(${target} ${names})
@@ -160,6 +182,7 @@ endmacro()
 
 #-----------------------------------------------------------------------------
 
+# Assign sources to libraries.
 load_source_list(libcmisockettcp sr_unix_gnp/libcmisockettcp.list)
 load_source_list(libdbcertify    sr_unix/libdbcertify.list)
 load_source_list(libdse          sr_unix/libdse.list)
@@ -170,8 +193,8 @@ load_source_list(liblke          sr_unix/liblke.list)
 load_source_list(libmupip        sr_unix/libmupip.list)
 load_source_list(libstub         sr_unix/libstub.list)
 
+# Assign sources to executables.
 set_source_list(gtm_threadgbl_deftypes gtm_threadgbl_deftypes)
-
 set_source_list(dbcertify        dbcertify dbcertify_cmd)
 set_source_list(dse              dse dse_cmd)
 set_source_list(ftok             ftok)
