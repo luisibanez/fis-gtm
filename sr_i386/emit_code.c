@@ -12,7 +12,7 @@
 #include "mdef.h"
 
 #include "compiler.h"
-#include "rtnhdr.h"
+#include <rtnhdr.h>
 #include "stack_frame.h"
 #include "opcode.h"
 #include "xfer_enum.h"

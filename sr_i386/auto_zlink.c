@@ -15,7 +15,7 @@
 
 #include "i386.h"
 #include "urx.h"
-#include "rtnhdr.h"
+#include <rtnhdr.h>
 #include "op.h"
 #include <auto_zlink.h>
 

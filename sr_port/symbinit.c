@@ -13,7 +13,7 @@
 
 #include "gtm_string.h"
 
-#include "rtnhdr.h"
+#include <rtnhdr.h>
 #include "mv_stent.h"		/* this includes lv_val.h which also includes hashtab_mname.h and hashtab.h */
 #include "stack_frame.h"
 #include "mdq.h"

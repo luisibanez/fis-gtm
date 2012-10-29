@@ -25,6 +25,7 @@
  */
 void *gtm_memcpy_validate_and_execute(void *target, const void *src, size_t len)
 {
+	assert((0 <= (signed)len) && (len <= MAXPOSINT4));	/* nothing beyond max positive int4 allowed */
 	if (target == src)	/* Allow special case to go through but avoid actual memcpy() call */
 		return target;
 	assert(((char *)(target) > (char *)(src))

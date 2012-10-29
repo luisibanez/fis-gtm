@@ -343,6 +343,7 @@ GBLREF	mcalloc_hdr	*mcavailptr, *mcavailbase;
 GBLREF	void		(*cache_table_relobjs)(void);	/* Function pointer to call cache_table_rebuild() */
 UNIX_ONLY(GBLREF ch_ret_type (*ht_rhash_ch)();)		/* Function pointer to hashtab_rehash_ch */
 UNIX_ONLY(GBLREF ch_ret_type (*jbxm_dump_ch)();)	/* Function pointer to jobexam_dump_ch */
+UNIX_ONLY(GBLREF ch_ret_type (*stpgc_ch)();)		/* Function pointer to stp_gcol_ch */
 /* This var allows us to call ourselves but still have callerid info */
 GBLREF	unsigned char	*smCallerId;			/* Caller of top level malloc/free */
 GBLREF	volatile int4	fast_lock_count;		/* Stop stale/epoch processing while we have our parts exposed */
@@ -1150,7 +1151,7 @@ void raise_gtmmemory_error(void)	/* Note renamed to raise_gtmmemory_error_dbg wh
         {
 #	endif
 		if (NULL != (addr = (void *)outOfMemoryMitigation)
-		    UNIX_ONLY(&& !(ht_rhash_ch == active_ch->ch || jbxm_dump_ch == active_ch->ch || stp_gcol_ch == active_ch->ch)))
+		    UNIX_ONLY(&& !(ht_rhash_ch == active_ch->ch || jbxm_dump_ch == active_ch->ch || stpgc_ch == active_ch->ch)))
 		{       /* Free our reserve only if not in certain condition handlers (on UNIX) since it is */
 			/* going to unwind this error and ignore it. On VMS the error will not be trapped   */
 			outOfMemoryMitigation = NULL;

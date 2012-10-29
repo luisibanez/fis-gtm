@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- *	Copyright 2001 Sanchez Computer Associates, Inc.	*
+ *	Copyright 2012 Fidelity Information Services, Inc	*
  *								*
  *	This source code contains the intellectual property	*
  *	of its copyright holder(s), and is made available	*
@@ -9,14 +9,9 @@
  *								*
  ****************************************************************/
 
-#include "mdef.h"
-#include "gt_timer.h"
-#include "crit_wake_alarm.h"
+#ifndef __WAIT_FOR_DISK_SPACE_H__
+#define __WAIT_FOR_DISK_SPACE_H__
 
-GBLDEF bool crit_timer_expired;
+void wait_for_disk_space(sgmnt_addrs *csa, char *fn, int fd, off_t offset, char *buf, size_t count, int *save_errno);
 
-void crit_wake_alarm(void)
-{
-	crit_timer_expired = TRUE;
-	GT_WAKE;
-}
+#endif

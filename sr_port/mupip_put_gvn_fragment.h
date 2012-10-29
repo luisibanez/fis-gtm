@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- *	Copyright 2001 Sanchez Computer Associates, Inc.	*
+ *	Copyright 2012 Fidelity Information Services, Inc	*
  *								*
  *	This source code contains the intellectual property	*
  *	of its copyright holder(s), and is made available	*
@@ -9,9 +9,9 @@
  *								*
  ****************************************************************/
 
-#ifndef __CRIT_WAKE_ALARM_H__
-#define __CRIT_WAKE_ALARM_H__
+#ifndef MUPIP_PUT_GVN_FRAGMENT_INCLUDED
+#define MUPIP_PUT_GVN_FRAGMENT_INCLUDED
 
-void crit_wake_alarm(void);
+void mupip_put_gvn_fragment(char *cp, int len, int val_off1, int val_len1);
 
-#endif
+#endif /* MUPIP_PUT_GVN_FRAGMENT_INCLUDED */

@@ -1,7 +1,7 @@
 #!/bin/sh -
 #################################################################
 #								#
-#	Copyright 2011 Fidelity Information Services, Inc       #
+#	Copyright 2011, 2012 Fidelity Information Services, Inc       #
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#

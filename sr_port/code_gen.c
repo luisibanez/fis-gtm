@@ -15,7 +15,7 @@
 #include "mdq.h"
 #include "cgp.h"
 #include "cmd_qlf.h"
-#include "rtnhdr.h"
+#include <rtnhdr.h>
 #include "obj_file.h"
 #include "list_file.h"
 #include <emit_code.h>
