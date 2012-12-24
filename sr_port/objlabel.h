@@ -43,6 +43,8 @@
 #	define	OBJ_PLATFORM_LABEL	0		/* s390 Linux */
 #elif defined(__linux__) && defined(__ia64)
 #	define	OBJ_PLATFORM_LABEL	0		/* Itanium Linux */
+#elif defined(__linux__) && defined(__arm__)
+#	define	OBJ_PLATFORM_LABEL	0		/* ARM Linux */
 #elif defined(__linux__) && defined(__i386__)
 #	define	OBJ_PLATFORM_LABEL	0		/* i386 Linux */
 #elif defined(__linux__) && defined(__x86_64)
