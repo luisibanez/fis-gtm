@@ -115,6 +115,11 @@ void extract_signal_info(int sig, siginfo_t *info, gtm_sigcontext_t *context, gt
 				{
 #    ifdef __ia64
 					gtmsi->int_iadr = (caddr_t)context->uc_mcontext.sc_ip;
+#    elif defined(__arm__)
+#      ifndef REG_EIP
+#        define REG_EIP EIP
+#      endif
+					gtmsi->int_iadr = (caddr_t)context->uc_mcontext.arm_pc;
 #    elif defined(__i386)
 #      ifndef REG_EIP
 #        define REG_EIP EIP
