@@ -153,6 +153,14 @@ void dyncall();
 #  endif
 #endif /* __ia64 */
 
+#ifdef __arm
+/* Must investigate real values for ARM and Raspberry Pi */
+#define CACHELINE_SIZE	32
+#define MSYNC_ADDR_INCS	OS_PAGE_SIZE
+#undef BIGENDIAN
+typedef char  mach_inst;	/* machine instruction */
+#endif /* __arm */
+
 #ifdef __i386
 /* Through Pentium Pro/II/III, should use CPUID to get real value perhaps */
 #define CACHELINE_SIZE	32
