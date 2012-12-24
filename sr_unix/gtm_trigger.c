@@ -980,7 +980,7 @@ void gtm_trigger_cleanup(gv_trigger_t *trigdsc)
 								 */
 	free(rtnhdr);
 #	else
-#		if (!defined(__linux__) && !defined(__CYGWIN__)) || !defined(__i386) || !defined(COMP_GTA)
+#		if (!defined(__linux__) && !defined(__CYGWIN__)) || !defined(__i386) || !defined(COMP_GTA) || !defined(__arm__)
 #			error Unsupported NON-USHBIN platform
 #		endif
 	/* For a non-shared binary platform we need to get an approximate addr range for stp_move. This is not
