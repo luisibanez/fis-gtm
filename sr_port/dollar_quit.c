@@ -114,6 +114,28 @@ int dollar_quit(void)
 		} else
 			xfer_index = -1;	/* Not an xfer index */
 	}
+# elif defined(__arm__)
+	{
+		ptrs.instr = sf->mpc;
+		/* First figure out the potential length of the lea* instruction loading compiler temp offset */
+		if (0x078d == *ptrs.instr_type)
+			ptrs.instr += 3;	/* Past the 2 byte lea plus 1 byte push */
+		else if (0x478d == *ptrs.instr_type)
+			ptrs.instr += 4;	/* Past the 3 byte lea plus 1 byte push */
+		else if (0x878d == *ptrs.instr_type)
+			ptrs.instr += 7;	/* Past the 6 byte lea plus 1 byte push */
+		else
+			ptrs.instr = NULL;
+		/* Note the "long format call opcode" check below assumes that both of the EXFUNRET[ALS] calls remain at a
+		 * greater-than-128 byte offset in the transfer table (which they currently are).
+		 */
+		if ((NULL != ptrs.instr) && (0x93FF == *ptrs.instr_type))
+		{
+			ptrs.instr += SIZEOF(*ptrs.instr_type);
+			xfer_index = *ptrs.xfer_offset_32 / SIZEOF(void *);
+		} else
+			xfer_index = -1;
+	}
 #	elif defined(_AIX)
 	{
 		ptrs.instr = sf->mpc + 4;	/* Past address load of compiler temp arg */
