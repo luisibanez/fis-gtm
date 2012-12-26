@@ -102,6 +102,15 @@ if("${CMAKE_SYSTEM_NAME}" MATCHES "Linux")
     set(gen_xfer_desc 1)
   endif()
 endif()
+if("${CMAKE_SYSTEM_NAME}" MATCHES "Windows") # for MinGW
+  list(APPEND gt_src_list sr_linux)
+  if("${CMAKE_SIZEOF_VOID_P}" EQUAL 4)
+    list(APPEND gt_src_list sr_i386 sr_x86_regs sr_unix_nsb)
+  else()
+    list(APPEND gt_src_list sr_x86_64 sr_x86_regs)
+    set(gen_xfer_desc 1)
+  endif()
+endif()
 list(APPEND gt_src_list
   sr_unix_gnp
   sr_unix_cm
