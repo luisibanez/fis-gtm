@@ -16,7 +16,7 @@
 	.align	2
 	.global	dm_start
 	.type	dm_start, %function
-dm_start:
+dm_start_arm:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 1, uses_anonymous_args = 0
 	@ link register save eliminated.
