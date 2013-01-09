@@ -14,8 +14,8 @@
 	.text
 
 	.align	2
-	.global	dm_start
-	.type	dm_start, %function
+	.global	dm_start_arm
+	.type	dm_start_arm, %function
 dm_start_arm:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 1, uses_anonymous_args = 0
@@ -26,7 +26,7 @@ dm_start_arm:
 	add	sp, fp, #0
 	ldmfd	sp!, {fp}
 	bx	lr
-	.size	dm_start, .-dm_start
+	.size	dm_start_arm, .-dm_start_arm
 
 	.align	2
 	.global	gtm_levl_ret_code

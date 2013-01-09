@@ -14,9 +14,9 @@
 	.text
 
 	.align	2
-	.global	mum_tstart
-	.type	mum_tstart, %function
-mum_tstart:
+	.global	mum_tstart_arm
+	.type	mum_tstart_arm, %function
+mum_tstart_arm:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 1, uses_anonymous_args = 0
 	@ link register save eliminated.
@@ -25,4 +25,4 @@ mum_tstart:
 	add	sp, fp, #0
 	ldmfd	sp!, {fp}
 	bx	lr
-	.size	mum_tstart, .-mum_tstart
+	.size	mum_tstart_arm, .-mum_tstart_arm

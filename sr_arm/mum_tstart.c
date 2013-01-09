@@ -9,8 +9,7 @@
  *								*
  ****************************************************************/
 
-int dm_start(void)
+int mum_tstart(void)
 {
-  mum_tstart();
   return 0;
 }
