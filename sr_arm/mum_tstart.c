@@ -11,5 +11,12 @@
 
 int mum_tstart(void)
 {
+  if(1)
+  {
+    getframe();
+  } else
+  {
+    trans_code();
+  }
   return 0;
 }
